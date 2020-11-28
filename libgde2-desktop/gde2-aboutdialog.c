@@ -6,20 +6,20 @@
  * Copyright (C) 2003, 2004 Matthias Clasen <mclasen@redhat.com>
  * Copyright (C) 2014 Stefano Karapetsas <stefano@karapetsas.com>
  *
- * This file is part of the Mate Library.
+ * This file is part of the Gde2 Library.
  *
- * The Mate Library is free software; you can redistribute it and/or
+ * The Gde2 Library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * The Mate Library is distributed in the hope that it will be useful,
+ * The Gde2 Library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with the Mate Library; see the file COPYING.LIB.  If not,
+ * License along with the Gde2 Library; see the file COPYING.LIB.  If not,
  * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
@@ -37,14 +37,14 @@
 #include <glib/gi18n-lib.h>
 
 
-/* The #MateAboutDialog offers a simple way to display information about
+/* The #Gde2AboutDialog offers a simple way to display information about
  * a program like its logo, name, copyright, website and license. It is
  * also possible to give credits to the authors, documenters, translators
  * and artists who have worked on the program. An about dialog is typically
  * opened when the user selects the <literal>About</literal> option from
  * the <literal>Help</literal> menu. All parts of the dialog are optional.
  *
- * To make constructing a #MateAboutDialog as convenient as possible, you can
+ * To make constructing a #Gde2AboutDialog as convenient as possible, you can
  * use the function gde2_show_about_dialog() which constructs and shows a dialog
  * and keeps it around so that it can be shown again.
  *
@@ -52,7 +52,7 @@
  * on the dialog window (where &percnt;s is replaced by the name of the
  * application, but in order to ensure proper translation of the title,
  * applications should set the title property explicitly when constructing
- * a #MateAboutDialog, as shown in the following example:
+ * a #Gde2AboutDialog, as shown in the following example:
  * <informalexample><programlisting>
  * gde2_show_about_dialog (NULL,
  *                         "program-name", "ExampleCode",
@@ -66,7 +66,7 @@
 static GdkColor default_link_color = { 0, 0, 0, 0xeeee };
 static GdkColor default_visited_link_color = { 0, 0x5555, 0x1a1a, 0x8b8b };
 
-struct _MateAboutDialogPrivate
+struct _Gde2AboutDialogPrivate
 {
   gchar *name;
   gchar *version;
@@ -101,7 +101,7 @@ struct _MateAboutDialogPrivate
   guint wrap_license : 1;
 };
 
-#define GDE2_ABOUT_DIALOG_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GDE2_TYPE_ABOUT_DIALOG, MateAboutDialogPrivate))
+#define GDE2_ABOUT_DIALOG_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GDE2_TYPE_ABOUT_DIALOG, Gde2AboutDialogPrivate))
 
 
 enum
@@ -133,12 +133,12 @@ static void                 gde2_about_dialog_set_property   (GObject           
                                                               const GValue       *value,
                                                               GParamSpec         *pspec);
 static void                 gde2_about_dialog_show           (GtkWidget          *widge);
-static void                 update_name_version              (MateAboutDialog    *about);
+static void                 update_name_version              (Gde2AboutDialog    *about);
 static GtkIconSet *         icon_set_new_from_pixbufs        (GList              *pixbufs);
-static void                 follow_if_link                   (MateAboutDialog    *about,
+static void                 follow_if_link                   (Gde2AboutDialog    *about,
                                                               GtkTextView        *text_view,
                                                               GtkTextIter        *iter);
-static void                 set_cursor_if_appropriate        (MateAboutDialog    *about,
+static void                 set_cursor_if_appropriate        (Gde2AboutDialog    *about,
                                                               GtkTextView        *text_view,
                                                               gint                x,
                                                               gint                y);
@@ -146,19 +146,19 @@ static void                 display_credits_dialog           (GtkWidget         
                                                               gpointer            data);
 static void                 display_license_dialog           (GtkWidget          *button,
                                                               gpointer            data);
-static void                 close_cb                         (MateAboutDialog    *about);
-static gboolean             gde2_about_dialog_activate_link  (MateAboutDialog    *about,
+static void                 close_cb                         (Gde2AboutDialog    *about);
+static gboolean             gde2_about_dialog_activate_link  (Gde2AboutDialog    *about,
                                                               const gchar        *uri);
 
-static void                 default_url_hook                 (MateAboutDialog    *about,
+static void                 default_url_hook                 (Gde2AboutDialog    *about,
                                                               const gchar        *uri,
                                                               gpointer            user_data);
-static void                 default_email_hook               (MateAboutDialog    *about,
+static void                 default_email_hook               (Gde2AboutDialog    *about,
                                                               const gchar        *email_address,
                                                               gpointer            user_data);
 
 static void
-default_url_hook (MateAboutDialog *about,
+default_url_hook (Gde2AboutDialog *about,
                   const gchar    *uri,
                   gpointer        user_data)
 {
@@ -189,7 +189,7 @@ default_url_hook (MateAboutDialog *about,
 }
 
 static void
-default_email_hook (MateAboutDialog *about,
+default_email_hook (Gde2AboutDialog *about,
                     const gchar    *email_address,
                     gpointer        user_data)
 {
@@ -203,10 +203,10 @@ default_email_hook (MateAboutDialog *about,
   g_free (uri);
 }
 
-G_DEFINE_TYPE (MateAboutDialog, gde2_about_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (Gde2AboutDialog, gde2_about_dialog, GTK_TYPE_DIALOG)
 
 static void
-gde2_about_dialog_class_init (MateAboutDialogClass *klass)
+gde2_about_dialog_class_init (Gde2AboutDialogClass *klass)
 {
   GObjectClass *object_class;
   GtkWidgetClass *widget_class;
@@ -222,7 +222,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
   widget_class->show = gde2_about_dialog_show;
 
   /**
-   * MateAboutDialog:program-name:
+   * Gde2AboutDialog:program-name:
    *
    * The name of the program.
    * If this is not set, it defaults to g_get_application_name().
@@ -238,7 +238,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                         G_PARAM_READWRITE));
 
   /**
-   * MateAboutDialog:version:
+   * Gde2AboutDialog:version:
    *
    * The version of the program.
    *
@@ -253,7 +253,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                         G_PARAM_READWRITE));
 
   /**
-   * MateAboutDialog:copyright:
+   * Gde2AboutDialog:copyright:
    *
    * Copyright information for the program.
    *
@@ -269,7 +269,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
         
 
   /**
-   * MateAboutDialog:comments:
+   * Gde2AboutDialog:comments:
    *
    * Comments about the program. This string is displayed in a label
    * in the main dialog, thus it should be a short explanation of
@@ -286,7 +286,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                         G_PARAM_READWRITE));
 
   /**
-   * MateAboutDialog:license:
+   * Gde2AboutDialog:license:
    *
    * The license of the program. This string is displayed in a
    * text view in a secondary dialog, therefore it is fine to use
@@ -305,7 +305,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                         G_PARAM_READWRITE));
 
   /**
-   * MateAboutDialog:website:
+   * Gde2AboutDialog:website:
    *
    * The URL for the link to the website of the program.
    * This should be a string starting with "http://.
@@ -321,10 +321,10 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                         G_PARAM_READWRITE));
 
   /**
-   * MateAboutDialog:website-label:
+   * Gde2AboutDialog:website-label:
    *
    * The label for the link to the website of the program. If this is not set,
-   * it defaults to the URL specified in the #MateAboutDialog:website property.
+   * it defaults to the URL specified in the #Gde2AboutDialog:website property.
    *
    * Since: 1.9
    */
@@ -337,7 +337,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                         G_PARAM_READWRITE));
 
   /**
-   * MateAboutDialog:authors:
+   * Gde2AboutDialog:authors:
    *
    * The authors of the program, as a %NULL-terminated array of strings.
    * Each string may contain email addresses and URLs, which will be displayed
@@ -354,7 +354,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                        G_PARAM_READWRITE));
 
   /**
-   * MateAboutDialog:documenters:
+   * Gde2AboutDialog:documenters:
    *
    * The people documenting the program, as a %NULL-terminated array of strings.
    * Each string may contain email addresses and URLs, which will be displayed
@@ -371,7 +371,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                        G_PARAM_READWRITE));
 
   /**
-   * MateAboutDialog:artists:
+   * Gde2AboutDialog:artists:
    *
    * The people who contributed artwork to the program, as a %NULL-terminated
    * array of strings. Each string may contain email addresses and URLs, which
@@ -389,7 +389,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
 
 
   /**
-   * MateAboutDialog:translator-credits:
+   * Gde2AboutDialog:translator-credits:
    *
    * Credits to the translators. This string should be marked as translatable.
    * The string may contain email addresses and URLs, which will be displayed
@@ -406,7 +406,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                         G_PARAM_READWRITE));
         
   /**
-   * MateAboutDialog:logo:
+   * Gde2AboutDialog:logo:
    *
    * A logo for the about box. If this is not set, it defaults to
    * gtk_window_get_default_icon_list().
@@ -422,10 +422,10 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                         G_PARAM_READWRITE));
 
   /**
-   * MateAboutDialog:logo-icon-name:
+   * Gde2AboutDialog:logo-icon-name:
    *
    * A named icon to use as the logo for the about box. This property
-   * overrides the #MateAboutDialog:logo property.
+   * overrides the #Gde2AboutDialog:logo property.
    *
    * Since: 1.9
    */
@@ -437,7 +437,7 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                         NULL,
                                                         G_PARAM_READWRITE));
   /**
-   * MateAboutDialog:wrap-license:
+   * Gde2AboutDialog:wrap-license:
    *
    * Whether to wrap the text in the license dialog.
    *
@@ -452,14 +452,14 @@ gde2_about_dialog_class_init (MateAboutDialogClass *klass)
                                                          G_PARAM_READWRITE));
 
 
-  g_type_class_add_private (object_class, sizeof (MateAboutDialogPrivate));
+  g_type_class_add_private (object_class, sizeof (Gde2AboutDialogPrivate));
 }
 
 static void
-gde2_about_dialog_init (MateAboutDialog *about)
+gde2_about_dialog_init (Gde2AboutDialog *about)
 {
   GtkDialog *dialog = GTK_DIALOG (about);
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   GdkDisplay *display;
   GtkWidget *vbox, *hbox, *button, *close_button, *image;
 
@@ -594,8 +594,8 @@ gde2_about_dialog_init (MateAboutDialog *about)
 static void
 gde2_about_dialog_finalize (GObject *object)
 {
-  MateAboutDialog *about = GDE2_ABOUT_DIALOG (object);
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialog *about = GDE2_ABOUT_DIALOG (object);
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   g_free (priv->name);
   g_free (priv->version);
@@ -630,8 +630,8 @@ gde2_about_dialog_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  MateAboutDialog *about = GDE2_ABOUT_DIALOG (object);
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialog *about = GDE2_ABOUT_DIALOG (object);
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   switch (prop_id)
     {
@@ -689,8 +689,8 @@ gde2_about_dialog_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  MateAboutDialog *about = GDE2_ABOUT_DIALOG (object);
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialog *about = GDE2_ABOUT_DIALOG (object);
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   switch (prop_id)
     {
@@ -754,7 +754,7 @@ gde2_about_dialog_get_property (GObject    *object,
 }
 
 static gboolean
-gde2_about_dialog_activate_link (MateAboutDialog *about,
+gde2_about_dialog_activate_link (Gde2AboutDialog *about,
                                 const gchar    *uri)
 {
   if (g_str_has_prefix (uri, "mailto:"))
@@ -776,9 +776,9 @@ gde2_about_dialog_activate_link (MateAboutDialog *about,
 }
 
 static void
-update_website (MateAboutDialog *about)
+update_website (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   gtk_widget_show (priv->website_label);
 
@@ -820,7 +820,7 @@ gde2_about_dialog_show (GtkWidget *widget)
 
 /**
  * gde2_about_dialog_get_program_name:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the program name displayed in the about dialog.
  *
@@ -830,24 +830,24 @@ gde2_about_dialog_show (GtkWidget *widget)
  * Since: 1.9
  */
 const gchar *
-gde2_about_dialog_get_program_name (MateAboutDialog *about)
+gde2_about_dialog_get_program_name (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return priv->name;
 }
 
 static void
-update_name_version (MateAboutDialog *about)
+update_name_version (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar *title_string, *name_string;
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   title_string = g_strdup_printf (_("About %s"), priv->name);
   gtk_window_set_title (GTK_WINDOW (about), title_string);
@@ -867,7 +867,7 @@ update_name_version (MateAboutDialog *about)
 
 /**
  * gde2_about_dialog_set_program_name:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @name: the program name
  *
  * Sets the name to display in the about dialog.
@@ -876,15 +876,15 @@ update_name_version (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_program_name (MateAboutDialog *about,
+gde2_about_dialog_set_program_name (Gde2AboutDialog *about,
                                    const gchar    *name)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar *tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
   tmp = priv->name;
   priv->name = g_strdup (name ? name : g_get_application_name ());
   g_free (tmp);
@@ -897,7 +897,7 @@ gde2_about_dialog_set_program_name (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_version:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the version string.
  *
@@ -907,20 +907,20 @@ gde2_about_dialog_set_program_name (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar *
-gde2_about_dialog_get_version (MateAboutDialog *about)
+gde2_about_dialog_get_version (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return priv->version;
 }
 
 /**
  * gde2_about_dialog_set_version:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @version: (allow-none): the version string
  *
  * Sets the version string to display in the about dialog.
@@ -928,15 +928,15 @@ gde2_about_dialog_get_version (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_version (MateAboutDialog *about,
+gde2_about_dialog_set_version (Gde2AboutDialog *about,
                               const gchar    *version)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar *tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->version;
   priv->version = g_strdup (version);
@@ -949,7 +949,7 @@ gde2_about_dialog_set_version (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_copyright:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the copyright string.
  *
@@ -959,20 +959,20 @@ gde2_about_dialog_set_version (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar *
-gde2_about_dialog_get_copyright (MateAboutDialog *about)
+gde2_about_dialog_get_copyright (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return priv->copyright;
 }
 
 /**
  * gde2_about_dialog_set_copyright:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @copyright: (allow-none): the copyright string
  *
  * Sets the copyright string to display in the about dialog.
@@ -981,15 +981,15 @@ gde2_about_dialog_get_copyright (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_copyright (MateAboutDialog *about,
+gde2_about_dialog_set_copyright (Gde2AboutDialog *about,
                                 const gchar    *copyright)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar *copyright_string, *tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->copyright;
   priv->copyright = g_strdup (copyright);
@@ -1012,7 +1012,7 @@ gde2_about_dialog_set_copyright (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_comments:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the comments string.
  *
@@ -1022,20 +1022,20 @@ gde2_about_dialog_set_copyright (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar *
-gde2_about_dialog_get_comments (MateAboutDialog *about)
+gde2_about_dialog_get_comments (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return priv->comments;
 }
 
 /**
  * gde2_about_dialog_set_comments:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @comments: (allow-none): a comments string
  *
  * Sets the comments string to display in the about dialog.
@@ -1044,15 +1044,15 @@ gde2_about_dialog_get_comments (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_comments (MateAboutDialog *about,
+gde2_about_dialog_set_comments (Gde2AboutDialog *about,
                                const gchar    *comments)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar *tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->comments;
   if (comments)
@@ -1073,7 +1073,7 @@ gde2_about_dialog_set_comments (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_license:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the license information.
  *
@@ -1083,20 +1083,20 @@ gde2_about_dialog_set_comments (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar *
-gde2_about_dialog_get_license (MateAboutDialog *about)
+gde2_about_dialog_get_license (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return priv->license;
 }
 
 /**
  * gde2_about_dialog_set_license:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @license: (allow-none): the license information or %NULL
  *
  * Sets the license information to be displayed in the secondary
@@ -1106,15 +1106,15 @@ gde2_about_dialog_get_license (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_license (MateAboutDialog *about,
+gde2_about_dialog_set_license (Gde2AboutDialog *about,
                               const gchar    *license)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar *tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->license;
   if (license)
@@ -1134,7 +1134,7 @@ gde2_about_dialog_set_license (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_wrap_license:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns whether the license text in @about is
  * automatically wrapped.
@@ -1144,20 +1144,20 @@ gde2_about_dialog_set_license (MateAboutDialog *about,
  * Since: 1.9
  */
 gboolean
-gde2_about_dialog_get_wrap_license (MateAboutDialog *about)
+gde2_about_dialog_get_wrap_license (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), FALSE);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return priv->wrap_license;
 }
 
 /**
  * gde2_about_dialog_set_wrap_license:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @wrap_license: whether to wrap the license
  *
  * Sets whether the license text in @about is
@@ -1166,14 +1166,14 @@ gde2_about_dialog_get_wrap_license (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_wrap_license (MateAboutDialog *about,
+gde2_about_dialog_set_wrap_license (Gde2AboutDialog *about,
                                    gboolean        wrap_license)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   wrap_license = wrap_license != FALSE;
 
@@ -1187,7 +1187,7 @@ gde2_about_dialog_set_wrap_license (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_website:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the website URL.
  *
@@ -1197,20 +1197,20 @@ gde2_about_dialog_set_wrap_license (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar *
-gde2_about_dialog_get_website (MateAboutDialog *about)
+gde2_about_dialog_get_website (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return priv->website_url;
 }
 
 /**
  * gde2_about_dialog_set_website:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @website: (allow-none): a URL string starting with "http://"
  *
  * Sets the URL to use for the website link.
@@ -1218,15 +1218,15 @@ gde2_about_dialog_get_website (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_website (MateAboutDialog *about,
+gde2_about_dialog_set_website (Gde2AboutDialog *about,
                               const gchar    *website)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar *tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->website_url;
   priv->website_url = g_strdup (website);
@@ -1239,7 +1239,7 @@ gde2_about_dialog_set_website (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_website_label:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the label used for the website link.
  *
@@ -1249,20 +1249,20 @@ gde2_about_dialog_set_website (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar *
-gde2_about_dialog_get_website_label (MateAboutDialog *about)
+gde2_about_dialog_get_website_label (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return priv->website_text;
 }
 
 /**
  * gde2_about_dialog_set_website_label:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @website_label: the label used for the website link
  *
  * Sets the label to be used for the website link.
@@ -1271,15 +1271,15 @@ gde2_about_dialog_get_website_label (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_website_label (MateAboutDialog *about,
+gde2_about_dialog_set_website_label (Gde2AboutDialog *about,
                                     const gchar    *website_label)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar *tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->website_text;
   priv->website_text = g_strdup (website_label);
@@ -1292,7 +1292,7 @@ gde2_about_dialog_set_website_label (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_authors:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the string which are displayed in the authors tab
  * of the secondary credits dialog.
@@ -1304,21 +1304,21 @@ gde2_about_dialog_set_website_label (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar * const *
-gde2_about_dialog_get_authors (MateAboutDialog *about)
+gde2_about_dialog_get_authors (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return (const gchar * const *) priv->authors;
 }
 
 static void
-update_credits_button_visibility (MateAboutDialog *about)
+update_credits_button_visibility (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv = about->private_data;
+  Gde2AboutDialogPrivate *priv = about->private_data;
   gboolean show;
 
   show = priv->authors != NULL ||
@@ -1335,7 +1335,7 @@ update_credits_button_visibility (MateAboutDialog *about)
 
 /**
  * gde2_about_dialog_set_authors:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @authors: a %NULL-terminated array of strings
  *
  * Sets the strings which are displayed in the authors tab
@@ -1344,15 +1344,15 @@ update_credits_button_visibility (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_authors (MateAboutDialog  *about,
+gde2_about_dialog_set_authors (Gde2AboutDialog  *about,
                               const gchar    **authors)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar **tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->authors;
   priv->authors = g_strdupv ((gchar **)authors);
@@ -1365,7 +1365,7 @@ gde2_about_dialog_set_authors (MateAboutDialog  *about,
 
 /**
  * gde2_about_dialog_get_documenters:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the string which are displayed in the documenters
  * tab of the secondary credits dialog.
@@ -1377,20 +1377,20 @@ gde2_about_dialog_set_authors (MateAboutDialog  *about,
  * Since: 1.9
  */
 const gchar * const *
-gde2_about_dialog_get_documenters (MateAboutDialog *about)
+gde2_about_dialog_get_documenters (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return (const gchar * const *)priv->documenters;
 }
 
 /**
  * gde2_about_dialog_set_documenters:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @documenters: a %NULL-terminated array of strings
  *
  * Sets the strings which are displayed in the documenters tab
@@ -1399,15 +1399,15 @@ gde2_about_dialog_get_documenters (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_documenters (MateAboutDialog *about,
+gde2_about_dialog_set_documenters (Gde2AboutDialog *about,
                                   const gchar   **documenters)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar **tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->documenters;
   priv->documenters = g_strdupv ((gchar **)documenters);
@@ -1420,7 +1420,7 @@ gde2_about_dialog_set_documenters (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_artists:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the string which are displayed in the artists tab
  * of the secondary credits dialog.
@@ -1432,20 +1432,20 @@ gde2_about_dialog_set_documenters (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar * const *
-gde2_about_dialog_get_artists (MateAboutDialog *about)
+gde2_about_dialog_get_artists (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return (const gchar * const *)priv->artists;
 }
 
 /**
  * gde2_about_dialog_set_artists:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @artists: a %NULL-terminated array of strings
  *
  * Sets the strings which are displayed in the artists tab
@@ -1454,15 +1454,15 @@ gde2_about_dialog_get_artists (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_artists (MateAboutDialog *about,
+gde2_about_dialog_set_artists (Gde2AboutDialog *about,
                               const gchar   **artists)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar **tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->artists;
   priv->artists = g_strdupv ((gchar **)artists);
@@ -1475,7 +1475,7 @@ gde2_about_dialog_set_artists (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_translator_credits:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the translator credits string which is displayed
  * in the translators tab of the secondary credits dialog.
@@ -1486,20 +1486,20 @@ gde2_about_dialog_set_artists (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar *
-gde2_about_dialog_get_translator_credits (MateAboutDialog *about)
+gde2_about_dialog_get_translator_credits (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   return priv->translator_credits;
 }
 
 /**
  * gde2_about_dialog_set_translator_credits:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @translator_credits: (allow-none): the translator credits
  *
  * Sets the translator credits string which is displayed in
@@ -1514,21 +1514,21 @@ gde2_about_dialog_get_translator_credits (MateAboutDialog *about)
  * ]|
  * It is a good idea to use the customary msgid "translator-credits" for this
  * purpose, since translators will already know the purpose of that msgid, and
- * since #MateAboutDialog will detect if "translator-credits" is untranslated
+ * since #Gde2AboutDialog will detect if "translator-credits" is untranslated
  * and hide the tab.
  *
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_translator_credits (MateAboutDialog *about,
+gde2_about_dialog_set_translator_credits (Gde2AboutDialog *about,
                                          const gchar    *translator_credits)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   gchar *tmp;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   tmp = priv->translator_credits;
   priv->translator_credits = g_strdup (translator_credits);
@@ -1541,7 +1541,7 @@ gde2_about_dialog_set_translator_credits (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_logo:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the pixbuf displayed as logo in the about dialog.
  *
@@ -1552,13 +1552,13 @@ gde2_about_dialog_set_translator_credits (MateAboutDialog *about,
  * Since: 1.9
  */
 GdkPixbuf *
-gde2_about_dialog_get_logo (MateAboutDialog *about)
+gde2_about_dialog_get_logo (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   if (gtk_image_get_storage_type (GTK_IMAGE (priv->logo_image)) == GTK_IMAGE_PIXBUF)
     return gtk_image_get_pixbuf (GTK_IMAGE (priv->logo_image));
@@ -1586,7 +1586,7 @@ icon_set_new_from_pixbufs (GList *pixbufs)
 
 /**
  * gde2_about_dialog_set_logo:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @logo: (allow-none): a #GdkPixbuf, or %NULL
  *
  * Sets the pixbuf to be displayed as logo in the about dialog.
@@ -1596,14 +1596,14 @@ icon_set_new_from_pixbufs (GList *pixbufs)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_logo (MateAboutDialog *about,
+gde2_about_dialog_set_logo (Gde2AboutDialog *about,
                            GdkPixbuf      *logo)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   g_object_freeze_notify (G_OBJECT (about));
 
@@ -1635,7 +1635,7 @@ gde2_about_dialog_set_logo (MateAboutDialog *about,
 
 /**
  * gde2_about_dialog_get_logo_icon_name:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  *
  * Returns the icon name displayed as logo in the about dialog.
  *
@@ -1646,14 +1646,14 @@ gde2_about_dialog_set_logo (MateAboutDialog *about,
  * Since: 1.9
  */
 const gchar *
-gde2_about_dialog_get_logo_icon_name (MateAboutDialog *about)
+gde2_about_dialog_get_logo_icon_name (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
   const gchar *icon_name = NULL;
 
   g_return_val_if_fail (GDE2_IS_ABOUT_DIALOG (about), NULL);
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   if (gtk_image_get_storage_type (GTK_IMAGE (priv->logo_image)) == GTK_IMAGE_ICON_NAME)
     gtk_image_get_icon_name (GTK_IMAGE (priv->logo_image), &icon_name, NULL);
@@ -1663,7 +1663,7 @@ gde2_about_dialog_get_logo_icon_name (MateAboutDialog *about)
 
 /**
  * gde2_about_dialog_set_logo_icon_name:
- * @about: a #MateAboutDialog
+ * @about: a #Gde2AboutDialog
  * @icon_name: (allow-none): an icon name, or %NULL
  *
  * Sets the pixbuf to be displayed as logo in the about dialog.
@@ -1673,14 +1673,14 @@ gde2_about_dialog_get_logo_icon_name (MateAboutDialog *about)
  * Since: 1.9
  */
 void
-gde2_about_dialog_set_logo_icon_name (MateAboutDialog *about,
+gde2_about_dialog_set_logo_icon_name (Gde2AboutDialog *about,
                                      const gchar    *icon_name)
 {
-  MateAboutDialogPrivate *priv;
+  Gde2AboutDialogPrivate *priv;
 
   g_return_if_fail (GDE2_IS_ABOUT_DIALOG (about));
 
-  priv = (MateAboutDialogPrivate *)about->private_data;
+  priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   g_object_freeze_notify (G_OBJECT (about));
 
@@ -1723,12 +1723,12 @@ gde2_about_dialog_set_logo_icon_name (MateAboutDialog *about,
 }
 
 static void
-follow_if_link (MateAboutDialog *about,
+follow_if_link (Gde2AboutDialog *about,
                 GtkTextView    *text_view,
                 GtkTextIter    *iter)
 {
   GSList *tags = NULL, *tagp = NULL;
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
   gchar *uri = NULL;
 
   tags = gtk_text_iter_get_tags (iter);
@@ -1768,7 +1768,7 @@ follow_if_link (MateAboutDialog *about,
 static gboolean
 text_view_key_press_event (GtkWidget      *text_view,
                            GdkEventKey    *event,
-                           MateAboutDialog *about)
+                           Gde2AboutDialog *about)
 {
   GtkTextIter iter;
   GtkTextBuffer *buffer;
@@ -1794,7 +1794,7 @@ text_view_key_press_event (GtkWidget      *text_view,
 static gboolean
 text_view_event_after (GtkWidget      *text_view,
                        GdkEvent       *event,
-                       MateAboutDialog *about)
+                       Gde2AboutDialog *about)
 {
   GtkTextIter start, end, iter;
   GtkTextBuffer *buffer;
@@ -1828,12 +1828,12 @@ text_view_event_after (GtkWidget      *text_view,
 }
 
 static void
-set_cursor_if_appropriate (MateAboutDialog *about,
+set_cursor_if_appropriate (Gde2AboutDialog *about,
                            GtkTextView    *text_view,
                            gint            x,
                            gint            y)
 {
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
   GSList *tags = NULL, *tagp = NULL;
   GtkTextIter iter;
   gboolean hovering_over_link = FALSE;
@@ -1870,7 +1870,7 @@ set_cursor_if_appropriate (MateAboutDialog *about,
 static gboolean
 text_view_motion_notify_event (GtkWidget *text_view,
                                GdkEventMotion *event,
-                               MateAboutDialog *about)
+                               Gde2AboutDialog *about)
 {
   gint x, y;
 
@@ -1889,7 +1889,7 @@ text_view_motion_notify_event (GtkWidget *text_view,
 static gboolean
 text_view_visibility_notify_event (GtkWidget          *text_view,
                                    GdkEventVisibility *event,
-                                   MateAboutDialog     *about)
+                                   Gde2AboutDialog     *about)
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
   GdkDeviceManager *device_manager;
@@ -1916,7 +1916,7 @@ text_view_visibility_notify_event (GtkWidget          *text_view,
 }
 
 static GtkWidget *
-text_view_new (MateAboutDialog  *about,
+text_view_new (Gde2AboutDialog  *about,
                GtkWidget       *dialog,
                gchar          **strings,
                GtkWrapMode      wrap_mode)
@@ -1931,7 +1931,7 @@ text_view_new (MateAboutDialog  *about,
   GdkColor color;
   GdkColor link_color;
   GdkColor visited_link_color;
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   gtk_widget_ensure_style (GTK_WIDGET (about));
   gtk_widget_style_get (GTK_WIDGET (about),
@@ -2070,7 +2070,7 @@ text_view_new (MateAboutDialog  *about,
 }
 
 static void
-add_credits_page (MateAboutDialog *about,
+add_credits_page (Gde2AboutDialog *about,
                   GtkWidget      *credits_dialog,
                   GtkWidget      *notebook,
                   gchar          *title,
@@ -2096,8 +2096,8 @@ static void
 display_credits_dialog (GtkWidget *button,
                         gpointer   data)
 {
-  MateAboutDialog *about = (MateAboutDialog *)data;
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialog *about = (Gde2AboutDialog *)data;
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
   GtkWidget *dialog, *notebook;
   GtkDialog *credits_dialog;
 
@@ -2171,8 +2171,8 @@ static void
 display_license_dialog (GtkWidget *button,
                         gpointer   data)
 {
-  MateAboutDialog *about = (MateAboutDialog *)data;
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialog *about = (Gde2AboutDialog *)data;
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
   GtkWidget *dialog, *view, *sw;
   GtkDialog *licence_dialog;
   gchar *strings[2];
@@ -2229,24 +2229,24 @@ display_license_dialog (GtkWidget *button,
 /**
  * gde2_about_dialog_new:
  *
- * Creates a new #MateAboutDialog.
+ * Creates a new #Gde2AboutDialog.
  *
- * Returns: a newly created #MateAboutDialog
+ * Returns: a newly created #Gde2AboutDialog
  *
  * Since: 1.9
  */
 GtkWidget *
 gde2_about_dialog_new (void)
 {
-  MateAboutDialog *dialog = g_object_new (GDE2_TYPE_ABOUT_DIALOG, NULL);
+  Gde2AboutDialog *dialog = g_object_new (GDE2_TYPE_ABOUT_DIALOG, NULL);
 
   return GTK_WIDGET (dialog);
 }
 
 static void
-close_cb (MateAboutDialog *about)
+close_cb (Gde2AboutDialog *about)
 {
-  MateAboutDialogPrivate *priv = (MateAboutDialogPrivate *)about->private_data;
+  Gde2AboutDialogPrivate *priv = (Gde2AboutDialogPrivate *)about->private_data;
 
   if (priv->license_dialog != NULL)
     {

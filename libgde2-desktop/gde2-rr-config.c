@@ -4,20 +4,20 @@
  * Copyright 2007, 2008, Red Hat, Inc.
  * Copyright 2010 Giovanni Campagna
  * 
- * This file is part of the Mate Library.
+ * This file is part of the Gde2 Library.
  * 
- * The Mate Library is free software; you can redistribute it and/or
+ * The Gde2 Library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * The Mate Library is distributed in the hope that it will be useful,
+ * The Gde2 Library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  * 
  * You should have received a copy of the GNU Library General Public
- * License along with the Mate Library; see the file COPYING.LIB.  If not,
+ * License along with the Gde2 Library; see the file COPYING.LIB.  If not,
  * write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  * 
@@ -80,8 +80,8 @@ typedef struct CrtcAssignment CrtcAssignment;
 static gboolean         crtc_assignment_apply (CrtcAssignment   *assign,
 					       guint32           timestamp,
 					       GError          **error);
-static CrtcAssignment  *crtc_assignment_new   (MateRRScreen      *screen,
-					       MateRROutputInfo **outputs,
+static CrtcAssignment  *crtc_assignment_new   (Gde2RRScreen      *screen,
+					       Gde2RROutputInfo **outputs,
 					       GError            **error);
 static void             crtc_assignment_free  (CrtcAssignment   *assign);
 
@@ -91,7 +91,7 @@ enum {
   PROP_LAST
 };
 
-G_DEFINE_TYPE (MateRRConfig, gde2_rr_config, G_TYPE_OBJECT)
+G_DEFINE_TYPE (Gde2RRConfig, gde2_rr_config, G_TYPE_OBJECT)
 
 typedef struct Parser Parser;
 
@@ -99,8 +99,8 @@ typedef struct Parser Parser;
 struct Parser
 {
     int			config_file_version;
-    MateRROutputInfo *	output;
-    MateRRConfig *	configuration;
+    Gde2RROutputInfo *	output;
+    Gde2RRConfig *	configuration;
     GPtrArray *		outputs;
     GPtrArray *		configurations;
     GQueue *		stack;
@@ -248,7 +248,7 @@ handle_end_element (GMarkupParseContext *context,
     {
 	g_ptr_array_add (parser->outputs, NULL);
 	parser->configuration->priv->outputs =
-	    (MateRROutputInfo **)g_ptr_array_free (parser->outputs, FALSE);
+	    (Gde2RROutputInfo **)g_ptr_array_free (parser->outputs, FALSE);
 	parser->outputs = g_ptr_array_new ();
 	g_ptr_array_add (parser->configurations, parser->configuration);
 	parser->configuration = NULL;
@@ -384,7 +384,7 @@ parser_free (Parser *parser)
 
     for (i = 0; i < parser->outputs->len; ++i)
     {
-	MateRROutputInfo *output = parser->outputs->pdata[i];
+	Gde2RROutputInfo *output = parser->outputs->pdata[i];
 
 	g_object_unref (output);
     }
@@ -393,7 +393,7 @@ parser_free (Parser *parser)
 
     for (i = 0; i < parser->configurations->len; ++i)
     {
-	MateRRConfig *config = parser->configurations->pdata[i];
+	Gde2RRConfig *config = parser->configurations->pdata[i];
 
 	g_object_unref (config);
     }
@@ -407,11 +407,11 @@ parser_free (Parser *parser)
     g_free (parser);
 }
 
-static MateRRConfig **
+static Gde2RRConfig **
 configurations_read_from_file (const gchar *filename, GError **error)
 {
     Parser *parser = g_new0 (Parser, 1);
-    MateRRConfig **result;
+    Gde2RRConfig **result;
     GMarkupParser callbacks = {
 	handle_start_element,
 	handle_end_element,
@@ -436,7 +436,7 @@ configurations_read_from_file (const gchar *filename, GError **error)
     g_assert (parser->outputs);
     
     g_ptr_array_add (parser->configurations, NULL);
-    result = (MateRRConfig **)g_ptr_array_free (parser->configurations, FALSE);
+    result = (Gde2RRConfig **)g_ptr_array_free (parser->configurations, FALSE);
     parser->configurations = g_ptr_array_new ();
     
     g_assert (parser->outputs);
@@ -447,9 +447,9 @@ out:
 }
 
 static void
-gde2_rr_config_init (MateRRConfig *self)
+gde2_rr_config_init (Gde2RRConfig *self)
 {
-    self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GDE2_TYPE_RR_CONFIG, MateRRConfigPrivate);
+    self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GDE2_TYPE_RR_CONFIG, Gde2RRConfigPrivate);
 
     self->priv->clone = FALSE;
     self->priv->screen = NULL;
@@ -459,7 +459,7 @@ gde2_rr_config_init (MateRRConfig *self)
 static void
 gde2_rr_config_set_property (GObject *gobject, guint property_id, const GValue *value, GParamSpec *property)
 {
-    MateRRConfig *self = GDE2_RR_CONFIG (gobject);
+    Gde2RRConfig *self = GDE2_RR_CONFIG (gobject);
 
     switch (property_id) {
 	case PROP_SCREEN:
@@ -473,7 +473,7 @@ gde2_rr_config_set_property (GObject *gobject, guint property_id, const GValue *
 static void
 gde2_rr_config_finalize (GObject *gobject)
 {
-    MateRRConfig *self = GDE2_RR_CONFIG (gobject);
+    Gde2RRConfig *self = GDE2_RR_CONFIG (gobject);
 
     if (self->priv->screen)
 	g_object_unref (self->priv->screen);
@@ -482,7 +482,7 @@ gde2_rr_config_finalize (GObject *gobject)
 	int i;
 
         for (i = 0; self->priv->outputs[i] != NULL; i++) {
-	    MateRROutputInfo *output = self->priv->outputs[i];
+	    Gde2RROutputInfo *output = self->priv->outputs[i];
 	    g_object_unref (output);
 	}
 	g_free (self->priv->outputs);
@@ -492,10 +492,10 @@ gde2_rr_config_finalize (GObject *gobject)
 }
 
 gboolean
-gde2_rr_config_load_current (MateRRConfig *config, GError **error)
+gde2_rr_config_load_current (Gde2RRConfig *config, GError **error)
 {
     GPtrArray *a;
-    MateRROutput **rr_outputs;
+    Gde2RROutput **rr_outputs;
     int i;
     int clone_width = -1;
     int clone_height = -1;
@@ -510,11 +510,11 @@ gde2_rr_config_load_current (MateRRConfig *config, GError **error)
     
     for (i = 0; rr_outputs[i] != NULL; ++i)
     {
-	MateRROutput *rr_output = rr_outputs[i];
-	MateRROutputInfo *output = g_object_new (GDE2_TYPE_RR_OUTPUT_INFO, NULL);
-	MateRRMode *mode = NULL;
+	Gde2RROutput *rr_output = rr_outputs[i];
+	Gde2RROutputInfo *output = g_object_new (GDE2_TYPE_RR_OUTPUT_INFO, NULL);
+	Gde2RRMode *mode = NULL;
 	const guint8 *edid_data = gde2_rr_output_get_edid_data (rr_output);
-	MateRRCrtc *crtc;
+	Gde2RRCrtc *crtc;
 
 	output->priv->name = g_strdup (gde2_rr_output_get_name (rr_output));
 	output->priv->connected = gde2_rr_output_is_connected (rr_output);
@@ -592,7 +592,7 @@ gde2_rr_config_load_current (MateRRConfig *config, GError **error)
 	    
 	    if (!mode)
 	    {
-		MateRRMode **modes = gde2_rr_output_list_modes (rr_output);
+		Gde2RRMode **modes = gde2_rr_output_list_modes (rr_output);
 		
 		/* FIXME: we should pick the "best" mode here, where best is
 		 * sorted wrt
@@ -628,7 +628,7 @@ gde2_rr_config_load_current (MateRRConfig *config, GError **error)
 
     g_ptr_array_add (a, NULL);
     
-    config->priv->outputs = (MateRROutputInfo **)g_ptr_array_free (a, FALSE);
+    config->priv->outputs = (Gde2RROutputInfo **)g_ptr_array_free (a, FALSE);
 
     /* Walk the outputs computing the right-most edge of all
      * lit-up displays
@@ -636,7 +636,7 @@ gde2_rr_config_load_current (MateRRConfig *config, GError **error)
     last_x = 0;
     for (i = 0; config->priv->outputs[i] != NULL; ++i)
     {
-	MateRROutputInfo *output = config->priv->outputs[i];
+	Gde2RROutputInfo *output = config->priv->outputs[i];
 
 	if (output->priv->on)
 	{
@@ -649,7 +649,7 @@ gde2_rr_config_load_current (MateRRConfig *config, GError **error)
      */
     for (i = 0; config->priv->outputs[i] != NULL; ++i)
     {
-	MateRROutputInfo *output = config->priv->outputs[i];
+	Gde2RROutputInfo *output = config->priv->outputs[i];
 
 	if (output->priv->connected && !output->priv->on)
 	{
@@ -664,10 +664,10 @@ gde2_rr_config_load_current (MateRRConfig *config, GError **error)
 }
 
 gboolean
-gde2_rr_config_load_filename (MateRRConfig *result, const char *filename, GError **error)
+gde2_rr_config_load_filename (Gde2RRConfig *result, const char *filename, GError **error)
 {
-    MateRRConfig *current;
-    MateRRConfig **configs;
+    Gde2RRConfig *current;
+    Gde2RRConfig **configs;
     gboolean found = FALSE;
 
     g_return_val_if_fail (GDE2_IS_RR_CONFIG (result), FALSE);
@@ -699,7 +699,7 @@ gde2_rr_config_load_filename (MateRRConfig *result, const char *filename, GError
 		    g_ptr_array_add (array, configs[i]->priv->outputs[j]);
 		}
 		g_ptr_array_add (array, NULL);
-		result->priv->outputs = (MateRROutputInfo **) g_ptr_array_free (array, FALSE);
+		result->priv->outputs = (Gde2RROutputInfo **) g_ptr_array_free (array, FALSE);
 
 		found = TRUE;
 		break;
@@ -718,24 +718,24 @@ gde2_rr_config_load_filename (MateRRConfig *result, const char *filename, GError
 }
 
 static void
-gde2_rr_config_class_init (MateRRConfigClass *klass)
+gde2_rr_config_class_init (Gde2RRConfigClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-    g_type_class_add_private (klass, sizeof (MateRROutputInfoPrivate));
+    g_type_class_add_private (klass, sizeof (Gde2RROutputInfoPrivate));
 
     gobject_class->set_property = gde2_rr_config_set_property;
     gobject_class->finalize = gde2_rr_config_finalize;
 
     g_object_class_install_property (gobject_class, PROP_SCREEN,
-				     g_param_spec_object ("screen", "Screen", "The MateRRScreen this config applies to", GDE2_TYPE_RR_SCREEN,
+				     g_param_spec_object ("screen", "Screen", "The Gde2RRScreen this config applies to", GDE2_TYPE_RR_SCREEN,
 							  G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB));
 }
 
-MateRRConfig *
-gde2_rr_config_new_current (MateRRScreen *screen, GError **error)
+Gde2RRConfig *
+gde2_rr_config_new_current (Gde2RRScreen *screen, GError **error)
 {
-    MateRRConfig *self = g_object_new (GDE2_TYPE_RR_CONFIG, "screen", screen, NULL);
+    Gde2RRConfig *self = g_object_new (GDE2_TYPE_RR_CONFIG, "screen", screen, NULL);
 
     if (gde2_rr_config_load_current (self, error))
       return self;
@@ -746,10 +746,10 @@ gde2_rr_config_new_current (MateRRScreen *screen, GError **error)
       }
 }
 
-MateRRConfig *
-gde2_rr_config_new_stored (MateRRScreen *screen, GError **error)
+Gde2RRConfig *
+gde2_rr_config_new_stored (Gde2RRScreen *screen, GError **error)
 {
-    MateRRConfig *self = g_object_new (GDE2_TYPE_RR_CONFIG, "screen", screen, NULL);
+    Gde2RRConfig *self = g_object_new (GDE2_TYPE_RR_CONFIG, "screen", screen, NULL);
     char *filename;
     gboolean success;
 
@@ -810,7 +810,7 @@ out:
 }
 
 static gboolean
-output_match (MateRROutputInfo *output1, MateRROutputInfo *output2)
+output_match (Gde2RROutputInfo *output1, Gde2RROutputInfo *output2)
 {
     g_assert (GDE2_IS_RR_OUTPUT_INFO (output1));
     g_assert (GDE2_IS_RR_OUTPUT_INFO (output2));
@@ -834,7 +834,7 @@ output_match (MateRROutputInfo *output1, MateRROutputInfo *output2)
 }
 
 static gboolean
-output_equal (MateRROutputInfo *output1, MateRROutputInfo *output2)
+output_equal (Gde2RROutputInfo *output1, Gde2RROutputInfo *output2)
 {
     g_assert (GDE2_IS_RR_OUTPUT_INFO (output1));
     g_assert (GDE2_IS_RR_OUTPUT_INFO (output2));
@@ -869,14 +869,14 @@ output_equal (MateRROutputInfo *output1, MateRROutputInfo *output2)
     return TRUE;
 }
 
-static MateRROutputInfo *
-find_output (MateRRConfig *config, const char *name)
+static Gde2RROutputInfo *
+find_output (Gde2RRConfig *config, const char *name)
 {
     int i;
 
     for (i = 0; config->priv->outputs[i] != NULL; ++i)
     {
-	MateRROutputInfo *output = config->priv->outputs[i];
+	Gde2RROutputInfo *output = config->priv->outputs[i];
 	
 	if (strcmp (name, output->priv->name) == 0)
 	    return output;
@@ -889,7 +889,7 @@ find_output (MateRRConfig *config, const char *name)
  * setups"
  */
 gboolean
-gde2_rr_config_match (MateRRConfig *c1, MateRRConfig *c2)
+gde2_rr_config_match (Gde2RRConfig *c1, Gde2RRConfig *c2)
 {
     int i;
     g_return_val_if_fail (GDE2_IS_RR_CONFIG (c1), FALSE);
@@ -897,8 +897,8 @@ gde2_rr_config_match (MateRRConfig *c1, MateRRConfig *c2)
 
     for (i = 0; c1->priv->outputs[i] != NULL; ++i)
     {
-	MateRROutputInfo *output1 = c1->priv->outputs[i];
-	MateRROutputInfo *output2;
+	Gde2RROutputInfo *output1 = c1->priv->outputs[i];
+	Gde2RROutputInfo *output2;
 
 	output2 = find_output (c2, output1->priv->name);
 	if (!output2 || !output_match (output1, output2))
@@ -912,8 +912,8 @@ gde2_rr_config_match (MateRRConfig *c1, MateRRConfig *c2)
  * modes being set on the outputs"
  */
 gboolean
-gde2_rr_config_equal (MateRRConfig  *c1,
-		       MateRRConfig  *c2)
+gde2_rr_config_equal (Gde2RRConfig  *c1,
+		       Gde2RRConfig  *c2)
 {
     int i;
     g_return_val_if_fail (GDE2_IS_RR_CONFIG (c1), FALSE);
@@ -921,8 +921,8 @@ gde2_rr_config_equal (MateRRConfig  *c1,
 
     for (i = 0; c1->priv->outputs[i] != NULL; ++i)
     {
-	MateRROutputInfo *output1 = c1->priv->outputs[i];
-	MateRROutputInfo *output2;
+	Gde2RROutputInfo *output1 = c1->priv->outputs[i];
+	Gde2RROutputInfo *output2;
 
 	output2 = find_output (c2, output1->priv->name);
 	if (!output2 || !output_equal (output1, output2))
@@ -932,11 +932,11 @@ gde2_rr_config_equal (MateRRConfig  *c1,
     return TRUE;
 }
 
-static MateRROutputInfo **
-make_outputs (MateRRConfig *config)
+static Gde2RROutputInfo **
+make_outputs (Gde2RRConfig *config)
 {
     GPtrArray *outputs;
-    MateRROutputInfo *first_on;
+    Gde2RROutputInfo *first_on;
     int i;
 
     outputs = g_ptr_array_new ();
@@ -945,8 +945,8 @@ make_outputs (MateRRConfig *config)
     
     for (i = 0; config->priv->outputs[i] != NULL; ++i)
     {
-	MateRROutputInfo *old = config->priv->outputs[i];
-	MateRROutputInfo *new = g_object_new (GDE2_TYPE_RR_OUTPUT_INFO, NULL);
+	Gde2RROutputInfo *old = config->priv->outputs[i];
+	Gde2RROutputInfo *new = g_object_new (GDE2_TYPE_RR_OUTPUT_INFO, NULL);
 	*(new->priv) = *(old->priv);
 	if (old->priv->name)
 	    new->priv->name = g_strdup (old->priv->name);
@@ -972,15 +972,15 @@ make_outputs (MateRRConfig *config)
 
     g_ptr_array_add (outputs, NULL);
 
-    return (MateRROutputInfo **)g_ptr_array_free (outputs, FALSE);
+    return (Gde2RROutputInfo **)g_ptr_array_free (outputs, FALSE);
 }
 
 gboolean
-gde2_rr_config_applicable (MateRRConfig  *configuration,
-			    MateRRScreen  *screen,
+gde2_rr_config_applicable (Gde2RRConfig  *configuration,
+			    Gde2RRScreen  *screen,
 			    GError        **error)
 {
-    MateRROutputInfo **outputs;
+    Gde2RROutputInfo **outputs;
     CrtcAssignment *assign;
     gboolean result;
     int i;
@@ -1032,7 +1032,7 @@ gde2_rr_config_get_intended_filename (void)
 }
 
 static const char *
-get_rotation_name (MateRRRotation r)
+get_rotation_name (Gde2RRRotation r)
 {
     if (r & GDE2_RR_ROTATION_0)
 	return "normal";
@@ -1053,19 +1053,19 @@ yes_no (int x)
 }
 
 static const char *
-get_reflect_x (MateRRRotation r)
+get_reflect_x (Gde2RRRotation r)
 {
     return yes_no (r & GDE2_RR_REFLECT_X);
 }
 
 static const char *
-get_reflect_y (MateRRRotation r)
+get_reflect_y (Gde2RRRotation r)
 {
     return yes_no (r & GDE2_RR_REFLECT_Y);
 }
 
 static void
-emit_configuration (MateRRConfig *config,
+emit_configuration (Gde2RRConfig *config,
 		    GString *string)
 {
     int j;
@@ -1076,7 +1076,7 @@ emit_configuration (MateRRConfig *config,
     
     for (j = 0; config->priv->outputs[j] != NULL; ++j)
     {
-	MateRROutputInfo *output = config->priv->outputs[j];
+	Gde2RROutputInfo *output = config->priv->outputs[j];
 	
 	g_string_append_printf (
 	    string, "      <output name=\"%s\">\n", output->priv->name);
@@ -1121,7 +1121,7 @@ emit_configuration (MateRRConfig *config,
 }
 
 void
-gde2_rr_config_sanitize (MateRRConfig *config)
+gde2_rr_config_sanitize (Gde2RRConfig *config)
 {
     int i;
     int x_offset, y_offset;
@@ -1133,7 +1133,7 @@ gde2_rr_config_sanitize (MateRRConfig *config)
     x_offset = y_offset = G_MAXINT;
     for (i = 0; config->priv->outputs[i]; ++i)
     {
-	MateRROutputInfo *output = config->priv->outputs[i];
+	Gde2RROutputInfo *output = config->priv->outputs[i];
 
 	if (output->priv->on)
 	{
@@ -1144,7 +1144,7 @@ gde2_rr_config_sanitize (MateRRConfig *config)
 
     for (i = 0; config->priv->outputs[i]; ++i)
     {
-	MateRROutputInfo *output = config->priv->outputs[i];
+	Gde2RROutputInfo *output = config->priv->outputs[i];
 	
 	if (output->priv->on)
 	{
@@ -1172,13 +1172,13 @@ gde2_rr_config_sanitize (MateRRConfig *config)
 }
 
 gboolean
-gde2_rr_config_ensure_primary (MateRRConfig *configuration)
+gde2_rr_config_ensure_primary (Gde2RRConfig *configuration)
 {
         int              i;
-        MateRROutputInfo  *laptop;
-        MateRROutputInfo  *top_left;
+        Gde2RROutputInfo  *laptop;
+        Gde2RROutputInfo  *top_left;
         gboolean        found;
-        MateRRConfigPrivate *priv;
+        Gde2RRConfigPrivate *priv;
 
         g_return_val_if_fail (GDE2_IS_RR_CONFIG (configuration), FALSE);
 
@@ -1188,7 +1188,7 @@ gde2_rr_config_ensure_primary (MateRRConfig *configuration)
         priv = configuration->priv;
 
         for (i = 0; priv->outputs[i] != NULL; ++i) {
-                MateRROutputInfo *info = priv->outputs[i];
+                Gde2RROutputInfo *info = priv->outputs[i];
 
                 if (! info->priv->on) {
                         info->priv->primary = FALSE;
@@ -1228,9 +1228,9 @@ gde2_rr_config_ensure_primary (MateRRConfig *configuration)
 }
 
 gboolean
-gde2_rr_config_save (MateRRConfig *configuration, GError **error)
+gde2_rr_config_save (Gde2RRConfig *configuration, GError **error)
 {
-    MateRRConfig **configurations;
+    Gde2RRConfig **configurations;
     GString *output;
     int i;
     gchar *intended_filename;
@@ -1281,13 +1281,13 @@ gde2_rr_config_save (MateRRConfig *configuration, GError **error)
 }
 
 gboolean
-gde2_rr_config_apply_with_time (MateRRConfig *config,
-				 MateRRScreen *screen,
+gde2_rr_config_apply_with_time (Gde2RRConfig *config,
+				 Gde2RRScreen *screen,
 				 guint32        timestamp,
 				 GError       **error)
 {
     CrtcAssignment *assignment;
-    MateRROutputInfo **outputs;
+    Gde2RROutputInfo **outputs;
     gboolean result = FALSE;
     int i;
 
@@ -1316,7 +1316,7 @@ gde2_rr_config_apply_with_time (MateRRConfig *config,
 }
 
 /* gde2_rr_config_apply_from_filename_with_time:
- * @screen: A #MateRRScreen
+ * @screen: A #Gde2RRScreen
  * @filename: Path of the file to look in for stored RANDR configurations.
  * @timestamp: X server timestamp from the event that causes the screen configuration to change (a user's button press, for example)
  * @error: Location to store error, or %NULL
@@ -1348,9 +1348,9 @@ gde2_rr_config_apply_with_time (MateRRConfig *config,
  * nothing is changed.
  */
 gboolean
-gde2_rr_config_apply_from_filename_with_time (MateRRScreen *screen, const char *filename, guint32 timestamp, GError **error)
+gde2_rr_config_apply_from_filename_with_time (Gde2RRScreen *screen, const char *filename, guint32 timestamp, GError **error)
 {
-    MateRRConfig *stored;
+    Gde2RRConfig *stored;
     GError *my_error;
 
     g_return_val_if_fail (GDE2_IS_RR_SCREEN (screen), FALSE);
@@ -1390,10 +1390,10 @@ gde2_rr_config_apply_from_filename_with_time (MateRRScreen *screen, const char *
 /**
  * gde2_rr_config_get_outputs:
  *
- * Returns: (array zero-terminated=1) (element-type MateDesktop.RROutputInfo) (transfer none): the output configuration for this #MateRRConfig
+ * Returns: (array zero-terminated=1) (element-type Gde2Desktop.RROutputInfo) (transfer none): the output configuration for this #Gde2RRConfig
  */
-MateRROutputInfo **
-gde2_rr_config_get_outputs (MateRRConfig *self)
+Gde2RROutputInfo **
+gde2_rr_config_get_outputs (Gde2RRConfig *self)
 {
     g_return_val_if_fail (GDE2_IS_RR_CONFIG (self), NULL);
 
@@ -1408,7 +1408,7 @@ gde2_rr_config_get_outputs (MateRRConfig *self)
  * (i.e. they have a CRTC assigned).
  */
 gboolean
-gde2_rr_config_get_clone (MateRRConfig *self)
+gde2_rr_config_get_clone (Gde2RRConfig *self)
 {
     g_return_val_if_fail (GDE2_IS_RR_CONFIG (self), FALSE);
 
@@ -1416,7 +1416,7 @@ gde2_rr_config_get_clone (MateRRConfig *self)
 }
 
 void
-gde2_rr_config_set_clone (MateRRConfig *self, gboolean clone)
+gde2_rr_config_set_clone (Gde2RRConfig *self, gboolean clone)
 {
     g_return_if_fail (GDE2_IS_RR_CONFIG (self));
 
@@ -1431,29 +1431,29 @@ typedef struct CrtcInfo CrtcInfo;
 
 struct CrtcInfo
 {
-    MateRRMode    *mode;
+    Gde2RRMode    *mode;
     int        x;
     int        y;
-    MateRRRotation rotation;
+    Gde2RRRotation rotation;
     GPtrArray *outputs;
 };
 
 struct CrtcAssignment
 {
-    MateRRScreen *screen;
+    Gde2RRScreen *screen;
     GHashTable *info;
-    MateRROutput *primary;
+    Gde2RROutput *primary;
 };
 
 static gboolean
 can_clone (CrtcInfo *info,
-	   MateRROutput *output)
+	   Gde2RROutput *output)
 {
     int i;
 
     for (i = 0; i < info->outputs->len; ++i)
     {
-	MateRROutput *clone = info->outputs->pdata[i];
+	Gde2RROutput *clone = info->outputs->pdata[i];
 
 	if (!gde2_rr_output_can_clone (clone, output))
 	    return FALSE;
@@ -1464,13 +1464,13 @@ can_clone (CrtcInfo *info,
 
 static gboolean
 crtc_assignment_assign (CrtcAssignment   *assign,
-			MateRRCrtc      *crtc,
-			MateRRMode      *mode,
+			Gde2RRCrtc      *crtc,
+			Gde2RRMode      *mode,
 			int               x,
 			int               y,
-			MateRRRotation   rotation,
+			Gde2RRRotation   rotation,
                         gboolean          primary,
-			MateRROutput    *output,
+			Gde2RROutput    *output,
 			GError          **error)
 {
     CrtcInfo *info = g_hash_table_lookup (assign->info, crtc);
@@ -1569,8 +1569,8 @@ crtc_assignment_assign (CrtcAssignment   *assign,
 
 static void
 crtc_assignment_unassign (CrtcAssignment *assign,
-			  MateRRCrtc         *crtc,
-			  MateRROutput       *output)
+			  Gde2RRCrtc         *crtc,
+			  Gde2RROutput       *output)
 {
     CrtcInfo *info = g_hash_table_lookup (assign->info, crtc);
 
@@ -1607,7 +1607,7 @@ configure_crtc (gpointer key,
 		gpointer value,
 		gpointer data)
 {
-    MateRRCrtc *crtc = key;
+    Gde2RRCrtc *crtc = key;
     CrtcInfo *info = value;
     ConfigureCrtcState *state = data;
 
@@ -1619,7 +1619,7 @@ configure_crtc (gpointer key,
 					     info->x, info->y,
 					     info->mode,
 					     info->rotation,
-					     (MateRROutput **)info->outputs->pdata,
+					     (Gde2RROutput **)info->outputs->pdata,
 					     info->outputs->len,
 					     state->error))
 	state->has_error = TRUE;
@@ -1637,9 +1637,9 @@ mode_is_rotated (CrtcInfo *info)
 }
 
 static gboolean
-crtc_is_rotated (MateRRCrtc *crtc)
+crtc_is_rotated (Gde2RRCrtc *crtc)
 {
-    MateRRRotation r = gde2_rr_crtc_get_current_rotation (crtc);
+    Gde2RRRotation r = gde2_rr_crtc_get_current_rotation (crtc);
 
     if ((r & GDE2_RR_ROTATION_270)		||
 	(r & GDE2_RR_ROTATION_90))
@@ -1665,13 +1665,13 @@ accumulate_error (GString *accumulated_error, GError *error)
  * enough that it doesn't matter.
  */
 static gboolean
-real_assign_crtcs (MateRRScreen *screen,
-		   MateRROutputInfo **outputs,
+real_assign_crtcs (Gde2RRScreen *screen,
+		   Gde2RROutputInfo **outputs,
 		   CrtcAssignment *assignment,
 		   GError **error)
 {
-    MateRRCrtc **crtcs = gde2_rr_screen_list_crtcs (screen);
-    MateRROutputInfo *output;
+    Gde2RRCrtc **crtcs = gde2_rr_screen_list_crtcs (screen);
+    Gde2RROutputInfo *output;
     int i;
     gboolean tried_mode;
     GError *my_error;
@@ -1694,7 +1694,7 @@ real_assign_crtcs (MateRRScreen *screen,
 
     for (i = 0; crtcs[i] != NULL; ++i)
     {
-	MateRRCrtc *crtc = crtcs[i];
+	Gde2RRCrtc *crtc = crtcs[i];
 	int crtc_id = gde2_rr_crtc_get_id (crtc);
 	int pass;
 
@@ -1707,13 +1707,13 @@ real_assign_crtcs (MateRRScreen *screen,
 	 */
 	for (pass = 0; pass < 2; ++pass)
 	{
-	    MateRROutput *gde2_rr_output = gde2_rr_screen_get_output_by_name (screen, output->priv->name);
-	    MateRRMode **modes = gde2_rr_output_list_modes (gde2_rr_output);
+	    Gde2RROutput *gde2_rr_output = gde2_rr_screen_get_output_by_name (screen, output->priv->name);
+	    Gde2RRMode **modes = gde2_rr_output_list_modes (gde2_rr_output);
 	    int j;
 
 	    for (j = 0; modes[j] != NULL; ++j)
 	    {
-		MateRRMode *mode = modes[j];
+		Gde2RRMode *mode = modes[j];
 		int mode_width;
 		int mode_height;
 		int mode_freq;
@@ -1806,7 +1806,7 @@ get_required_virtual_size (CrtcAssignment *assign, int *width, int *height)
     *width = *height = 1;
     for (list = active_crtcs; list != NULL; list = list->next)
     {
-	MateRRCrtc *crtc = list->data;
+	Gde2RRCrtc *crtc = list->data;
 	CrtcInfo *info = g_hash_table_lookup (assign->info, crtc);
 	int w, h;
 
@@ -1828,7 +1828,7 @@ get_required_virtual_size (CrtcAssignment *assign, int *width, int *height)
 }
 
 static CrtcAssignment *
-crtc_assignment_new (MateRRScreen *screen, MateRROutputInfo **outputs, GError **error)
+crtc_assignment_new (Gde2RRScreen *screen, Gde2RROutputInfo **outputs, GError **error)
 {
     CrtcAssignment *assignment = g_new0 (CrtcAssignment, 1);
 
@@ -1878,7 +1878,7 @@ fail:
 static gboolean
 crtc_assignment_apply (CrtcAssignment *assign, guint32 timestamp, GError **error)
 {
-    MateRRCrtc **all_crtcs = gde2_rr_screen_list_crtcs (assign->screen);
+    Gde2RRCrtc **all_crtcs = gde2_rr_screen_list_crtcs (assign->screen);
     int width, height;
     int i;
     int min_width, max_width, min_height, max_height;
@@ -1913,8 +1913,8 @@ crtc_assignment_apply (CrtcAssignment *assign, guint32 timestamp, GError **error
      */
     for (i = 0; all_crtcs[i] != NULL; ++i)
     {
-	MateRRCrtc *crtc = all_crtcs[i];
-	MateRRMode *mode = gde2_rr_crtc_get_current_mode (crtc);
+	Gde2RRCrtc *crtc = all_crtcs[i];
+	Gde2RRMode *mode = gde2_rr_crtc_get_current_mode (crtc);
 	int x, y;
 
 	if (mode)

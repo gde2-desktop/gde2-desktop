@@ -42,7 +42,7 @@ enum {
 
 
 /***************************/
-/* MateColorSelectionDialog */
+/* Gde2ColorSelectionDialog */
 /***************************/
 
 static void gde2_color_selection_dialog_buildable_interface_init     (GtkBuildableIface *iface);
@@ -50,7 +50,7 @@ static GObject * gde2_color_selection_dialog_buildable_get_internal_child (GtkBu
 									  GtkBuilder   *builder,
 									  const gchar  *childname);
 
-G_DEFINE_TYPE_WITH_CODE (MateColorSelectionDialog, gde2_color_selection_dialog,
+G_DEFINE_TYPE_WITH_CODE (Gde2ColorSelectionDialog, gde2_color_selection_dialog,
            GTK_TYPE_DIALOG,
            G_IMPLEMENT_INTERFACE (GTK_TYPE_BUILDABLE,
                       gde2_color_selection_dialog_buildable_interface_init))
@@ -63,7 +63,7 @@ gde2_color_selection_dialog_get_property (GObject         *object,
 					 GValue          *value,
 					 GParamSpec      *pspec)
 {
-  MateColorSelectionDialog *colorsel;
+  Gde2ColorSelectionDialog *colorsel;
 
   colorsel = GDE2_COLOR_SELECTION_DIALOG (object);
 
@@ -88,7 +88,7 @@ gde2_color_selection_dialog_get_property (GObject         *object,
 }
 
 static void
-gde2_color_selection_dialog_class_init (MateColorSelectionDialogClass *klass)
+gde2_color_selection_dialog_class_init (Gde2ColorSelectionDialogClass *klass)
 {
   GObjectClass   *gobject_class = G_OBJECT_CLASS (klass);
   gobject_class->get_property = gde2_color_selection_dialog_get_property;
@@ -124,7 +124,7 @@ gde2_color_selection_dialog_class_init (MateColorSelectionDialogClass *klass)
 }
 
 static void
-gde2_color_selection_dialog_init (MateColorSelectionDialog *colorseldiag)
+gde2_color_selection_dialog_init (Gde2ColorSelectionDialog *colorseldiag)
 {
   GtkDialog *dialog = GTK_DIALOG (colorseldiag);
 
@@ -175,7 +175,7 @@ gde2_color_selection_dialog_init (MateColorSelectionDialog *colorseldiag)
 GtkWidget*
 gde2_color_selection_dialog_new (const gchar *title)
 {
-  MateColorSelectionDialog *colorseldiag;
+  Gde2ColorSelectionDialog *colorseldiag;
   
   colorseldiag = g_object_new (GDE2_TYPE_COLOR_SELECTION_DIALOG, NULL);
 
@@ -189,16 +189,16 @@ gde2_color_selection_dialog_new (const gchar *title)
 
 /**
  * gde2_color_selection_dialog_get_color_selection:
- * @colorsel: a #MateColorSelectionDialog
+ * @colorsel: a #Gde2ColorSelectionDialog
  *
- * Retrieves the #MateColorSelection widget embedded in the dialog.
+ * Retrieves the #Gde2ColorSelection widget embedded in the dialog.
  *
- * Returns: (transfer none): the embedded #MateColorSelection
+ * Returns: (transfer none): the embedded #Gde2ColorSelection
  *
  * Since: 1.9.1
  **/
 GtkWidget*
-gde2_color_selection_dialog_get_color_selection (MateColorSelectionDialog *colorsel)
+gde2_color_selection_dialog_get_color_selection (Gde2ColorSelectionDialog *colorsel)
 {
   g_return_val_if_fail (GDE2_IS_COLOR_SELECTION_DIALOG (colorsel), NULL);
 

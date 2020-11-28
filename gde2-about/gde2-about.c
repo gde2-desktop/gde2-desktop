@@ -67,7 +67,7 @@ static void gde2_about_on_activate(GApplication* app)
 
 void gde2_about_run(void)
 {
-    gde2_about_dialog = (MateAboutDialog*) gde2_about_dialog_new();
+    gde2_about_dialog = (Gde2AboutDialog*) gde2_about_dialog_new();
 
     gtk_window_set_default_icon_name(icon);
     gde2_about_dialog_set_logo_icon_name(gde2_about_dialog, icon);

@@ -4,20 +4,20 @@
  * Copyright (C) 2002 Red Hat, Inc.
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  *
- * This file is part of the Mate Library.
+ * This file is part of the Gde2 Library.
  *
- * The Mate Library is free software; you can redistribute it and/or
+ * The Gde2 Library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * The Mate Library is distributed in the hope that it will be useful,
+ * The Gde2 Library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with the Mate Library; see the file COPYING.LIB.  If not,
+ * License along with the Gde2 Library; see the file COPYING.LIB.  If not,
  * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
@@ -47,8 +47,8 @@
 
 #define SECONDS_BETWEEN_STATS 10
 
-struct _MateDesktopThumbnailFactoryPrivate {
-  MateDesktopThumbnailSize size;
+struct _Gde2DesktopThumbnailFactoryPrivate {
+  Gde2DesktopThumbnailSize size;
 
   GMutex lock;
 
@@ -64,16 +64,16 @@ struct _MateDesktopThumbnailFactoryPrivate {
 
 static const char *appname = "gde2-thumbnail-factory";
 
-static void gde2_desktop_thumbnail_factory_init          (MateDesktopThumbnailFactory      *factory);
-static void gde2_desktop_thumbnail_factory_class_init    (MateDesktopThumbnailFactoryClass *class);
+static void gde2_desktop_thumbnail_factory_init          (Gde2DesktopThumbnailFactory      *factory);
+static void gde2_desktop_thumbnail_factory_class_init    (Gde2DesktopThumbnailFactoryClass *class);
 
-G_DEFINE_TYPE (MateDesktopThumbnailFactory,
+G_DEFINE_TYPE (Gde2DesktopThumbnailFactory,
 	       gde2_desktop_thumbnail_factory,
 	       G_TYPE_OBJECT)
 #define parent_class gde2_desktop_thumbnail_factory_parent_class
 
 #define GDE2_DESKTOP_THUMBNAIL_FACTORY_GET_PRIVATE(object) \
-  (G_TYPE_INSTANCE_GET_PRIVATE ((object), GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY, MateDesktopThumbnailFactoryPrivate))
+  (G_TYPE_INSTANCE_GET_PRIVATE ((object), GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY, Gde2DesktopThumbnailFactoryPrivate))
 
 typedef struct {
     gint width;
@@ -468,8 +468,8 @@ _gdk_pixbuf_new_from_uri_at_scale (const char *uri,
 static void
 gde2_desktop_thumbnail_factory_finalize (GObject *object)
 {
-  MateDesktopThumbnailFactory *factory;
-  MateDesktopThumbnailFactoryPrivate *priv;
+  Gde2DesktopThumbnailFactory *factory;
+  Gde2DesktopThumbnailFactoryPrivate *priv;
   
   factory = GDE2_DESKTOP_THUMBNAIL_FACTORY (object);
 
@@ -513,10 +513,10 @@ gde2_desktop_thumbnail_factory_finalize (GObject *object)
 
 /* These should be called with the lock held */
 static void
-gde2_desktop_thumbnail_factory_register_mime_types (MateDesktopThumbnailFactory *factory,
+gde2_desktop_thumbnail_factory_register_mime_types (Gde2DesktopThumbnailFactory *factory,
                                                      Thumbnailer                  *thumb)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
   gint i;
 
   for (i = 0; thumb->mime_types[i]; i++)
@@ -529,20 +529,20 @@ gde2_desktop_thumbnail_factory_register_mime_types (MateDesktopThumbnailFactory 
 }
 
 static void
-gde2_desktop_thumbnail_factory_add_thumbnailer (MateDesktopThumbnailFactory *factory,
+gde2_desktop_thumbnail_factory_add_thumbnailer (Gde2DesktopThumbnailFactory *factory,
                                                  Thumbnailer                  *thumb)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
 
   gde2_desktop_thumbnail_factory_register_mime_types (factory, thumb);
   priv->thumbnailers = g_list_prepend (priv->thumbnailers, thumb);
 }
 
 static gboolean
-gde2_desktop_thumbnail_factory_is_disabled (MateDesktopThumbnailFactory *factory,
+gde2_desktop_thumbnail_factory_is_disabled (Gde2DesktopThumbnailFactory *factory,
                                              const gchar                  *mime_type)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
   guint i;
 
   if (priv->disabled)
@@ -570,10 +570,10 @@ remove_thumbnailer_from_mime_type_map (gchar       *key,
 
 
 static void
-update_or_create_thumbnailer (MateDesktopThumbnailFactory *factory,
+update_or_create_thumbnailer (Gde2DesktopThumbnailFactory *factory,
                               const gchar                  *path)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
   GList *l;
   Thumbnailer *thumb;
   gboolean found = FALSE;
@@ -610,10 +610,10 @@ update_or_create_thumbnailer (MateDesktopThumbnailFactory *factory,
 }
 
 static void
-remove_thumbnailer (MateDesktopThumbnailFactory *factory,
+remove_thumbnailer (Gde2DesktopThumbnailFactory *factory,
                     const gchar                  *path)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
   GList *l;
   Thumbnailer *thumb;
 
@@ -643,7 +643,7 @@ thumbnailers_directory_changed (GFileMonitor                 *monitor,
                                 GFile                        *file,
                                 GFile                        *other_file,
                                 GFileMonitorEvent             event_type,
-                                MateDesktopThumbnailFactory *factory)
+                                Gde2DesktopThumbnailFactory *factory)
 {
   gchar *path;
 
@@ -672,9 +672,9 @@ thumbnailers_directory_changed (GFileMonitor                 *monitor,
 }
 
 static void
-gde2_desktop_thumbnail_factory_load_thumbnailers (MateDesktopThumbnailFactory *factory)
+gde2_desktop_thumbnail_factory_load_thumbnailers (Gde2DesktopThumbnailFactory *factory)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
   const gchar * const *dirs;
   guint i;
 
@@ -733,9 +733,9 @@ gde2_desktop_thumbnail_factory_load_thumbnailers (MateDesktopThumbnailFactory *f
 static void
 external_thumbnailers_disabled_all_changed_cb (GSettings                    *settings,
                                                const gchar                  *key,
-                                               MateDesktopThumbnailFactory *factory)
+                                               Gde2DesktopThumbnailFactory *factory)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
 
   g_mutex_lock (&priv->lock);
 
@@ -757,9 +757,9 @@ external_thumbnailers_disabled_all_changed_cb (GSettings                    *set
 static void
 external_thumbnailers_disabled_changed_cb (GSettings                    *settings,
                                            const gchar                  *key,
-                                           MateDesktopThumbnailFactory *factory)
+                                           Gde2DesktopThumbnailFactory *factory)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
 
   g_mutex_lock (&priv->lock);
 
@@ -773,9 +773,9 @@ external_thumbnailers_disabled_changed_cb (GSettings                    *setting
 }
 
 static void
-gde2_desktop_thumbnail_factory_init (MateDesktopThumbnailFactory *factory)
+gde2_desktop_thumbnail_factory_init (Gde2DesktopThumbnailFactory *factory)
 {
-  MateDesktopThumbnailFactoryPrivate *priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv;
   
   factory->priv = GDE2_DESKTOP_THUMBNAIL_FACTORY_GET_PRIVATE (factory);
 
@@ -809,7 +809,7 @@ gde2_desktop_thumbnail_factory_init (MateDesktopThumbnailFactory *factory)
 }
 
 static void
-gde2_desktop_thumbnail_factory_class_init (MateDesktopThumbnailFactoryClass *class)
+gde2_desktop_thumbnail_factory_class_init (Gde2DesktopThumbnailFactoryClass *class)
 {
   GObjectClass *gobject_class;
 
@@ -817,25 +817,25 @@ gde2_desktop_thumbnail_factory_class_init (MateDesktopThumbnailFactoryClass *cla
 	
   gobject_class->finalize = gde2_desktop_thumbnail_factory_finalize;
 
-  g_type_class_add_private (class, sizeof (MateDesktopThumbnailFactoryPrivate));
+  g_type_class_add_private (class, sizeof (Gde2DesktopThumbnailFactoryPrivate));
 }
 
 /**
  * gde2_desktop_thumbnail_factory_new:
  * @size: The thumbnail size to use
  *
- * Creates a new #MateDesktopThumbnailFactory.
+ * Creates a new #Gde2DesktopThumbnailFactory.
  *
  * This function must be called on the main thread.
  * 
- * Return value: a new #MateDesktopThumbnailFactory
+ * Return value: a new #Gde2DesktopThumbnailFactory
  *
  * Since: 2.2
  **/
-MateDesktopThumbnailFactory *
-gde2_desktop_thumbnail_factory_new (MateDesktopThumbnailSize size)
+Gde2DesktopThumbnailFactory *
+gde2_desktop_thumbnail_factory_new (Gde2DesktopThumbnailSize size)
 {
-  MateDesktopThumbnailFactory *factory;
+  Gde2DesktopThumbnailFactory *factory;
   
   factory = g_object_new (GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY, NULL);
   
@@ -846,7 +846,7 @@ gde2_desktop_thumbnail_factory_new (MateDesktopThumbnailSize size)
 
 /**
  * gde2_desktop_thumbnail_factory_lookup:
- * @factory: a #MateDesktopThumbnailFactory
+ * @factory: a #Gde2DesktopThumbnailFactory
  * @uri: the uri of a file
  * @mtime: the mtime of the file
  *
@@ -859,11 +859,11 @@ gde2_desktop_thumbnail_factory_new (MateDesktopThumbnailSize size)
  * Since: 2.2
  **/
 char *
-gde2_desktop_thumbnail_factory_lookup (MateDesktopThumbnailFactory *factory,
+gde2_desktop_thumbnail_factory_lookup (Gde2DesktopThumbnailFactory *factory,
 					const char            *uri,
 					time_t                 mtime)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
   char *path, *file;
   GChecksum *checksum;
   guint8 digest[16];
@@ -908,7 +908,7 @@ gde2_desktop_thumbnail_factory_lookup (MateDesktopThumbnailFactory *factory,
 
 /**
  * gde2_desktop_thumbnail_factory_has_valid_failed_thumbnail:
- * @factory: a #MateDesktopThumbnailFactory
+ * @factory: a #Gde2DesktopThumbnailFactory
  * @uri: the uri of a file
  * @mtime: the mtime of the file
  *
@@ -923,7 +923,7 @@ gde2_desktop_thumbnail_factory_lookup (MateDesktopThumbnailFactory *factory,
  * Since: 2.2
  **/
 gboolean
-gde2_desktop_thumbnail_factory_has_valid_failed_thumbnail (MateDesktopThumbnailFactory *factory,
+gde2_desktop_thumbnail_factory_has_valid_failed_thumbnail (Gde2DesktopThumbnailFactory *factory,
 							    const char            *uri,
 							    time_t                 mtime)
 {
@@ -1037,12 +1037,12 @@ mimetype_supported_by_gdk_pixbuf (const char *mime_type)
 
 /**
  * gde2_desktop_thumbnail_factory_can_thumbnail:
- * @factory: a #MateDesktopThumbnailFactory
+ * @factory: a #Gde2DesktopThumbnailFactory
  * @uri: the uri of a file
  * @mime_type: the mime type of the file
  * @mtime: the mtime of the file
  *
- * Returns TRUE if this MateIconFactory can (at least try) to thumbnail
+ * Returns TRUE if this Gde2IconFactory can (at least try) to thumbnail
  * this file. Thumbnails or files with failed thumbnails won't be thumbnailed.
  *
  * Usage of this function is threadsafe.
@@ -1052,7 +1052,7 @@ mimetype_supported_by_gdk_pixbuf (const char *mime_type)
  * Since: 2.2
  **/
 gboolean
-gde2_desktop_thumbnail_factory_can_thumbnail (MateDesktopThumbnailFactory *factory,
+gde2_desktop_thumbnail_factory_can_thumbnail (Gde2DesktopThumbnailFactory *factory,
 					       const char            *uri,
 					       const char            *mime_type,
 					       time_t                 mtime)
@@ -1160,7 +1160,7 @@ expand_thumbnailing_script (const char *script,
 
 /**
  * gde2_desktop_thumbnail_factory_generate_thumbnail:
- * @factory: a #MateDesktopThumbnailFactory
+ * @factory: a #Gde2DesktopThumbnailFactory
  * @uri: the uri of a file
  * @mime_type: the mime type of the file
  *
@@ -1174,7 +1174,7 @@ expand_thumbnailing_script (const char *script,
  * Since: 2.2
  **/
 GdkPixbuf *
-gde2_desktop_thumbnail_factory_generate_thumbnail (MateDesktopThumbnailFactory *factory,
+gde2_desktop_thumbnail_factory_generate_thumbnail (Gde2DesktopThumbnailFactory *factory,
 						    const char            *uri,
 						    const char            *mime_type)
 {
@@ -1301,7 +1301,7 @@ gde2_desktop_thumbnail_factory_generate_thumbnail (MateDesktopThumbnailFactory *
 }
 
 static gboolean
-make_thumbnail_dirs (MateDesktopThumbnailFactory *factory)
+make_thumbnail_dirs (Gde2DesktopThumbnailFactory *factory)
 {
   char *thumbnail_dir;
   char *image_dir;
@@ -1334,7 +1334,7 @@ make_thumbnail_dirs (MateDesktopThumbnailFactory *factory)
 }
 
 static gboolean
-make_thumbnail_fail_dirs (MateDesktopThumbnailFactory *factory)
+make_thumbnail_fail_dirs (Gde2DesktopThumbnailFactory *factory)
 {
   char *thumbnail_dir;
   char *fail_dir;
@@ -1380,7 +1380,7 @@ make_thumbnail_fail_dirs (MateDesktopThumbnailFactory *factory)
 
 /**
  * gde2_desktop_thumbnail_factory_save_thumbnail:
- * @factory: a #MateDesktopThumbnailFactory
+ * @factory: a #Gde2DesktopThumbnailFactory
  * @thumbnail: the thumbnail as a pixbuf 
  * @uri: the uri of a file
  * @original_mtime: the modification time of the original file 
@@ -1393,12 +1393,12 @@ make_thumbnail_fail_dirs (MateDesktopThumbnailFactory *factory)
  * Since: 2.2
  **/
 void
-gde2_desktop_thumbnail_factory_save_thumbnail (MateDesktopThumbnailFactory *factory,
+gde2_desktop_thumbnail_factory_save_thumbnail (Gde2DesktopThumbnailFactory *factory,
 						GdkPixbuf             *thumbnail,
 						const char            *uri,
 						time_t                 original_mtime)
 {
-  MateDesktopThumbnailFactoryPrivate *priv = factory->priv;
+  Gde2DesktopThumbnailFactoryPrivate *priv = factory->priv;
   char *path, *file;
   char *tmp_path;
   const char *width, *height;
@@ -1492,7 +1492,7 @@ gde2_desktop_thumbnail_factory_save_thumbnail (MateDesktopThumbnailFactory *fact
 
 /**
  * gde2_desktop_thumbnail_factory_create_failed_thumbnail:
- * @factory: a #MateDesktopThumbnailFactory
+ * @factory: a #Gde2DesktopThumbnailFactory
  * @uri: the uri of a file
  * @mtime: the modification time of the file
  *
@@ -1504,7 +1504,7 @@ gde2_desktop_thumbnail_factory_save_thumbnail (MateDesktopThumbnailFactory *fact
  * Since: 2.2
  **/
 void
-gde2_desktop_thumbnail_factory_create_failed_thumbnail (MateDesktopThumbnailFactory *factory,
+gde2_desktop_thumbnail_factory_create_failed_thumbnail (Gde2DesktopThumbnailFactory *factory,
 							 const char            *uri,
 							 time_t                 mtime)
 {
@@ -1607,7 +1607,7 @@ gde2_desktop_thumbnail_md5 (const char *uri)
  **/
 char *
 gde2_desktop_thumbnail_path_for_uri (const char         *uri,
-				      MateDesktopThumbnailSize  size)
+				      Gde2DesktopThumbnailSize  size)
 {
   char *md5;
   char *file;

@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../gde2-about/gde2-about.desktop.in.in.h:1
 msgid "About GDE2"
-msgstr "Momba ny Mate"
+msgstr "Momba ny Gde2"
 
 #: ../gde2-about/gde2-about.desktop.in.in.h:2
 msgid "Learn more about GDE2"

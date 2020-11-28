@@ -5,20 +5,20 @@
  *
  * Copyright 2008, Novell, Inc.
  *
- * This file is part of the Mate Library.
+ * This file is part of the Gde2 Library.
  *
- * The Mate Library is free software; you can redistribute it and/or
+ * The Gde2 Library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * The Mate Library is distributed in the hope that it will be useful,
+ * The Gde2 Library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with the Mate Library; see the file COPYING.LIB.  If not,
+ * License along with the Gde2 Library; see the file COPYING.LIB.  If not,
  * write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
@@ -39,8 +39,8 @@
 
 #include "gde2-rr-labeler.h"
 
-struct _MateRRLabelerPrivate {
-	MateRRConfig *config;
+struct _Gde2RRLabelerPrivate {
+	Gde2RRConfig *config;
 
 	int num_outputs;
 
@@ -61,11 +61,11 @@ enum {
 	PROP_LAST
 };
 
-G_DEFINE_TYPE (MateRRLabeler, gde2_rr_labeler, G_TYPE_OBJECT);
+G_DEFINE_TYPE (Gde2RRLabeler, gde2_rr_labeler, G_TYPE_OBJECT);
 
 static void gde2_rr_labeler_finalize (GObject *object);
-static void create_label_windows (MateRRLabeler *labeler);
-static void setup_from_config (MateRRLabeler *labeler);
+static void create_label_windows (Gde2RRLabeler *labeler);
+static void setup_from_config (Gde2RRLabeler *labeler);
 
 static int
 get_current_desktop (GdkScreen *screen)
@@ -100,7 +100,7 @@ get_current_desktop (GdkScreen *screen)
 }
 
 static gboolean
-get_work_area (MateRRLabeler *labeler,
+get_work_area (Gde2RRLabeler *labeler,
 	       GdkRectangle   *rect)
 {
 	Atom            workarea;
@@ -169,7 +169,7 @@ get_work_area (MateRRLabeler *labeler,
 static GdkFilterReturn
 screen_xevent_filter (GdkXEvent      *xevent,
 		      GdkEvent       *event,
-		      MateRRLabeler *labeler)
+		      Gde2RRLabeler *labeler)
 {
 	XEvent *xev;
 
@@ -186,11 +186,11 @@ screen_xevent_filter (GdkXEvent      *xevent,
 }
 
 static void
-gde2_rr_labeler_init (MateRRLabeler *labeler)
+gde2_rr_labeler_init (Gde2RRLabeler *labeler)
 {
 	GdkWindow *gdkwindow;
 
-	labeler->priv = G_TYPE_INSTANCE_GET_PRIVATE (labeler, GDE2_TYPE_RR_LABELER, MateRRLabelerPrivate);
+	labeler->priv = G_TYPE_INSTANCE_GET_PRIVATE (labeler, GDE2_TYPE_RR_LABELER, Gde2RRLabelerPrivate);
 
 	labeler->priv->workarea_atom = XInternAtom (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()),
 						    "_NET_WORKAREA",
@@ -206,7 +206,7 @@ gde2_rr_labeler_init (MateRRLabeler *labeler)
 static void
 gde2_rr_labeler_set_property (GObject *gobject, guint property_id, const GValue *value, GParamSpec *param_spec)
 {
-	MateRRLabeler *self = GDE2_RR_LABELER (gobject);
+	Gde2RRLabeler *self = GDE2_RR_LABELER (gobject);
 
 	switch (property_id) {
 	case PROP_CONFIG:
@@ -220,7 +220,7 @@ gde2_rr_labeler_set_property (GObject *gobject, guint property_id, const GValue 
 static GObject *
 gde2_rr_labeler_constructor (GType type, guint n_construct_properties, GObjectConstructParam *construct_properties)
 {
-	MateRRLabeler *self = (MateRRLabeler*) G_OBJECT_CLASS (gde2_rr_labeler_parent_class)->constructor (type, n_construct_properties, construct_properties);
+	Gde2RRLabeler *self = (Gde2RRLabeler*) G_OBJECT_CLASS (gde2_rr_labeler_parent_class)->constructor (type, n_construct_properties, construct_properties);
 
 	setup_from_config (self);
 
@@ -228,11 +228,11 @@ gde2_rr_labeler_constructor (GType type, guint n_construct_properties, GObjectCo
 }
 
 static void
-gde2_rr_labeler_class_init (MateRRLabelerClass *klass)
+gde2_rr_labeler_class_init (Gde2RRLabelerClass *klass)
 {
 	GObjectClass *object_class;
 
-	g_type_class_add_private (klass, sizeof (MateRRLabelerPrivate));
+	g_type_class_add_private (klass, sizeof (Gde2RRLabelerPrivate));
 
 	object_class = (GObjectClass *) klass;
 
@@ -251,7 +251,7 @@ gde2_rr_labeler_class_init (MateRRLabelerClass *klass)
 static void
 gde2_rr_labeler_finalize (GObject *object)
 {
-	MateRRLabeler *labeler;
+	Gde2RRLabeler *labeler;
 	GdkWindow      *gdkwindow;
 
 	labeler = GDE2_RR_LABELER (object);
@@ -274,10 +274,10 @@ gde2_rr_labeler_finalize (GObject *object)
 }
 
 static int
-count_outputs (MateRRConfig *config)
+count_outputs (Gde2RRConfig *config)
 {
 	int i;
-	MateRROutputInfo **outputs = gde2_rr_config_get_outputs (config);
+	Gde2RROutputInfo **outputs = gde2_rr_config_get_outputs (config);
 
 	for (i = 0; outputs[i] != NULL; i++)
 		;
@@ -286,7 +286,7 @@ count_outputs (MateRRConfig *config)
 }
 
 static void
-make_palette (MateRRLabeler *labeler)
+make_palette (Gde2RRLabeler *labeler)
 {
 	/* The idea is that we go around an hue color wheel.  We want to start
 	 * at red, go around to green/etc. and stop at blue --- because magenta
@@ -390,7 +390,7 @@ label_window_expose_event_cb (GtkWidget *widget, GdkEventExpose *event, gpointer
 }
 
 static void
-position_window (MateRRLabeler  *labeler,
+position_window (Gde2RRLabeler  *labeler,
 		 GtkWidget       *window,
 		 int              x,
 		 int              y)
@@ -411,10 +411,10 @@ position_window (MateRRLabeler  *labeler,
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static GtkWidget *
-create_label_window (MateRRLabeler *labeler, MateRROutputInfo *output, GdkRGBA *color)
+create_label_window (Gde2RRLabeler *labeler, Gde2RROutputInfo *output, GdkRGBA *color)
 #else
 static GtkWidget *
-create_label_window (MateRRLabeler *labeler, MateRROutputInfo *output, GdkColor *color)
+create_label_window (Gde2RRLabeler *labeler, Gde2RROutputInfo *output, GdkColor *color)
 #endif
 {
 	GtkWidget *window;
@@ -485,11 +485,11 @@ create_label_window (MateRRLabeler *labeler, MateRROutputInfo *output, GdkColor 
 }
 
 static void
-create_label_windows (MateRRLabeler *labeler)
+create_label_windows (Gde2RRLabeler *labeler)
 {
 	int i;
 	gboolean created_window_for_clone;
-	MateRROutputInfo **outputs;
+	Gde2RROutputInfo **outputs;
 
 	labeler->priv->windows = g_new (GtkWidget *, labeler->priv->num_outputs);
 
@@ -509,7 +509,7 @@ create_label_windows (MateRRLabeler *labeler)
 }
 
 static void
-setup_from_config (MateRRLabeler *labeler)
+setup_from_config (Gde2RRLabeler *labeler)
 {
 	labeler->priv->num_outputs = count_outputs (labeler->priv->config);
 
@@ -527,10 +527,10 @@ setup_from_config (MateRRLabeler *labeler)
  * for configuring multiple monitors.
  * The labels will be shown by default, use gde2_rr_labeler_hide to hide them.
  *
- * Returns: A new #MateRRLabeler
+ * Returns: A new #Gde2RRLabeler
  */
-MateRRLabeler *
-gde2_rr_labeler_new (MateRRConfig *config)
+Gde2RRLabeler *
+gde2_rr_labeler_new (Gde2RRConfig *config)
 {
 	g_return_val_if_fail (GDE2_IS_RR_CONFIG (config), NULL);
 
@@ -539,15 +539,15 @@ gde2_rr_labeler_new (MateRRConfig *config)
 
 /**
  * gde2_rr_labeler_hide:
- * @labeler: A #MateRRLabeler
+ * @labeler: A #Gde2RRLabeler
  *
  * Hide ouput labels.
  */
 void
-gde2_rr_labeler_hide (MateRRLabeler *labeler)
+gde2_rr_labeler_hide (Gde2RRLabeler *labeler)
 {
 	int i;
-	MateRRLabelerPrivate *priv;
+	Gde2RRLabelerPrivate *priv;
 
 	g_return_if_fail (GDE2_IS_RR_LABELER (labeler));
 
@@ -568,17 +568,17 @@ gde2_rr_labeler_hide (MateRRLabeler *labeler)
 #if GTK_CHECK_VERSION (3, 0, 0)
 /**
  * gde2_rr_labeler_get_rgba_for_output:
- * @labeler: A #MateRRLabeler
+ * @labeler: A #Gde2RRLabeler
  * @output: Output device (i.e. monitor) to query
  * @rgba_out: (out): Color of selected monitor.
  *
  * Get the color used for the label on a given output (monitor).
  */
 void
-gde2_rr_labeler_get_rgba_for_output (MateRRLabeler *labeler, MateRROutputInfo *output, GdkRGBA *color_out)
+gde2_rr_labeler_get_rgba_for_output (Gde2RRLabeler *labeler, Gde2RROutputInfo *output, GdkRGBA *color_out)
 {
 	int i;
-	MateRROutputInfo **outputs;
+	Gde2RROutputInfo **outputs;
 
 	g_return_if_fail (GDE2_IS_RR_LABELER (labeler));
 	g_return_if_fail (GDE2_IS_RR_OUTPUT_INFO (output));
@@ -592,7 +592,7 @@ gde2_rr_labeler_get_rgba_for_output (MateRRLabeler *labeler, MateRROutputInfo *o
 			return;
 		}
 
-	g_warning ("trying to get the color for unknown MateOutputInfo %p; returning magenta!", output);
+	g_warning ("trying to get the color for unknown Gde2OutputInfo %p; returning magenta!", output);
 
 	color_out->red   = 1.0;
 	color_out->green = 0.0;
@@ -603,17 +603,17 @@ gde2_rr_labeler_get_rgba_for_output (MateRRLabeler *labeler, MateRROutputInfo *o
 
 /**
  * gde2_rr_labeler_get_color_for_output:
- * @labeler: A #MateRRLabeler
+ * @labeler: A #Gde2RRLabeler
  * @output: Output device (i.e. monitor) to query
  * @color_out: (out): Color of selected monitor.
  *
  * Get the color used for the label on a given output (monitor).
  */
 void
-gde2_rr_labeler_get_color_for_output (MateRRLabeler *labeler, MateRROutputInfo *output, GdkColor *color_out)
+gde2_rr_labeler_get_color_for_output (Gde2RRLabeler *labeler, Gde2RROutputInfo *output, GdkColor *color_out)
 {
 	int i;
-	MateRROutputInfo **outputs;
+	Gde2RROutputInfo **outputs;
 
 	g_return_if_fail (GDE2_IS_RR_LABELER (labeler));
 	g_return_if_fail (GDE2_IS_RR_OUTPUT_INFO (output));
@@ -633,7 +633,7 @@ gde2_rr_labeler_get_color_for_output (MateRRLabeler *labeler, MateRROutputInfo *
 			return;
 		}
 
-	g_warning ("trying to get the color for unknown MateOutputInfo %p; returning magenta!", output);
+	g_warning ("trying to get the color for unknown Gde2OutputInfo %p; returning magenta!", output);
 
 	color_out->red   = 0xffff;
 	color_out->green = 0;

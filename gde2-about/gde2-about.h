@@ -649,7 +649,7 @@ const char* artists[] = {
 };
 
 // widget for gde2-about window
-MateAboutDialog* gde2_about_dialog = FALSE;
+Gde2AboutDialog* gde2_about_dialog = FALSE;
 
 #if GTK_CHECK_VERSION(3, 0, 0)
     GtkApplication* gde2_about_application;

@@ -85,13 +85,13 @@ typedef struct FileCacheEntry FileCacheEntry;
 #define CACHE_SIZE 4
 
 /*
- *   Implementation of the MateBG class
+ *   Implementation of the Gde2BG class
  */
-struct _MateBG {
+struct _Gde2BG {
 	GObject		 parent_instance;
 	char		*filename;
-	MateBGPlacement	 placement;
-	MateBGColorType	 color_type;
+	Gde2BGPlacement	 placement;
+	Gde2BGColorType	 color_type;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA	 	 primary;
 	GdkRGBA	 	 secondary;
@@ -116,7 +116,7 @@ struct _MateBG {
 	GList* file_cache;
 };
 
-struct _MateBGClass {
+struct _Gde2BGClass {
 	GObjectClass parent_class;
 };
 
@@ -128,7 +128,7 @@ enum {
 
 static guint signals[N_SIGNALS] = {0};
 
-G_DEFINE_TYPE(MateBG, gde2_bg, G_TYPE_OBJECT)
+G_DEFINE_TYPE(Gde2BG, gde2_bg, G_TYPE_OBJECT)
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static cairo_surface_t *make_root_pixmap     (GdkWindow  *window,
@@ -176,28 +176,28 @@ static void       pixbuf_blend         (GdkPixbuf  *src,
 					double      alpha);
 
 /* Thumbnail utilities */
-static GdkPixbuf *create_thumbnail_for_filename (MateDesktopThumbnailFactory *factory,
+static GdkPixbuf *create_thumbnail_for_filename (Gde2DesktopThumbnailFactory *factory,
 						 const char            *filename);
 static gboolean   get_thumb_annotations (GdkPixbuf             *thumb,
 					 int                   *orig_width,
 					 int                   *orig_height);
 
 /* Cache */
-static GdkPixbuf *get_pixbuf_for_size  (MateBG               *bg,
+static GdkPixbuf *get_pixbuf_for_size  (Gde2BG               *bg,
 					gint                  num_monitor,
 					int                   width,
 					int                   height);
-static void       clear_cache          (MateBG               *bg);
-static gboolean   is_different         (MateBG               *bg,
+static void       clear_cache          (Gde2BG               *bg);
+static gboolean   is_different         (Gde2BG               *bg,
 					const char            *filename);
 static time_t     get_mtime            (const char            *filename);
-static GdkPixbuf *create_img_thumbnail (MateBG               *bg,
-					MateDesktopThumbnailFactory *factory,
+static GdkPixbuf *create_img_thumbnail (Gde2BG               *bg,
+					Gde2DesktopThumbnailFactory *factory,
 					GdkScreen             *screen,
 					int                    dest_width,
 					int                    dest_height,
 					int		       frame_num);
-static SlideShow * get_as_slideshow    (MateBG               *bg,
+static SlideShow * get_as_slideshow    (Gde2BG               *bg,
 					const char 	      *filename);
 static Slide *     get_current_slide   (SlideShow 	      *show,
 		   			double    	      *alpha);
@@ -259,7 +259,7 @@ color_to_string (const GdkColor *color)
 #endif
 
 static gboolean
-do_changed (MateBG *bg)
+do_changed (Gde2BG *bg)
 {
 	bg->changed_id = 0;
 
@@ -269,7 +269,7 @@ do_changed (MateBG *bg)
 }
 
 static void
-queue_changed (MateBG *bg)
+queue_changed (Gde2BG *bg)
 {
 	if (bg->changed_id > 0) {
 		g_source_remove (bg->changed_id);
@@ -283,7 +283,7 @@ queue_changed (MateBG *bg)
 }
 
 static gboolean
-do_transitioned (MateBG *bg)
+do_transitioned (Gde2BG *bg)
 {
 	bg->transitioned_id = 0;
 
@@ -298,7 +298,7 @@ do_transitioned (MateBG *bg)
 }
 
 static void
-queue_transitioned (MateBG *bg)
+queue_transitioned (Gde2BG *bg)
 {
 	if (bg->transitioned_id > 0) {
 		g_source_remove (bg->transitioned_id);
@@ -313,7 +313,7 @@ queue_transitioned (MateBG *bg)
 
 /* This function loads the user's preferences */
 void
-gde2_bg_load_from_preferences (MateBG *bg)
+gde2_bg_load_from_preferences (Gde2BG *bg)
 {
 	GSettings *settings;
 	settings = g_settings_new (GDE2_BG_SCHEMA);
@@ -324,7 +324,7 @@ gde2_bg_load_from_preferences (MateBG *bg)
 
 /* This function loads default system settings */
 void
-gde2_bg_load_from_system_preferences (MateBG *bg)
+gde2_bg_load_from_system_preferences (Gde2BG *bg)
 {
 	GSettings *settings;
 
@@ -341,7 +341,7 @@ gde2_bg_load_from_system_preferences (MateBG *bg)
 
 /* This function loads (and optionally resets to) default system settings */
 void
-gde2_bg_load_from_system_gsettings (MateBG    *bg,
+gde2_bg_load_from_system_gsettings (Gde2BG    *bg,
 				    GSettings *settings,
 				    gboolean   reset_apply)
 {
@@ -369,18 +369,18 @@ gde2_bg_load_from_system_gsettings (MateBG    *bg,
 }
 
 void
-gde2_bg_load_from_gsettings (MateBG    *bg,
+gde2_bg_load_from_gsettings (Gde2BG    *bg,
 			     GSettings *settings)
 {
 	char    *tmp;
 	char    *filename;
-	MateBGColorType ctype;
+	Gde2BGColorType ctype;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA c1, c2;
 #else
 	GdkColor c1, c2;
 #endif
-	MateBGPlacement placement;
+	Gde2BGPlacement placement;
 
 	g_return_if_fail (GDE2_IS_BG (bg));
 	g_return_if_fail (G_IS_SETTINGS (settings));
@@ -448,7 +448,7 @@ gde2_bg_load_from_gsettings (MateBG    *bg,
 }
 
 void
-gde2_bg_save_to_preferences (MateBG *bg)
+gde2_bg_save_to_preferences (Gde2BG *bg)
 {
 	GSettings *settings;
 	settings = g_settings_new (GDE2_BG_SCHEMA);
@@ -458,7 +458,7 @@ gde2_bg_save_to_preferences (MateBG *bg)
 }
 
 void
-gde2_bg_save_to_gsettings (MateBG    *bg,
+gde2_bg_save_to_gsettings (Gde2BG    *bg,
 			   GSettings *settings)
 {
 	gchar *primary;
@@ -488,14 +488,14 @@ gde2_bg_save_to_gsettings (MateBG    *bg,
 
 
 static void
-gde2_bg_init (MateBG *bg)
+gde2_bg_init (Gde2BG *bg)
 {
 }
 
 static void
 gde2_bg_dispose (GObject *object)
 {
-	MateBG *bg = GDE2_BG (object);
+	Gde2BG *bg = GDE2_BG (object);
 
 	if (bg->file_monitor) {
 		g_object_unref (bg->file_monitor);
@@ -510,7 +510,7 @@ gde2_bg_dispose (GObject *object)
 static void
 gde2_bg_finalize (GObject *object)
 {
-	MateBG *bg = GDE2_BG (object);
+	Gde2BG *bg = GDE2_BG (object);
 
 	if (bg->changed_id != 0) {
 		g_source_remove (bg->changed_id);
@@ -534,7 +534,7 @@ gde2_bg_finalize (GObject *object)
 }
 
 static void
-gde2_bg_class_init (MateBGClass *klass)
+gde2_bg_class_init (Gde2BGClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -558,15 +558,15 @@ gde2_bg_class_init (MateBGClass *klass)
 					 G_TYPE_NONE, 0);
 }
 
-MateBG *
+Gde2BG *
 gde2_bg_new (void)
 {
 	return g_object_new (GDE2_TYPE_BG, NULL);
 }
 
 void
-gde2_bg_set_color (MateBG *bg,
-		    MateBGColorType type,
+gde2_bg_set_color (Gde2BG *bg,
+		    Gde2BGColorType type,
 #if GTK_CHECK_VERSION (3, 0, 0)
 		    GdkRGBA *primary,
 		    GdkRGBA *secondary)
@@ -598,8 +598,8 @@ gde2_bg_set_color (MateBG *bg,
 }
 
 void
-gde2_bg_set_placement (MateBG		*bg,
-		       MateBGPlacement	 placement)
+gde2_bg_set_placement (Gde2BG		*bg,
+		       Gde2BGPlacement	 placement)
 {
 	g_return_if_fail (bg != NULL);
 
@@ -610,8 +610,8 @@ gde2_bg_set_placement (MateBG		*bg,
 	}
 }
 
-MateBGPlacement
-gde2_bg_get_placement (MateBG *bg)
+Gde2BGPlacement
+gde2_bg_get_placement (Gde2BG *bg)
 {
 	g_return_val_if_fail (bg != NULL, -1);
 
@@ -619,8 +619,8 @@ gde2_bg_get_placement (MateBG *bg)
 }
 
 void
-gde2_bg_get_color (MateBG		*bg,
-		   MateBGColorType	*type,
+gde2_bg_get_color (Gde2BG		*bg,
+		   Gde2BGColorType	*type,
 #if GTK_CHECK_VERSION (3, 0, 0)
 		   GdkRGBA		*primary,
 		   GdkRGBA		*secondary)
@@ -642,7 +642,7 @@ gde2_bg_get_color (MateBG		*bg,
 }
 
 void
-gde2_bg_set_draw_background (MateBG	*bg,
+gde2_bg_set_draw_background (Gde2BG	*bg,
 			     gboolean	 draw_background)
 {
 	g_return_if_fail (bg != NULL);
@@ -655,7 +655,7 @@ gde2_bg_set_draw_background (MateBG	*bg,
 }
 
 gboolean
-gde2_bg_get_draw_background (MateBG *bg)
+gde2_bg_get_draw_background (Gde2BG *bg)
 {
 	g_return_val_if_fail (bg != NULL, FALSE);
 
@@ -663,7 +663,7 @@ gde2_bg_get_draw_background (MateBG *bg)
 }
 
 const gchar *
-gde2_bg_get_filename (MateBG *bg)
+gde2_bg_get_filename (Gde2BG *bg)
 {
 	g_return_val_if_fail (bg != NULL, NULL);
 
@@ -678,7 +678,7 @@ get_wallpaper_cache_dir ()
 
 static inline gchar *
 get_wallpaper_cache_prefix_name (gint                     num_monitor,
-				 MateBGPlacement          placement,
+				 Gde2BGPlacement          placement,
 				 gint                     width,
 				 gint                     height)
 {
@@ -688,7 +688,7 @@ get_wallpaper_cache_prefix_name (gint                     num_monitor,
 static char *
 get_wallpaper_cache_filename (const char              *filename,
 			      gint                     num_monitor,
-			      MateBGPlacement          placement,
+			      Gde2BGPlacement          placement,
 			      gint                     width,
 			      gint                     height)
 {
@@ -759,7 +759,7 @@ cache_file_is_valid (const char *filename,
 }
 
 static void
-refresh_cache_file (MateBG     *bg,
+refresh_cache_file (Gde2BG     *bg,
 		    GdkPixbuf  *new_pixbuf,
 		    gint        num_monitor,
 		    gint        width,
@@ -812,14 +812,14 @@ file_changed (GFileMonitor     *file_monitor,
 	      GFileMonitorEvent event_type,
 	      gpointer          user_data)
 {
-	MateBG *bg = GDE2_BG (user_data);
+	Gde2BG *bg = GDE2_BG (user_data);
 
 	clear_cache (bg);
 	queue_changed (bg);
 }
 
 void
-gde2_bg_set_filename (MateBG	 *bg,
+gde2_bg_set_filename (Gde2BG	 *bg,
 		      const char *filename)
 {
 	g_return_if_fail (bg != NULL);
@@ -852,7 +852,7 @@ gde2_bg_set_filename (MateBG	 *bg,
 }
 
 static void
-draw_color_area (MateBG       *bg,
+draw_color_area (Gde2BG       *bg,
 		 GdkPixbuf    *dest,
 		 GdkRectangle *rect)
 {
@@ -897,7 +897,7 @@ draw_color_area (MateBG       *bg,
 }
 
 static void
-draw_color (MateBG    *bg,
+draw_color (Gde2BG    *bg,
 	    GdkPixbuf *dest)
 {
 	GdkRectangle rect;
@@ -910,7 +910,7 @@ draw_color (MateBG    *bg,
 }
 
 static void
-draw_color_each_monitor (MateBG    *bg,
+draw_color_each_monitor (Gde2BG    *bg,
 			 GdkPixbuf *dest,
 			 GdkScreen *screen)
 {
@@ -959,7 +959,7 @@ pixbuf_clip_to_fit (GdkPixbuf *src,
 }
 
 static GdkPixbuf *
-get_scaled_pixbuf (MateBGPlacement  placement,
+get_scaled_pixbuf (Gde2BGPlacement  placement,
 		   GdkPixbuf       *pixbuf,
 		   int width, int height,
 		   int *x, int *y,
@@ -1007,7 +1007,7 @@ get_scaled_pixbuf (MateBGPlacement  placement,
 
 
 static void
-draw_image_area (MateBG        *bg,
+draw_image_area (Gde2BG        *bg,
 		 gint           num_monitor,
 		 GdkPixbuf     *pixbuf,
 		 GdkPixbuf     *dest,
@@ -1047,7 +1047,7 @@ draw_image_area (MateBG        *bg,
 }
 
 static void
-draw_image_for_thumb (MateBG     *bg,
+draw_image_for_thumb (Gde2BG     *bg,
 		      GdkPixbuf  *pixbuf,
 		      GdkPixbuf  *dest)
 {
@@ -1062,7 +1062,7 @@ draw_image_for_thumb (MateBG     *bg,
 }
 
 static void
-draw_once (MateBG    *bg,
+draw_once (Gde2BG    *bg,
 	   GdkPixbuf *dest,
 	   gboolean   is_root)
 {
@@ -1087,7 +1087,7 @@ draw_once (MateBG    *bg,
 }
 
 static void
-draw_each_monitor (MateBG    *bg,
+draw_each_monitor (Gde2BG    *bg,
 		   GdkPixbuf *dest,
 		   GdkScreen *screen)
 {
@@ -1110,7 +1110,7 @@ draw_each_monitor (MateBG    *bg,
 }
 
 void
-gde2_bg_draw (MateBG     *bg,
+gde2_bg_draw (Gde2BG     *bg,
 	       GdkPixbuf *dest,
 	       GdkScreen *screen,
 	       gboolean   is_root)
@@ -1132,7 +1132,7 @@ gde2_bg_draw (MateBG     *bg,
 }
 
 gboolean
-gde2_bg_has_multiple_sizes (MateBG *bg)
+gde2_bg_has_multiple_sizes (Gde2BG *bg)
 {
 	SlideShow *show;
 	gboolean ret;
@@ -1151,7 +1151,7 @@ gde2_bg_has_multiple_sizes (MateBG *bg)
 }
 
 static void
-gde2_bg_get_pixmap_size (MateBG   *bg,
+gde2_bg_get_pixmap_size (Gde2BG   *bg,
 			  int        width,
 			  int        height,
 			  int       *pixmap_width,
@@ -1185,7 +1185,7 @@ gde2_bg_get_pixmap_size (MateBG   *bg,
 
 /**
  * gde2_bg_create_surface:
- * @bg: MateBG
+ * @bg: Gde2BG
  * @window:
  * @width:
  * @height:
@@ -1198,10 +1198,10 @@ gde2_bg_get_pixmap_size (MateBG   *bg,
  **/
 #if GTK_CHECK_VERSION (3, 0, 0)
 cairo_surface_t *
-gde2_bg_create_surface (MateBG      *bg,
+gde2_bg_create_surface (Gde2BG      *bg,
 #else
 GdkPixmap *
-gde2_bg_create_pixmap  (MateBG      *bg,
+gde2_bg_create_pixmap  (Gde2BG      *bg,
 #endif
 		 	GdkWindow   *window,
 			int	     width,
@@ -1288,7 +1288,7 @@ gde2_bg_create_pixmap  (MateBG      *bg,
  * clients know what colors to draw on top with
  */
 gboolean
-gde2_bg_is_dark (MateBG *bg,
+gde2_bg_is_dark (Gde2BG *bg,
 		  int      width,
 		  int      height)
 {
@@ -1417,7 +1417,7 @@ get_original_size (const char *filename,
 }
 
 static const char *
-get_filename_for_size (MateBG *bg, gint best_width, gint best_height)
+get_filename_for_size (Gde2BG *bg, gint best_width, gint best_height)
 {
 	SlideShow *show;
 	Slide *slide;
@@ -1438,8 +1438,8 @@ get_filename_for_size (MateBG *bg, gint best_width, gint best_height)
 }
 
 gboolean
-gde2_bg_get_image_size (MateBG	       *bg,
-			 MateDesktopThumbnailFactory *factory,
+gde2_bg_get_image_size (Gde2BG	       *bg,
+			 Gde2DesktopThumbnailFactory *factory,
 			 int                    best_width,
 			 int                    best_height,
 			 int		       *width,
@@ -1485,8 +1485,8 @@ fit_factor (int from_width, int from_height,
  * Returns: (transfer full): a #GdkPixbuf showing the background as a thumbnail
  */
 GdkPixbuf *
-gde2_bg_create_thumbnail (MateBG               *bg,
-		           MateDesktopThumbnailFactory *factory,
+gde2_bg_create_thumbnail (Gde2BG               *bg,
+		           Gde2DesktopThumbnailFactory *factory,
 			   GdkScreen             *screen,
 			   int                    dest_width,
 			   int                    dest_height)
@@ -1807,9 +1807,9 @@ gde2_bg_set_pixmap_as_root  (GdkScreen *screen, GdkPixmap *pixmap)
  * in that it adds a subtle crossfade animation from the
  * current root pixmap to the new one.
  *
- * Return value: (transfer full): a #MateBGCrossfade object
+ * Return value: (transfer full): a #Gde2BGCrossfade object
  **/
-MateBGCrossfade *
+Gde2BGCrossfade *
 #if GTK_CHECK_VERSION (3, 0, 0)
 gde2_bg_set_surface_as_root_with_crossfade (GdkScreen       *screen,
 		 			    cairo_surface_t *surface)
@@ -1820,7 +1820,7 @@ gde2_bg_set_pixmap_as_root_with_crossfade (GdkScreen *screen,
 {
 	GdkWindow       *root_window;
 	int              width, height;
-	MateBGCrossfade *fade;
+	Gde2BGCrossfade *fade;
 	cairo_t         *cr;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_surface_t *old_surface;
@@ -2005,7 +2005,7 @@ file_cache_entry_delete (FileCacheEntry *ent)
 }
 
 static void
-bound_cache (MateBG *bg)
+bound_cache (Gde2BG *bg)
 {
       while (g_list_length (bg->file_cache) >= CACHE_SIZE) {
 	      GList *last_link = g_list_last (bg->file_cache);
@@ -2018,7 +2018,7 @@ bound_cache (MateBG *bg)
 }
 
 static const FileCacheEntry *
-file_cache_lookup (MateBG *bg, FileType type, const char *filename)
+file_cache_lookup (Gde2BG *bg, FileType type, const char *filename)
 {
 	GList *list;
 
@@ -2035,7 +2035,7 @@ file_cache_lookup (MateBG *bg, FileType type, const char *filename)
 }
 
 static FileCacheEntry *
-file_cache_entry_new (MateBG *bg,
+file_cache_entry_new (Gde2BG *bg,
 		      FileType type,
 		      const char *filename)
 {
@@ -2054,7 +2054,7 @@ file_cache_entry_new (MateBG *bg,
 }
 
 static void
-file_cache_add_pixbuf (MateBG *bg,
+file_cache_add_pixbuf (Gde2BG *bg,
 		       const char *filename,
 		       GdkPixbuf *pixbuf)
 {
@@ -2063,7 +2063,7 @@ file_cache_add_pixbuf (MateBG *bg,
 }
 
 static void
-file_cache_add_thumbnail (MateBG *bg,
+file_cache_add_thumbnail (Gde2BG *bg,
 			  const char *filename,
 			  GdkPixbuf *pixbuf)
 {
@@ -2072,7 +2072,7 @@ file_cache_add_thumbnail (MateBG *bg,
 }
 
 static void
-file_cache_add_slide_show (MateBG *bg,
+file_cache_add_slide_show (Gde2BG *bg,
 			   const char *filename,
 			   SlideShow *show)
 {
@@ -2081,7 +2081,7 @@ file_cache_add_slide_show (MateBG *bg,
 }
 
 static GdkPixbuf *
-load_from_cache_file (MateBG     *bg,
+load_from_cache_file (Gde2BG     *bg,
 		      const char *filename,
 		      gint        num_monitor,
 		      gint        best_width,
@@ -2102,7 +2102,7 @@ load_from_cache_file (MateBG     *bg,
 }
 
 static GdkPixbuf *
-get_as_pixbuf_for_size (MateBG    *bg,
+get_as_pixbuf_for_size (Gde2BG    *bg,
 			const char *filename,
 			gint         monitor,
 			gint         best_width,
@@ -2157,7 +2157,7 @@ get_as_pixbuf_for_size (MateBG    *bg,
 }
 
 static SlideShow *
-get_as_slideshow (MateBG *bg, const char *filename)
+get_as_slideshow (Gde2BG *bg, const char *filename)
 {
 	const FileCacheEntry *ent;
 	if ((ent = file_cache_lookup (bg, SLIDESHOW, filename))) {
@@ -2174,7 +2174,7 @@ get_as_slideshow (MateBG *bg, const char *filename)
 }
 
 static GdkPixbuf *
-get_as_thumbnail (MateBG *bg, MateDesktopThumbnailFactory *factory, const char *filename)
+get_as_thumbnail (Gde2BG *bg, Gde2DesktopThumbnailFactory *factory, const char *filename)
 {
 	const FileCacheEntry *ent;
 	if ((ent = file_cache_lookup (bg, THUMBNAIL, filename))) {
@@ -2193,7 +2193,7 @@ get_as_thumbnail (MateBG *bg, MateDesktopThumbnailFactory *factory, const char *
 static gboolean
 blow_expensive_caches (gpointer data)
 {
-	MateBG *bg = data;
+	Gde2BG *bg = data;
 	GList *list;
 
 	bg->blow_caches_id = 0;
@@ -2219,7 +2219,7 @@ blow_expensive_caches (gpointer data)
 }
 
 static void
-blow_expensive_caches_in_idle (MateBG *bg)
+blow_expensive_caches_in_idle (Gde2BG *bg)
 {
 	if (bg->blow_caches_id == 0) {
 		bg->blow_caches_id =
@@ -2232,7 +2232,7 @@ blow_expensive_caches_in_idle (MateBG *bg)
 static gboolean
 on_timeout (gpointer data)
 {
-	MateBG *bg = data;
+	Gde2BG *bg = data;
 
 	bg->timeout_id = 0;
 
@@ -2266,7 +2266,7 @@ get_slide_timeout (Slide   *slide)
 }
 
 static void
-ensure_timeout (MateBG *bg,
+ensure_timeout (Gde2BG *bg,
 		Slide   *slide)
 {
 	if (!bg->timeout_id) {
@@ -2307,7 +2307,7 @@ get_mtime (const char *filename)
 }
 
 static GdkPixbuf *
-scale_thumbnail (MateBGPlacement placement,
+scale_thumbnail (Gde2BGPlacement placement,
 		 const char *filename,
 		 GdkPixbuf *thumb,
 		 GdkScreen *screen,
@@ -2372,8 +2372,8 @@ scale_thumbnail (MateBGPlacement placement,
  * -1 means 'current slide'.
  */
 static GdkPixbuf *
-create_img_thumbnail (MateBG                      *bg,
-		      MateDesktopThumbnailFactory *factory,
+create_img_thumbnail (Gde2BG                      *bg,
+		      Gde2DesktopThumbnailFactory *factory,
 		      GdkScreen                    *screen,
 		      int                           dest_width,
 		      int                           dest_height,
@@ -2517,7 +2517,7 @@ find_best_size (GSList *sizes, gint width, gint height)
 }
 
 static GdkPixbuf *
-get_pixbuf_for_size (MateBG *bg,
+get_pixbuf_for_size (Gde2BG *bg,
 		     gint monitor,
 		     gint best_width,
 		     gint best_height)
@@ -2602,7 +2602,7 @@ get_pixbuf_for_size (MateBG *bg,
 }
 
 static gboolean
-is_different (MateBG    *bg,
+is_different (Gde2BG    *bg,
 	      const char *filename)
 {
 	if (!filename && bg->filename) {
@@ -2628,7 +2628,7 @@ is_different (MateBG    *bg,
 }
 
 static void
-clear_cache (MateBG *bg)
+clear_cache (Gde2BG *bg)
 {
 	GList *list;
 
@@ -3308,7 +3308,7 @@ read_slideshow_file (const char *filename,
 
 /* Thumbnail utilities */
 static GdkPixbuf *
-create_thumbnail_for_filename (MateDesktopThumbnailFactory *factory,
+create_thumbnail_for_filename (Gde2DesktopThumbnailFactory *factory,
 			       const char            *filename)
 {
 	char *thumb;
@@ -3395,7 +3395,7 @@ slideshow_has_multiple_sizes (SlideShow *show)
  * Returns whether the background is a slideshow.
  */
 gboolean
-gde2_bg_changes_with_time (MateBG *bg)
+gde2_bg_changes_with_time (Gde2BG *bg)
 {
 	SlideShow *show;
 
@@ -3422,8 +3422,8 @@ gde2_bg_changes_with_time (MateBG *bg)
  * or NULL if frame_num is out of bounds.
  */
 GdkPixbuf *
-gde2_bg_create_frame_thumbnail (MateBG			*bg,
-				 MateDesktopThumbnailFactory	*factory,
+gde2_bg_create_frame_thumbnail (Gde2BG			*bg,
+				 Gde2DesktopThumbnailFactory	*factory,
 				 GdkScreen			*screen,
 				 int				 dest_width,
 				 int				 dest_height,

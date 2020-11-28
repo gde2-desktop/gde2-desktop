@@ -42,13 +42,13 @@ msgstr "GDE2 nyedhiyani desktop intuitif lan atraktif kanggo panganggo Linux ngg
 msgid ""
 "GDE2 includes most of what you see on your computer, including the file "
 "manager, document viewer, image viewer, menus, and many applications."
-msgstr "Mate ngandhut sing biyasane ana ing komputer, kalebu pangatur file, panampil dhokumèn, panampil gambar, menu, lan akeh aplikasi liyane."
+msgstr "Gde2 ngandhut sing biyasane ana ing komputer, kalebu pangatur file, panampil dhokumèn, panampil gambar, menu, lan akeh aplikasi liyane."
 
 #: ../gde2-about/gde2-about.h:51
 msgid ""
 "GDE2 is a Free, usable, stable, accessible desktop environment for the Unix-"
 "like family of operating systems."
-msgstr "Mate iku Bebas, iso digunakke, stabil, lingkungan desktop sing iso diakses kanggo sistem operasi kulawarga Kaya-Unix."
+msgstr "Gde2 iku Bebas, iso digunakke, stabil, lingkungan desktop sing iso diakses kanggo sistem operasi kulawarga Kaya-Unix."
 
 #: ../gde2-about/gde2-about.h:54
 msgid ""
@@ -56,13 +56,13 @@ msgid ""
 "code to GNOME since it was started in 1997; many more have contributed in "
 "other important ways, including translations, documentation, and quality "
 "assurance."
-msgstr "Mate punika tutugan saka GNOME 2. Atusan wong wis nyumbang kode kanggo GNOME awit iku diwiwiti ing 1997; isih akeh maneh liyane sing wis nyumbang ing cara penting, kalebu jarwan, dokumentasi, lan jaminan kualitas."
+msgstr "Gde2 punika tutugan saka GNOME 2. Atusan wong wis nyumbang kode kanggo GNOME awit iku diwiwiti ing 1997; isih akeh maneh liyane sing wis nyumbang ing cara penting, kalebu jarwan, dokumentasi, lan jaminan kualitas."
 
 #: ../gde2-about/gde2-about.h:58
 msgid ""
 "GNOME 2 was the most popular Linux desktop but it’s no longer available... "
 "GDE2 is here to provide that same desktop to you!"
-msgstr "GNOME 2 punika desktop Linux paling populer nanging iku ora ono meneh ... Mate punika ing kene kanggo nyedhiyani desktop sing padha kanggo sampeyan!"
+msgstr "GNOME 2 punika desktop Linux paling populer nanging iku ora ono meneh ... Gde2 punika ing kene kanggo nyedhiyani desktop sing padha kanggo sampeyan!"
 
 #: ../gde2-about/gde2-about.h:61
 msgid ""

@@ -81,7 +81,7 @@ msgid ""
 "The name “GDE2” comes from yerba maté, a species of holly native to "
 "subtropical South America. Its leaves contain caffeine and are used to make "
 "infusions and a beverage called gde2."
-msgstr "Der Name »GDE2« wird abgeleitet von yerba maté, eine Stechpalmenart, die im subtropischen Südamerika heimisch ist. Seine Blätter enthalten Koffein und werden verwendet, um Infusionen und ein Getränk namens Mate herzustellen."
+msgstr "Der Name »GDE2« wird abgeleitet von yerba maté, eine Stechpalmenart, die im subtropischen Südamerika heimisch ist. Seine Blätter enthalten Koffein und werden verwendet, um Infusionen und ein Getränk namens Gde2 herzustellen."
 
 #. Translators: "Unknown" here is used to identify a monitor for which
 #. * we don't know the vendor. When a vendor is known, the name of the
@@ -1452,7 +1452,7 @@ msgstr "ESD aktivieren"
 
 #: ../schemas/org.gde2.sound.gschema.xml.in.h:6
 msgid "Enable sound server startup."
-msgstr "Den Klangservers beim Mate-Start aktivieren."
+msgstr "Den Klangservers beim Gde2-Start aktivieren."
 
 #: ../schemas/org.gde2.sound.gschema.xml.in.h:7
 msgid "Sounds for events"

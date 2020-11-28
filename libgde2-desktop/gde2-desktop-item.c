@@ -5,22 +5,22 @@
    Copyright (C) 2001 Sid Vicious
    All rights reserved.
 
-   This file is part of the Mate Library.
+   This file is part of the Gde2 Library.
 
    Developed by Elliot Lee <sopwith@redhat.com> and Sid Vicious
 
-   The Mate Library is free software; you can redistribute it and/or
+   The Gde2 Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
    published by the Free Software Foundation; either version 2 of the
    License, or (at your option) any later version.
 
-   The Mate Library is distributed in the hope that it will be useful,
+   The Gde2 Library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    Library General Public License for more details.
 
    You should have received a copy of the GNU Library General Public
-   License along with the Mate Library; see the file COPYING.LIB.  If not,
+   License along with the Gde2 Library; see the file COPYING.LIB.  If not,
    write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
    Boston, MA 02110-1301, USA.  */
 /*
@@ -61,13 +61,13 @@
 
 #include "private.h"
 
-struct _MateDesktopItem {
+struct _Gde2DesktopItem {
 	int refcount;
 
 	/* all languages used */
 	GList *languages;
 
-	MateDesktopItemType type;
+	Gde2DesktopItemType type;
 
 	/* `modified' means that the ditem has been
 	 * modified since the last save. */
@@ -122,18 +122,18 @@ typedef struct {
 	gsize pos;
 } ReadBuf;
 
-static MateDesktopItem *ditem_load (ReadBuf           *rb,
+static Gde2DesktopItem *ditem_load (ReadBuf           *rb,
 				     gboolean           no_translations,
 				     GError           **error);
-static gboolean          ditem_save (MateDesktopItem  *item,
+static gboolean          ditem_save (Gde2DesktopItem  *item,
 				     const char        *uri,
 				     GError           **error);
 
-static void gde2_desktop_item_set_location_gfile (MateDesktopItem *item,
+static void gde2_desktop_item_set_location_gfile (Gde2DesktopItem *item,
 						   GFile            *file);
 
-static MateDesktopItem *gde2_desktop_item_new_from_gfile (GFile *file,
-							    MateDesktopItemLoadFlags flags,
+static Gde2DesktopItem *gde2_desktop_item_new_from_gfile (GFile *file,
+							    Gde2DesktopItemLoadFlags flags,
 							    GError **error);
 
 static int
@@ -308,7 +308,7 @@ readbuf_close (ReadBuf *rb)
 	g_free (rb);
 }
 
-static MateDesktopItemType
+static Gde2DesktopItemType
 type_from_string (const char *type)
 {
 	if (!type)
@@ -352,18 +352,18 @@ type_from_string (const char *type)
 /**
  * gde2_desktop_item_new:
  *
- * Creates a MateDesktopItem object. The reference count on the returned value is set to '1'.
+ * Creates a Gde2DesktopItem object. The reference count on the returned value is set to '1'.
  *
- * Returns: The new MateDesktopItem
+ * Returns: The new Gde2DesktopItem
  */
-MateDesktopItem *
+Gde2DesktopItem *
 gde2_desktop_item_new (void)
 {
-	MateDesktopItem *retval;
+	Gde2DesktopItem *retval;
 
 	_gde2_desktop_init_i18n ();
 
-	retval = g_new0 (MateDesktopItem, 1);
+	retval = g_new0 (Gde2DesktopItem, 1);
 
 	retval->refcount++;
 
@@ -419,16 +419,16 @@ copy_string_hash (gpointer key, gpointer value, gpointer user_data)
  * gde2_desktop_item_copy:
  * @item: The item to be copied
  *
- * Creates a copy of a MateDesktopItem.  The new copy has a refcount of 1.
+ * Creates a copy of a Gde2DesktopItem.  The new copy has a refcount of 1.
  * Note: Section stack is NOT copied.
  *
  * Returns: The new copy
  */
-MateDesktopItem *
-gde2_desktop_item_copy (const MateDesktopItem *item)
+Gde2DesktopItem *
+gde2_desktop_item_copy (const Gde2DesktopItem *item)
 {
 	GList *li;
-	MateDesktopItem *retval;
+	Gde2DesktopItem *retval;
 
 	g_return_val_if_fail (item != NULL, NULL);
 	g_return_val_if_fail (item->refcount > 0, NULL);
@@ -468,7 +468,7 @@ gde2_desktop_item_copy (const MateDesktopItem *item)
 }
 
 static void
-read_sort_order (MateDesktopItem *item, GFile *dir)
+read_sort_order (Gde2DesktopItem *item, GFile *dir)
 {
 	GFile *child;
 	char buf[BUFSIZ];
@@ -499,10 +499,10 @@ read_sort_order (MateDesktopItem *item, GFile *dir)
 	}
 }
 
-static MateDesktopItem *
+static Gde2DesktopItem *
 make_fake_directory (GFile *dir)
 {
-	MateDesktopItem *item;
+	Gde2DesktopItem *item;
 	GFile *child;
 
 	item = gde2_desktop_item_new ();
@@ -523,19 +523,19 @@ make_fake_directory (GFile *dir)
 
 /**
  * gde2_desktop_item_new_from_file:
- * @file: The filename or directory path to load the MateDesktopItem from
+ * @file: The filename or directory path to load the Gde2DesktopItem from
  * @flags: Flags to influence the loading process
  *
- * This function loads 'file' and turns it into a MateDesktopItem.
+ * This function loads 'file' and turns it into a Gde2DesktopItem.
  *
  * Returns: The newly loaded item.
  */
-MateDesktopItem *
+Gde2DesktopItem *
 gde2_desktop_item_new_from_file (const char *file,
-				  MateDesktopItemLoadFlags flags,
+				  Gde2DesktopItemLoadFlags flags,
 				  GError **error)
 {
-	MateDesktopItem *retval;
+	Gde2DesktopItem *retval;
 	GFile *gfile;
 
 	g_return_val_if_fail (file != NULL, NULL);
@@ -549,19 +549,19 @@ gde2_desktop_item_new_from_file (const char *file,
 
 /**
  * gde2_desktop_item_new_from_uri:
- * @uri: URI to load the MateDesktopItem from
+ * @uri: URI to load the Gde2DesktopItem from
  * @flags: Flags to influence the loading process
  *
- * This function loads 'uri' and turns it into a MateDesktopItem.
+ * This function loads 'uri' and turns it into a Gde2DesktopItem.
  *
  * Returns: The newly loaded item.
  */
-MateDesktopItem *
+Gde2DesktopItem *
 gde2_desktop_item_new_from_uri (const char *uri,
-				 MateDesktopItemLoadFlags flags,
+				 Gde2DesktopItemLoadFlags flags,
 				 GError **error)
 {
-	MateDesktopItem *retval;
+	Gde2DesktopItem *retval;
 	GFile *file;
 
 	g_return_val_if_fail (uri != NULL, NULL);
@@ -573,12 +573,12 @@ gde2_desktop_item_new_from_uri (const char *uri,
 	return retval;
 }
 
-static MateDesktopItem *
+static Gde2DesktopItem *
 gde2_desktop_item_new_from_gfile (GFile *file,
-				   MateDesktopItemLoadFlags flags,
+				   Gde2DesktopItemLoadFlags flags,
 				   GError **error)
 {
-	MateDesktopItem *retval;
+	Gde2DesktopItem *retval;
 	GFile *subfn;
 	GFileInfo *info;
 	GFileType type;
@@ -687,23 +687,23 @@ gde2_desktop_item_new_from_gfile (GFile *file,
 
 /**
  * gde2_desktop_item_new_from_string:
- * @string: string to load the MateDesktopItem from
+ * @string: string to load the Gde2DesktopItem from
  * @length: length of string, or -1 to use strlen
  * @flags: Flags to influence the loading process
  * @error: place to put errors
  *
- * This function turns the contents of the string into a MateDesktopItem.
+ * This function turns the contents of the string into a Gde2DesktopItem.
  *
  * Returns: The newly loaded item.
  */
-MateDesktopItem *
+Gde2DesktopItem *
 gde2_desktop_item_new_from_string (const char *uri,
 				    const char *string,
 				    gssize length,
-				    MateDesktopItemLoadFlags flags,
+				    Gde2DesktopItemLoadFlags flags,
 				    GError **error)
 {
-	MateDesktopItem *retval;
+	Gde2DesktopItem *retval;
 	ReadBuf *rb;
 
 	g_return_val_if_fail (string != NULL, NULL);
@@ -766,20 +766,20 @@ file_from_basename (const char *basename)
 
 /**
  * gde2_desktop_item_new_from_basename:
- * @basename: The basename of the MateDesktopItem to load.
+ * @basename: The basename of the Gde2DesktopItem to load.
  * @flags: Flags to influence the loading process
  *
  * This function loads 'basename' from a system data directory and
- * returns its MateDesktopItem.
+ * returns its Gde2DesktopItem.
  *
  * Returns: The newly loaded item.
  */
-MateDesktopItem *
+Gde2DesktopItem *
 gde2_desktop_item_new_from_basename (const char *basename,
-                                      MateDesktopItemLoadFlags flags,
+                                      Gde2DesktopItemLoadFlags flags,
                                       GError **error)
 {
-	MateDesktopItem *retval;
+	Gde2DesktopItem *retval;
 	char *file;
 
 	g_return_val_if_fail (basename != NULL, NULL);
@@ -802,7 +802,7 @@ gde2_desktop_item_new_from_basename (const char *basename,
 /**
  * gde2_desktop_item_save:
  * @item: A desktop item
- * @under: A new uri (location) for this #MateDesktopItem
+ * @under: A new uri (location) for this #Gde2DesktopItem
  * @force: Save even if it wasn't modified
  * @error: #GError return
  *
@@ -813,7 +813,7 @@ gde2_desktop_item_new_from_basename (const char *basename,
  * Returns: boolean. %TRUE if the file was saved, %FALSE otherwise
  */
 gboolean
-gde2_desktop_item_save (MateDesktopItem *item,
+gde2_desktop_item_save (Gde2DesktopItem *item,
 			 const char *under,
 			 gboolean force,
 			 GError **error)
@@ -855,8 +855,8 @@ gde2_desktop_item_save (MateDesktopItem *item,
  *
  * Returns: the newly referenced @item
  */
-MateDesktopItem *
-gde2_desktop_item_ref (MateDesktopItem *item)
+Gde2DesktopItem *
+gde2_desktop_item_ref (Gde2DesktopItem *item)
 {
 	g_return_val_if_fail (item != NULL, NULL);
 
@@ -887,7 +887,7 @@ free_section (gpointer data, gpointer user_data)
  * Decreases the reference count of the specified item, and destroys the item if there are no more references left.
  */
 void
-gde2_desktop_item_unref (MateDesktopItem *item)
+gde2_desktop_item_unref (Gde2DesktopItem *item)
 {
 	g_return_if_fail (item != NULL);
 	g_return_if_fail (item->refcount > 0);
@@ -919,7 +919,7 @@ gde2_desktop_item_unref (MateDesktopItem *item)
 }
 
 static Section *
-find_section (MateDesktopItem *item, const char *section)
+find_section (Gde2DesktopItem *item, const char *section)
 {
 	GList *li;
 	Section *sec;
@@ -948,7 +948,7 @@ find_section (MateDesktopItem *item, const char *section)
 }
 
 static Section *
-section_from_key (MateDesktopItem *item, const char *key)
+section_from_key (Gde2DesktopItem *item, const char *key)
 {
 	char *p;
 	char *name;
@@ -982,13 +982,13 @@ key_basename (const char *key)
 
 
 static const char *
-lookup (const MateDesktopItem *item, const char *key)
+lookup (const Gde2DesktopItem *item, const char *key)
 {
 	return g_hash_table_lookup (item->main_hash, key);
 }
 
 static const char *
-lookup_locale (const MateDesktopItem *item, const char *key, const char *locale)
+lookup_locale (const Gde2DesktopItem *item, const char *key, const char *locale)
 {
 	if (locale == NULL ||
 	    strcmp (locale, "C") == 0) {
@@ -1003,7 +1003,7 @@ lookup_locale (const MateDesktopItem *item, const char *key, const char *locale)
 }
 
 static const char *
-lookup_best_locale (const MateDesktopItem *item, const char *key)
+lookup_best_locale (const Gde2DesktopItem *item, const char *key)
 {
 	const char * const *langs_pointer;
 	int                 i;
@@ -1021,7 +1021,7 @@ lookup_best_locale (const MateDesktopItem *item, const char *key)
 }
 
 static void
-set (MateDesktopItem *item, const char *key, const char *value)
+set (Gde2DesktopItem *item, const char *key, const char *value)
 {
 	Section *sec = section_from_key (item, key);
 
@@ -1070,7 +1070,7 @@ set (MateDesktopItem *item, const char *key, const char *value)
 }
 
 static void
-set_locale (MateDesktopItem *item, const char *key,
+set_locale (Gde2DesktopItem *item, const char *key,
 	    const char *locale, const char *value)
 {
 	if (locale == NULL ||
@@ -1283,7 +1283,7 @@ append_first_converted (GString         *str,
 }
 
 static gboolean
-do_percent_subst (const MateDesktopItem  *item,
+do_percent_subst (const Gde2DesktopItem  *item,
 		  const char              *arg,
 		  GString                 *str,
 		  gboolean                 in_single_quotes,
@@ -1420,7 +1420,7 @@ do_percent_subst (const MateDesktopItem  *item,
 }
 
 static char *
-expand_string (const MateDesktopItem  *item,
+expand_string (const Gde2DesktopItem  *item,
 	       const char              *s,
 	       GSList                  *args,
 	       GSList                 **arg_ptr,
@@ -1737,7 +1737,7 @@ dummy_child_watch (GPid         pid,
 }
 
 static int
-ditem_execute (const MateDesktopItem *item,
+ditem_execute (const Gde2DesktopItem *item,
 	       const char *exec,
 	       GList *file_list,
 	       GdkScreen *screen,
@@ -1957,7 +1957,7 @@ ditem_execute (const MateDesktopItem *item,
 						      launch_time);
 
 			/* Don't allow accidental reuse of same timestamp */
-			((MateDesktopItem *)item)->launch_time = 0;
+			((Gde2DesktopItem *)item)->launch_time = 0;
 
 			envp = make_spawn_environment_for_sn_context (sn_context, envp);
 			if (free_me)
@@ -2051,9 +2051,9 @@ strip_the_amp (char *exec)
 
 static int
 gde2_desktop_item_launch_on_screen_with_env (
-		const MateDesktopItem       *item,
+		const Gde2DesktopItem       *item,
 		GList                        *file_list,
-		MateDesktopItemLaunchFlags   flags,
+		Gde2DesktopItemLaunchFlags   flags,
 		GdkScreen                    *screen,
 		int                           workspace,
 		char                        **envp,
@@ -2070,7 +2070,7 @@ gde2_desktop_item_launch_on_screen_with_env (
 		gboolean    retval;
 
 		url = gde2_desktop_item_get_string (item, GDE2_DESKTOP_ITEM_URL);
-		/* Mate panel used to put this in Exec */
+		/* Gde2 panel used to put this in Exec */
 		if (!(url && url[0] != '\0'))
 			url = exec;
 
@@ -2143,7 +2143,7 @@ gde2_desktop_item_launch_on_screen_with_env (
  * optionally appending additional arguments to its command line.  It uses
  * #g_shell_parse_argv to parse the the exec string into a vector which is
  * then passed to #g_spawn_async for execution. This can return all
- * the errors from MateURL, #g_shell_parse_argv and #g_spawn_async,
+ * the errors from Gde2URL, #g_shell_parse_argv and #g_spawn_async,
  * in addition to it's own.  The files are
  * only added if the entry defines one of the standard % strings in it's
  * Exec field.
@@ -2153,9 +2153,9 @@ gde2_desktop_item_launch_on_screen_with_env (
  * is returned and @error is set.
  */
 int
-gde2_desktop_item_launch (const MateDesktopItem       *item,
+gde2_desktop_item_launch (const Gde2DesktopItem       *item,
 			   GList                        *file_list,
-			   MateDesktopItemLaunchFlags   flags,
+			   Gde2DesktopItemLaunchFlags   flags,
 			   GError                      **error)
 {
 	return gde2_desktop_item_launch_on_screen_with_env (
@@ -2179,9 +2179,9 @@ gde2_desktop_item_launch (const MateDesktopItem       *item,
  * is returned and @error is set.
  */
 int
-gde2_desktop_item_launch_with_env (const MateDesktopItem       *item,
+gde2_desktop_item_launch_with_env (const Gde2DesktopItem       *item,
 				    GList                        *file_list,
-				    MateDesktopItemLaunchFlags   flags,
+				    Gde2DesktopItemLaunchFlags   flags,
 				    char                        **envp,
 				    GError                      **error)
 {
@@ -2208,9 +2208,9 @@ gde2_desktop_item_launch_with_env (const MateDesktopItem       *item,
  * is returned and @error is set.
  */
 int
-gde2_desktop_item_launch_on_screen (const MateDesktopItem       *item,
+gde2_desktop_item_launch_on_screen (const Gde2DesktopItem       *item,
 				     GList                        *file_list,
-				     MateDesktopItemLaunchFlags   flags,
+				     Gde2DesktopItemLaunchFlags   flags,
 				     GdkScreen                    *screen,
 				     int                           workspace,
 				     GError                      **error)
@@ -2236,9 +2236,9 @@ gde2_desktop_item_launch_on_screen (const MateDesktopItem       *item,
  * return of the last one is returned.
  */
 int
-gde2_desktop_item_drop_uri_list (const MateDesktopItem *item,
+gde2_desktop_item_drop_uri_list (const Gde2DesktopItem *item,
 				  const char *uri_list,
-				  MateDesktopItemLaunchFlags flags,
+				  Gde2DesktopItemLaunchFlags flags,
 				  GError **error)
 {
 	return gde2_desktop_item_drop_uri_list_with_env (item, uri_list,
@@ -2262,9 +2262,9 @@ gde2_desktop_item_drop_uri_list (const MateDesktopItem *item,
 * return of the last one is returned.
 */
 int
-gde2_desktop_item_drop_uri_list_with_env (const MateDesktopItem *item,
+gde2_desktop_item_drop_uri_list_with_env (const Gde2DesktopItem *item,
 					   const char *uri_list,
-					   MateDesktopItemLaunchFlags flags,
+					   Gde2DesktopItemLaunchFlags flags,
 					   char                        **envp,
 					   GError **error)
 {
@@ -2321,7 +2321,7 @@ exec_exists (const char *exec)
  * Returns: A boolean, %TRUE if it exists, %FALSE otherwise.
  */
 gboolean
-gde2_desktop_item_exists (const MateDesktopItem *item)
+gde2_desktop_item_exists (const Gde2DesktopItem *item)
 {
 	const char *try_exec;
 	const char *exec;
@@ -2375,10 +2375,10 @@ gde2_desktop_item_exists (const MateDesktopItem *item)
  * how the 'Exec' field should be handeled.
  *
  * Returns: The type of the specified 'item'. The returned
- * memory remains owned by the MateDesktopItem and should not be freed.
+ * memory remains owned by the Gde2DesktopItem and should not be freed.
  */
-MateDesktopItemType
-gde2_desktop_item_get_entry_type (const MateDesktopItem *item)
+Gde2DesktopItemType
+gde2_desktop_item_get_entry_type (const Gde2DesktopItem *item)
 {
 	g_return_val_if_fail (item != NULL, 0);
 	g_return_val_if_fail (item->refcount > 0, 0);
@@ -2387,8 +2387,8 @@ gde2_desktop_item_get_entry_type (const MateDesktopItem *item)
 }
 
 void
-gde2_desktop_item_set_entry_type (MateDesktopItem *item,
-				   MateDesktopItemType type)
+gde2_desktop_item_set_entry_type (Gde2DesktopItem *item,
+				   Gde2DesktopItemType type)
 {
 	g_return_if_fail (item != NULL);
 	g_return_if_fail (item->refcount > 0);
@@ -2436,10 +2436,10 @@ gde2_desktop_item_set_entry_type (MateDesktopItem *item,
  *
  * Returns: An enum value that specifies whether the item has changed since being loaded.
  */
-MateDesktopItemStatus
-gde2_desktop_item_get_file_status (const MateDesktopItem *item)
+Gde2DesktopItemStatus
+gde2_desktop_item_get_file_status (const Gde2DesktopItem *item)
 {
-	MateDesktopItemStatus retval;
+	Gde2DesktopItemStatus retval;
 	GFile *file;
 	GFileInfo *info;
 
@@ -2549,7 +2549,7 @@ gde2_desktop_item_find_icon (GtkIconTheme *icon_theme,
  * Returns: A newly allocated string
  */
 char *
-gde2_desktop_item_get_icon (const MateDesktopItem *item,
+gde2_desktop_item_get_icon (const Gde2DesktopItem *item,
 			     GtkIconTheme *icon_theme)
 {
 	/* maybe this function should be deprecated in favour of find icon
@@ -2574,7 +2574,7 @@ gde2_desktop_item_get_icon (const MateDesktopItem *item,
  *
  */
 const char *
-gde2_desktop_item_get_location (const MateDesktopItem *item)
+gde2_desktop_item_get_location (const Gde2DesktopItem *item)
 {
 	g_return_val_if_fail (item != NULL, NULL);
 	g_return_val_if_fail (item->refcount > 0, NULL);
@@ -2590,7 +2590,7 @@ gde2_desktop_item_get_location (const MateDesktopItem *item)
  * Set's the 'location' uri of this item.
  */
 void
-gde2_desktop_item_set_location (MateDesktopItem *item, const char *location)
+gde2_desktop_item_set_location (Gde2DesktopItem *item, const char *location)
 {
 	g_return_if_fail (item != NULL);
 	g_return_if_fail (item->refcount > 0);
@@ -2640,7 +2640,7 @@ gde2_desktop_item_set_location (MateDesktopItem *item, const char *location)
  * Set's the 'location' uri of this item to the given @file.
  */
 void
-gde2_desktop_item_set_location_file (MateDesktopItem *item, const char *file)
+gde2_desktop_item_set_location_file (Gde2DesktopItem *item, const char *file)
 {
 	g_return_if_fail (item != NULL);
 	g_return_if_fail (item->refcount > 0);
@@ -2657,7 +2657,7 @@ gde2_desktop_item_set_location_file (MateDesktopItem *item, const char *file)
 }
 
 static void
-gde2_desktop_item_set_location_gfile (MateDesktopItem *item, GFile *file)
+gde2_desktop_item_set_location_gfile (Gde2DesktopItem *item, GFile *file)
 {
 	g_return_if_fail (item != NULL);
 	g_return_if_fail (item->refcount > 0);
@@ -2678,7 +2678,7 @@ gde2_desktop_item_set_location_gfile (MateDesktopItem *item, GFile *file)
  */
 
 gboolean
-gde2_desktop_item_attr_exists (const MateDesktopItem *item,
+gde2_desktop_item_attr_exists (const Gde2DesktopItem *item,
 				const char *attr)
 {
 	g_return_val_if_fail (item != NULL, FALSE);
@@ -2692,7 +2692,7 @@ gde2_desktop_item_attr_exists (const MateDesktopItem *item,
  * String type
  */
 const char *
-gde2_desktop_item_get_string (const MateDesktopItem *item,
+gde2_desktop_item_get_string (const Gde2DesktopItem *item,
 			       const char *attr)
 {
 	g_return_val_if_fail (item != NULL, NULL);
@@ -2703,7 +2703,7 @@ gde2_desktop_item_get_string (const MateDesktopItem *item,
 }
 
 void
-gde2_desktop_item_set_string (MateDesktopItem *item,
+gde2_desktop_item_set_string (Gde2DesktopItem *item,
 			       const char *attr,
 			       const char *value)
 {
@@ -2720,7 +2720,7 @@ gde2_desktop_item_set_string (MateDesktopItem *item,
 /*
  * LocaleString type
  */
-const char* gde2_desktop_item_get_localestring(const MateDesktopItem* item, const char* attr)
+const char* gde2_desktop_item_get_localestring(const Gde2DesktopItem* item, const char* attr)
 {
 	g_return_val_if_fail(item != NULL, NULL);
 	g_return_val_if_fail(item->refcount > 0, NULL);
@@ -2729,7 +2729,7 @@ const char* gde2_desktop_item_get_localestring(const MateDesktopItem* item, cons
 	return lookup_best_locale(item, attr);
 }
 
-const char* gde2_desktop_item_get_localestring_lang(const MateDesktopItem* item, const char* attr, const char* language)
+const char* gde2_desktop_item_get_localestring_lang(const Gde2DesktopItem* item, const char* attr, const char* language)
 {
 	g_return_val_if_fail(item != NULL, NULL);
 	g_return_val_if_fail(item->refcount > 0, NULL);
@@ -2753,7 +2753,7 @@ const char* gde2_desktop_item_get_localestring_lang(const MateDesktopItem* item,
  * if the attribute is invalid or there is no matching locale.
  */
 const char *
-gde2_desktop_item_get_attr_locale (const MateDesktopItem *item,
+gde2_desktop_item_get_attr_locale (const Gde2DesktopItem *item,
 				    const char             *attr)
 {
 	const char * const *langs_pointer;
@@ -2772,7 +2772,7 @@ gde2_desktop_item_get_attr_locale (const MateDesktopItem *item,
 }
 
 GList *
-gde2_desktop_item_get_languages (const MateDesktopItem *item,
+gde2_desktop_item_get_languages (const Gde2DesktopItem *item,
 				  const char *attr)
 {
 	GList *li;
@@ -2809,7 +2809,7 @@ get_language (void)
 }
 
 void
-gde2_desktop_item_set_localestring (MateDesktopItem *item,
+gde2_desktop_item_set_localestring (Gde2DesktopItem *item,
 				     const char *attr,
 				     const char *value)
 {
@@ -2821,7 +2821,7 @@ gde2_desktop_item_set_localestring (MateDesktopItem *item,
 }
 
 void
-gde2_desktop_item_set_localestring_lang (MateDesktopItem *item,
+gde2_desktop_item_set_localestring_lang (Gde2DesktopItem *item,
 					  const char *attr,
 					  const char *language,
 					  const char *value)
@@ -2834,7 +2834,7 @@ gde2_desktop_item_set_localestring_lang (MateDesktopItem *item,
 }
 
 void
-gde2_desktop_item_clear_localestring (MateDesktopItem *item,
+gde2_desktop_item_clear_localestring (Gde2DesktopItem *item,
 				       const char *attr)
 {
 	GList *l;
@@ -2854,7 +2854,7 @@ gde2_desktop_item_clear_localestring (MateDesktopItem *item,
  */
 
 char **
-gde2_desktop_item_get_strings (const MateDesktopItem *item,
+gde2_desktop_item_get_strings (const Gde2DesktopItem *item,
 				const char *attr)
 {
 	const char *value;
@@ -2872,7 +2872,7 @@ gde2_desktop_item_get_strings (const MateDesktopItem *item,
 }
 
 void
-gde2_desktop_item_set_strings (MateDesktopItem *item,
+gde2_desktop_item_set_strings (Gde2DesktopItem *item,
 				const char *attr,
 				char **strings)
 {
@@ -2894,7 +2894,7 @@ gde2_desktop_item_set_strings (MateDesktopItem *item,
  * Boolean type
  */
 gboolean
-gde2_desktop_item_get_boolean (const MateDesktopItem *item,
+gde2_desktop_item_get_boolean (const Gde2DesktopItem *item,
 				const char *attr)
 {
 	const char *value;
@@ -2915,7 +2915,7 @@ gde2_desktop_item_get_boolean (const MateDesktopItem *item,
 }
 
 void
-gde2_desktop_item_set_boolean (MateDesktopItem *item,
+gde2_desktop_item_set_boolean (Gde2DesktopItem *item,
 				const char *attr,
 				gboolean value)
 {
@@ -2927,7 +2927,7 @@ gde2_desktop_item_set_boolean (MateDesktopItem *item,
 }
 
 void
-gde2_desktop_item_set_launch_time (MateDesktopItem *item,
+gde2_desktop_item_set_launch_time (Gde2DesktopItem *item,
 				    guint32           timestamp)
 {
 	g_return_if_fail (item != NULL);
@@ -2939,7 +2939,7 @@ gde2_desktop_item_set_launch_time (MateDesktopItem *item,
  * Clearing attributes
  */
 void
-gde2_desktop_item_clear_section (MateDesktopItem *item,
+gde2_desktop_item_clear_section (Gde2DesktopItem *item,
 				  const char *section)
 {
 	Section *sec;
@@ -3350,7 +3350,7 @@ snarf_locale_from_key (const char *key)
 }
 
 static void
-insert_key (MateDesktopItem *item,
+insert_key (Gde2DesktopItem *item,
 	    Section *cur_section,
 	    Encoding encoding,
 	    const char *key,
@@ -3466,7 +3466,7 @@ insert_key (MateDesktopItem *item,
 }
 
 static void
-setup_type (MateDesktopItem *item, const char *uri)
+setup_type (Gde2DesktopItem *item, const char *uri)
 {
 	const char *type = g_hash_table_lookup (item->main_hash,
 						GDE2_DESKTOP_ITEM_TYPE);
@@ -3492,7 +3492,7 @@ setup_type (MateDesktopItem *item, const char *uri)
 
 /* fallback to find something suitable for C locale */
 static char *
-try_english_key (MateDesktopItem *item, const char *key)
+try_english_key (Gde2DesktopItem *item, const char *key)
 {
 	char *str;
 	char *locales[] = { "en_US", "en_GB", "en_AU", "en", NULL };
@@ -3516,7 +3516,7 @@ try_english_key (MateDesktopItem *item, const char *key)
 
 
 static void
-sanitize (MateDesktopItem *item, const char *uri)
+sanitize (Gde2DesktopItem *item, const char *uri)
 {
 	const char *type;
 
@@ -3579,7 +3579,7 @@ enum {
 	KeyValue
 };
 
-static MateDesktopItem *
+static Gde2DesktopItem *
 ditem_load (ReadBuf *rb,
 	    gboolean no_translations,
 	    GError **error)
@@ -3589,7 +3589,7 @@ ditem_load (ReadBuf *rb,
 	char *next = CharBuffer;
 	int c;
 	Encoding encoding;
-	MateDesktopItem *item;
+	Gde2DesktopItem *item;
 	Section *cur_section = NULL;
 	char *key = NULL;
 	gboolean old_kde = FALSE;
@@ -3794,7 +3794,7 @@ stream_printf (GFileOutputStream *stream, const char *format, ...)
 }
 
 static void
-dump_section (MateDesktopItem *item, GFileOutputStream *stream, Section *section)
+dump_section (Gde2DesktopItem *item, GFileOutputStream *stream, Section *section)
 {
 	GList *li;
 
@@ -3813,7 +3813,7 @@ dump_section (MateDesktopItem *item, GFileOutputStream *stream, Section *section
 }
 
 static gboolean
-ditem_save (MateDesktopItem *item, const char *uri, GError **error)
+ditem_save (Gde2DesktopItem *item, const char *uri, GError **error)
 {
 	GList *li;
 	GFile *file;
@@ -3876,7 +3876,7 @@ gde2_desktop_item_get_type (void)
 	static GType type = 0;
 
 	if (type == 0) {
-		type = g_boxed_type_register_static ("MateDesktopItem",
+		type = g_boxed_type_register_static ("Gde2DesktopItem",
 						     _gde2_desktop_item_copy,
 						     _gde2_desktop_item_free);
 	}

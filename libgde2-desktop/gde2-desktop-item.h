@@ -5,20 +5,20 @@
    Copyright (C) 2001 Sid Vicious
    All rights reserved.
 
-   This file is part of the Mate Library.
+   This file is part of the Gde2 Library.
 
-   The Mate Library is free software; you can redistribute it and/or
+   The Gde2 Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
    published by the Free Software Foundation; either version 2 of the
    License, or (at your option) any later version.
 
-   The Mate Library is distributed in the hope that it will be useful,
+   The Gde2 Library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    Library General Public License for more details.
 
    You should have received a copy of the GNU Library General Public
-   License along with the Mate Library; see the file COPYING.LIB.  If not,
+   License along with the Gde2 Library; see the file COPYING.LIB.  If not,
    write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
    Boston, MA  02110-1301, USA.  */
 /*
@@ -51,18 +51,18 @@ typedef enum {
 	GDE2_DESKTOP_ITEM_TYPE_DIRECTORY,
 	GDE2_DESKTOP_ITEM_TYPE_SERVICE,
 	GDE2_DESKTOP_ITEM_TYPE_SERVICE_TYPE
-} MateDesktopItemType;
+} Gde2DesktopItemType;
 
 typedef enum {
         GDE2_DESKTOP_ITEM_UNCHANGED = 0,
         GDE2_DESKTOP_ITEM_CHANGED = 1,
         GDE2_DESKTOP_ITEM_DISAPPEARED = 2
-} MateDesktopItemStatus;
+} Gde2DesktopItemStatus;
 
 #define GDE2_TYPE_DESKTOP_ITEM         (gde2_desktop_item_get_type ())
 GType gde2_desktop_item_get_type       (void);
 
-typedef struct _MateDesktopItem MateDesktopItem;
+typedef struct _Gde2DesktopItem Gde2DesktopItem;
 
 /* standard */
 #define GDE2_DESKTOP_ITEM_ENCODING	"Encoding" /* string */
@@ -104,7 +104,7 @@ typedef enum {
 	/* Use the TryExec field to determine if this should be loaded */
         GDE2_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS = 1<<0,
         GDE2_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS = 1<<1
-} MateDesktopItemLoadFlags;
+} Gde2DesktopItemLoadFlags;
 
 typedef enum {
 	/* Never launch more instances even if the app can only
@@ -120,12 +120,12 @@ typedef enum {
 	GDE2_DESKTOP_ITEM_LAUNCH_APPEND_PATHS = 1<<3,
 	/* Don't automatically reap child process.  */
 	GDE2_DESKTOP_ITEM_LAUNCH_DO_NOT_REAP_CHILD = 1<<4
-} MateDesktopItemLaunchFlags;
+} Gde2DesktopItemLaunchFlags;
 
 typedef enum {
 	/* Don't check the kde directories */
         GDE2_DESKTOP_ITEM_ICON_NO_KDE = 1<<0
-} MateDesktopItemIconFlags;
+} Gde2DesktopItemIconFlags;
 
 typedef enum {
 	GDE2_DESKTOP_ITEM_ERROR_NO_FILENAME /* No filename set or given on save */,
@@ -136,7 +136,7 @@ typedef enum {
 	GDE2_DESKTOP_ITEM_ERROR_NO_URL /* No URL on a url entry*/,
 	GDE2_DESKTOP_ITEM_ERROR_NOT_LAUNCHABLE /* Not a launchable type of item */,
 	GDE2_DESKTOP_ITEM_ERROR_INVALID_TYPE /* Not of type application/x-gde2-app-info */
-} MateDesktopItemError;
+} Gde2DesktopItemError;
 
 /* Note that functions can also return the G_FILE_ERROR_* errors */
 
@@ -144,79 +144,79 @@ typedef enum {
 GQuark gde2_desktop_item_error_quark (void);
 
 /* Returned item from new*() and copy() methods have a refcount of 1 */
-MateDesktopItem *      gde2_desktop_item_new               (void);
-MateDesktopItem *      gde2_desktop_item_new_from_file     (const char                 *file,
-							      MateDesktopItemLoadFlags   flags,
+Gde2DesktopItem *      gde2_desktop_item_new               (void);
+Gde2DesktopItem *      gde2_desktop_item_new_from_file     (const char                 *file,
+							      Gde2DesktopItemLoadFlags   flags,
 							      GError                    **error);
-MateDesktopItem *      gde2_desktop_item_new_from_uri      (const char                 *uri,
-							      MateDesktopItemLoadFlags   flags,
+Gde2DesktopItem *      gde2_desktop_item_new_from_uri      (const char                 *uri,
+							      Gde2DesktopItemLoadFlags   flags,
 							      GError                    **error);
-MateDesktopItem *      gde2_desktop_item_new_from_string   (const char                 *uri,
+Gde2DesktopItem *      gde2_desktop_item_new_from_string   (const char                 *uri,
 							      const char                 *string,
 							      gssize                      length,
-							      MateDesktopItemLoadFlags   flags,
+							      Gde2DesktopItemLoadFlags   flags,
 							      GError                    **error);
-MateDesktopItem *      gde2_desktop_item_new_from_basename (const char                 *basename,
-							      MateDesktopItemLoadFlags   flags,
+Gde2DesktopItem *      gde2_desktop_item_new_from_basename (const char                 *basename,
+							      Gde2DesktopItemLoadFlags   flags,
 							      GError                    **error);
-MateDesktopItem *      gde2_desktop_item_copy              (const MateDesktopItem     *item);
+Gde2DesktopItem *      gde2_desktop_item_copy              (const Gde2DesktopItem     *item);
 
 /* if under is NULL save in original location */
-gboolean                gde2_desktop_item_save              (MateDesktopItem           *item,
+gboolean                gde2_desktop_item_save              (Gde2DesktopItem           *item,
 							      const char                 *under,
 							      gboolean			  force,
 							      GError                    **error);
-MateDesktopItem *      gde2_desktop_item_ref               (MateDesktopItem           *item);
-void                    gde2_desktop_item_unref             (MateDesktopItem           *item);
-int			gde2_desktop_item_launch	     (const MateDesktopItem     *item,
+Gde2DesktopItem *      gde2_desktop_item_ref               (Gde2DesktopItem           *item);
+void                    gde2_desktop_item_unref             (Gde2DesktopItem           *item);
+int			gde2_desktop_item_launch	     (const Gde2DesktopItem     *item,
 							      GList                      *file_list,
-							      MateDesktopItemLaunchFlags flags,
+							      Gde2DesktopItemLaunchFlags flags,
 							      GError                    **error);
-int			gde2_desktop_item_launch_with_env   (const MateDesktopItem     *item,
+int			gde2_desktop_item_launch_with_env   (const Gde2DesktopItem     *item,
 							      GList                      *file_list,
-							      MateDesktopItemLaunchFlags flags,
+							      Gde2DesktopItemLaunchFlags flags,
 							      char                      **envp,
 							      GError                    **error);
 
-int                     gde2_desktop_item_launch_on_screen  (const MateDesktopItem       *item,
+int                     gde2_desktop_item_launch_on_screen  (const Gde2DesktopItem       *item,
 							      GList                        *file_list,
-							      MateDesktopItemLaunchFlags   flags,
+							      Gde2DesktopItemLaunchFlags   flags,
 							      GdkScreen                    *screen,
 							      int                           workspace,
 							      GError                      **error);
 
 /* A list of files or urls dropped onto an icon */
-int                     gde2_desktop_item_drop_uri_list     (const MateDesktopItem     *item,
+int                     gde2_desktop_item_drop_uri_list     (const Gde2DesktopItem     *item,
 							      const char                 *uri_list,
-							      MateDesktopItemLaunchFlags flags,
+							      Gde2DesktopItemLaunchFlags flags,
 							      GError                    **error);
 
-int                     gde2_desktop_item_drop_uri_list_with_env    (const MateDesktopItem     *item,
+int                     gde2_desktop_item_drop_uri_list_with_env    (const Gde2DesktopItem     *item,
 								      const char                 *uri_list,
-								      MateDesktopItemLaunchFlags flags,
+								      Gde2DesktopItemLaunchFlags flags,
 								      char                      **envp,
 								      GError                    **error);
 
-gboolean                gde2_desktop_item_exists            (const MateDesktopItem     *item);
+gboolean                gde2_desktop_item_exists            (const Gde2DesktopItem     *item);
 
-MateDesktopItemType	gde2_desktop_item_get_entry_type    (const MateDesktopItem	 *item);
+Gde2DesktopItemType	gde2_desktop_item_get_entry_type    (const Gde2DesktopItem	 *item);
 /* You could also just use the set_string on the TYPE argument */
-void			gde2_desktop_item_set_entry_type    (MateDesktopItem		 *item,
-							      MateDesktopItemType	  type);
+void			gde2_desktop_item_set_entry_type    (Gde2DesktopItem		 *item,
+							      Gde2DesktopItemType	  type);
 
 /* Get current location on disk */
-const char *            gde2_desktop_item_get_location      (const MateDesktopItem     *item);
-void                    gde2_desktop_item_set_location      (MateDesktopItem           *item,
+const char *            gde2_desktop_item_get_location      (const Gde2DesktopItem     *item);
+void                    gde2_desktop_item_set_location      (Gde2DesktopItem           *item,
 							      const char                 *location);
-void                    gde2_desktop_item_set_location_file (MateDesktopItem           *item,
+void                    gde2_desktop_item_set_location_file (Gde2DesktopItem           *item,
 							      const char                 *file);
-MateDesktopItemStatus  gde2_desktop_item_get_file_status   (const MateDesktopItem     *item);
+Gde2DesktopItemStatus  gde2_desktop_item_get_file_status   (const Gde2DesktopItem     *item);
 
 /*
  * Get the icon, this is not as simple as getting the Icon attr as it actually tries to find
  * it and returns %NULL if it can't
  */
-char *                  gde2_desktop_item_get_icon          (const MateDesktopItem     *item,
+char *                  gde2_desktop_item_get_icon          (const Gde2DesktopItem     *item,
 							      GtkIconTheme               *icon_theme);
 
 char *                  gde2_desktop_item_find_icon         (GtkIconTheme               *icon_theme,
@@ -229,42 +229,42 @@ char *                  gde2_desktop_item_find_icon         (GtkIconTheme       
 /*
  * Reading/Writing different sections, NULL is the standard section
  */
-gboolean                gde2_desktop_item_attr_exists       (const MateDesktopItem     *item,
+gboolean                gde2_desktop_item_attr_exists       (const Gde2DesktopItem     *item,
 							      const char                 *attr);
 
 /*
  * String type
  */
-const char *            gde2_desktop_item_get_string        (const MateDesktopItem     *item,
+const char *            gde2_desktop_item_get_string        (const Gde2DesktopItem     *item,
 							      const char		 *attr);
 
-void                    gde2_desktop_item_set_string        (MateDesktopItem           *item,
+void                    gde2_desktop_item_set_string        (Gde2DesktopItem           *item,
 							      const char		 *attr,
 							      const char                 *value);
 
-const char *            gde2_desktop_item_get_attr_locale   (const MateDesktopItem     *item,
+const char *            gde2_desktop_item_get_attr_locale   (const Gde2DesktopItem     *item,
 							      const char		 *attr);
 
 /*
  * LocaleString type
  */
-const char *            gde2_desktop_item_get_localestring  (const MateDesktopItem     *item,
+const char *            gde2_desktop_item_get_localestring  (const Gde2DesktopItem     *item,
 							      const char		 *attr);
-const char *            gde2_desktop_item_get_localestring_lang (const MateDesktopItem *item,
+const char *            gde2_desktop_item_get_localestring_lang (const Gde2DesktopItem *item,
 								  const char		 *attr,
 								  const char             *language);
 /* use g_list_free only */
-GList *                 gde2_desktop_item_get_languages     (const MateDesktopItem     *item,
+GList *                 gde2_desktop_item_get_languages     (const Gde2DesktopItem     *item,
 							      const char		 *attr);
 
-void                    gde2_desktop_item_set_localestring  (MateDesktopItem           *item,
+void                    gde2_desktop_item_set_localestring  (Gde2DesktopItem           *item,
 							      const char		 *attr,
 							      const char                 *value);
-void                    gde2_desktop_item_set_localestring_lang  (MateDesktopItem      *item,
+void                    gde2_desktop_item_set_localestring_lang  (Gde2DesktopItem      *item,
 								   const char		 *attr,
 								   const char		 *language,
 								   const char            *value);
-void                    gde2_desktop_item_clear_localestring(MateDesktopItem           *item,
+void                    gde2_desktop_item_clear_localestring(Gde2DesktopItem           *item,
 							      const char		 *attr);
 
 /*
@@ -272,27 +272,27 @@ void                    gde2_desktop_item_clear_localestring(MateDesktopItem    
  */
 
 /* use gde2_desktop_item_free_string_list */
-char **                 gde2_desktop_item_get_strings       (const MateDesktopItem     *item,
+char **                 gde2_desktop_item_get_strings       (const Gde2DesktopItem     *item,
 							      const char		 *attr);
 
-void			gde2_desktop_item_set_strings       (MateDesktopItem           *item,
+void			gde2_desktop_item_set_strings       (Gde2DesktopItem           *item,
 							      const char                 *attr,
 							      char                      **strings);
 
 /*
  * Boolean type
  */
-gboolean                gde2_desktop_item_get_boolean       (const MateDesktopItem     *item,
+gboolean                gde2_desktop_item_get_boolean       (const Gde2DesktopItem     *item,
 							      const char		 *attr);
 
-void                    gde2_desktop_item_set_boolean       (MateDesktopItem           *item,
+void                    gde2_desktop_item_set_boolean       (Gde2DesktopItem           *item,
 							      const char		 *attr,
 							      gboolean                    value);
 
 /*
  * Xserver time of user action that caused the application launch to start.
  */
-void                    gde2_desktop_item_set_launch_time   (MateDesktopItem           *item,
+void                    gde2_desktop_item_set_launch_time   (Gde2DesktopItem           *item,
 							      guint32                     timestamp);
 
 /*
@@ -300,7 +300,7 @@ void                    gde2_desktop_item_set_launch_time   (MateDesktopItem    
  */
 #define                 gde2_desktop_item_clear_attr(item,attr) \
 				gde2_desktop_item_set_string(item,attr,NULL)
-void			gde2_desktop_item_clear_section     (MateDesktopItem           *item,
+void			gde2_desktop_item_clear_section     (Gde2DesktopItem           *item,
 							      const char                 *section);
 
 G_END_DECLS

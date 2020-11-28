@@ -25,7 +25,7 @@ msgstr ""
 #. * displayed in the about box to give credit to the translator(s).
 #: ../gde2-about/gde2-about.c:96
 msgid "translator-credits"
-msgstr "Matic Žgur <mr.zgur@gmail.com>\nAndraž Tori <andraz.tori1@guest.arnes.si>\nMatej Urbančič <gde2ju@svn.gde2.org>\nDamir Jerovšek <damir.jerovsek@ubuntu.com> "
+msgstr "Matic Žgur <mr.zgur@gmail.com>\nAndraž Tori <andraz.tori1@guest.arnes.si>\nGde2j Urbančič <gde2ju@svn.gde2.org>\nDamir Jerovšek <damir.jerovsek@ubuntu.com> "
 
 #: ../gde2-about/gde2-about.desktop.in.in.h:1
 msgid "About GDE2"

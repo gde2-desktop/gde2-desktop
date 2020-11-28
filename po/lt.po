@@ -1291,7 +1291,7 @@ msgstr "Neleisti naudotojui keisti temų nustatymų."
 
 #: ../schemas/org.gde2.lockdown.gschema.xml.in.h:17
 msgid "Disable log out"
-msgstr "Išjungti atsijungimą iš Mate"
+msgstr "Išjungti atsijungimą iš Gde2"
 
 #: ../schemas/org.gde2.lockdown.gschema.xml.in.h:18
 msgid "Prevent the user from logging out."

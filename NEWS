@@ -34,7 +34,7 @@ GDE2-desktop 1.14.1
 
 GDE2-desktop 1.14.0
 
-  * Drop MateConf migration script and ancient GDE2-conf-import tool
+  * Drop Gde2Conf migration script and ancient GDE2-conf-import tool
   * Fix deprecated usage of GtkHBox and GtkVBox in GTK+3 build
   * Translations update
   * Fix Changelog generation
@@ -77,7 +77,7 @@ GDE2-desktop 1.10.1
 
 GDE2-desktop 1.10.0
 
-  * Turn MateRRScreen, GnomeRRConfig and GnomeOutputInfo into a GObject.
+  * Turn Gde2RRScreen, GnomeRRConfig and GnomeOutputInfo into a GObject.
     Thanks to monsta for helping to test this.
   * Add gobject introspection
   * Many RANDR fixes
@@ -85,12 +85,12 @@ GDE2-desktop 1.10.0
   * use GDK_WINDOW_XID for inter-GTK compatibility
   * Updated mpaste for website change
   * Added org.GDE2.debug GSettings schema
-  * Added MateColorButton class to have traditional color selection
+  * Added Gde2ColorButton class to have traditional color selection
     dialog with GTK3
   * Removed desktop-docs
   * Removed user guide
   * Removed libunique optional dependency
-  * Added MateAboutDialog class to have traditional about dialog with
+  * Added Gde2AboutDialog class to have traditional about dialog with
     GTK3 too
 
 GDE2-desktop 1.8.0

@@ -22,7 +22,7 @@ AM_CPPFLAGS =							\
 	$(GDE2_DESKTOP_CFLAGS)					\
 	$(XLIB_CFLAGS)						\
 	$(DCONF_CFLAGS)						\
-	-DG_LOG_DOMAIN=\"MateDesktop\"				\
+	-DG_LOG_DOMAIN=\"Gde2Desktop\"				\
 	-DGDE2LOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale\""	\
 	-DPNP_IDS=\""$(PNP_IDS)"\"				\
 	$(DISABLE_DEPRECATED_CFLAGS)
@@ -103,15 +103,15 @@ INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
 
 if HAVE_INTROSPECTION
 
-MateDesktop-2.0.gir: libgde2-desktop-2.la
-MateDesktop_2_0_gir_INCLUDES = GObject-2.0 Gtk-$(GTK_API_VERSION)
-MateDesktop_2_0_gir_PACKAGES = gdk-pixbuf-2.0 glib-2.0 gobject-2.0 gio-2.0 gtk+-$(GTK_API_VERSION)
-MateDesktop_2_0_gir_CFLAGS = -DGDE2_DESKTOP_USE_UNSTABLE_API -I$(top_srcdir)
-MateDesktop_2_0_gir_LIBS = libgde2-desktop-2.la
-MateDesktop_2_0_gir_FILES = $(introspection_sources) $(libgde2_desktop_HEADERS)
-MateDesktop_2_0_gir_SCANNERFLAGS = --identifier-prefix=Mate --symbol-prefix=gde2_
+Gde2Desktop-2.0.gir: libgde2-desktop-2.la
+Gde2Desktop_2_0_gir_INCLUDES = GObject-2.0 Gtk-$(GTK_API_VERSION)
+Gde2Desktop_2_0_gir_PACKAGES = gdk-pixbuf-2.0 glib-2.0 gobject-2.0 gio-2.0 gtk+-$(GTK_API_VERSION)
+Gde2Desktop_2_0_gir_CFLAGS = -DGDE2_DESKTOP_USE_UNSTABLE_API -I$(top_srcdir)
+Gde2Desktop_2_0_gir_LIBS = libgde2-desktop-2.la
+Gde2Desktop_2_0_gir_FILES = $(introspection_sources) $(libgde2_desktop_HEADERS)
+Gde2Desktop_2_0_gir_SCANNERFLAGS = --identifier-prefix=Gde2 --symbol-prefix=gde2_
 INTROSPECTION_SCANNER_ARGS += $(patsubst %,--c-include='libgde2-desktop/%',$(libgde2_desktop_HEADERS))
-INTROSPECTION_GIRS += MateDesktop-2.0.gir
+INTROSPECTION_GIRS += Gde2Desktop-2.0.gir
 
 girdir = $(datadir)/gir-1.0
 gir_DATA = $(INTROSPECTION_GIRS)

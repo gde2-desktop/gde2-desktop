@@ -38,7 +38,7 @@
 #include <gde2-bg.h>
 #include "gde2-bg-crossfade.h"
 
-struct _MateBGCrossfadePrivate
+struct _Gde2BGCrossfadePrivate
 {
 	GdkWindow       *window;
 	GtkWidget       *widget;
@@ -66,10 +66,10 @@ enum {
 
 static guint signals[NUMBER_OF_SIGNALS] = { 0 };
 
-G_DEFINE_TYPE (MateBGCrossfade, gde2_bg_crossfade, G_TYPE_OBJECT)
+G_DEFINE_TYPE (Gde2BGCrossfade, gde2_bg_crossfade, G_TYPE_OBJECT)
 #define GDE2_BG_CROSSFADE_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o),\
 			                   GDE2_TYPE_BG_CROSSFADE,\
-			                   MateBGCrossfadePrivate))
+			                   Gde2BGCrossfadePrivate))
 
 static void
 gde2_bg_crossfade_set_property (GObject      *object,
@@ -77,7 +77,7 @@ gde2_bg_crossfade_set_property (GObject      *object,
 				 const GValue *value,
 				 GParamSpec   *pspec)
 {
-	MateBGCrossfade *fade;
+	Gde2BGCrossfade *fade;
 
 	g_assert (GDE2_IS_BG_CROSSFADE (object));
 
@@ -103,7 +103,7 @@ gde2_bg_crossfade_get_property (GObject    *object,
 			     GValue     *value,
 			     GParamSpec *pspec)
 {
-	MateBGCrossfade *fade;
+	Gde2BGCrossfade *fade;
 
 	g_assert (GDE2_IS_BG_CROSSFADE (object));
 
@@ -127,7 +127,7 @@ gde2_bg_crossfade_get_property (GObject    *object,
 static void
 gde2_bg_crossfade_finalize (GObject *object)
 {
-	MateBGCrossfade *fade;
+	Gde2BGCrossfade *fade;
 
 	fade = GDE2_BG_CROSSFADE (object);
 
@@ -150,7 +150,7 @@ gde2_bg_crossfade_finalize (GObject *object)
 }
 
 static void
-gde2_bg_crossfade_class_init (MateBGCrossfadeClass *fade_class)
+gde2_bg_crossfade_class_init (Gde2BGCrossfadeClass *fade_class)
 {
 	GObjectClass *gobject_class;
 
@@ -161,7 +161,7 @@ gde2_bg_crossfade_class_init (MateBGCrossfadeClass *fade_class)
 	gobject_class->finalize = gde2_bg_crossfade_finalize;
 
 	/**
-	 * MateBGCrossfade:width:
+	 * Gde2BGCrossfade:width:
 	 *
 	 * When a crossfade is running, this is width of the fading
 	 * surface.
@@ -175,7 +175,7 @@ gde2_bg_crossfade_class_init (MateBGCrossfadeClass *fade_class)
 							    G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
 
 	/**
-	 * MateBGCrossfade:height:
+	 * Gde2BGCrossfade:height:
 	 *
 	 * When a crossfade is running, this is height of the fading
 	 * surface.
@@ -188,8 +188,8 @@ gde2_bg_crossfade_class_init (MateBGCrossfadeClass *fade_class)
 							   G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
 
 	/**
-	 * MateBGCrossfade::finished:
-	 * @fade: the #MateBGCrossfade that received the signal
+	 * Gde2BGCrossfade::finished:
+	 * @fade: the #Gde2BGCrossfade that received the signal
 	 * @window: the #GdkWindow the crossfade happend on.
 	 *
 	 * When a crossfade finishes, @window will have a copy
@@ -202,11 +202,11 @@ gde2_bg_crossfade_class_init (MateBGCrossfadeClass *fade_class)
 					  g_cclosure_marshal_VOID__OBJECT,
 					  G_TYPE_NONE, 1, G_TYPE_OBJECT);
 
-	g_type_class_add_private (gobject_class, sizeof (MateBGCrossfadePrivate));
+	g_type_class_add_private (gobject_class, sizeof (Gde2BGCrossfadePrivate));
 }
 
 static void
-gde2_bg_crossfade_init (MateBGCrossfade *fade)
+gde2_bg_crossfade_init (Gde2BGCrossfade *fade)
 {
 	fade->priv = GDE2_BG_CROSSFADE_GET_PRIVATE (fade);
 
@@ -226,9 +226,9 @@ gde2_bg_crossfade_init (MateBGCrossfade *fade)
  * Creates a new object to manage crossfading a
  * window background between two #cairo_surface_ts.
  *
- * Return value: the new #MateBGCrossfade
+ * Return value: the new #Gde2BGCrossfade
  **/
-MateBGCrossfade* gde2_bg_crossfade_new (int width, int height)
+Gde2BGCrossfade* gde2_bg_crossfade_new (int width, int height)
 {
 	GObject* object;
 
@@ -237,7 +237,7 @@ MateBGCrossfade* gde2_bg_crossfade_new (int width, int height)
 		"height", height,
 		NULL);
 
-	return (MateBGCrossfade*) object;
+	return (Gde2BGCrossfade*) object;
 }
 
 static cairo_surface_t *
@@ -346,7 +346,7 @@ tile_pixmap (GdkPixmap *pixmap,
 
 /**
  * gde2_bg_crossfade_set_start_surface:
- * @fade: a #MateBGCrossfade
+ * @fade: a #Gde2BGCrossfade
  * @surface: The cairo surface to fade from
  *
  * Before initiating a crossfade with gde2_bg_crossfade_start()
@@ -358,9 +358,9 @@ tile_pixmap (GdkPixmap *pixmap,
  **/
 gboolean
 #if GTK_CHECK_VERSION(3, 0, 0)
-gde2_bg_crossfade_set_start_surface (MateBGCrossfade* fade, cairo_surface_t *surface)
+gde2_bg_crossfade_set_start_surface (Gde2BGCrossfade* fade, cairo_surface_t *surface)
 #else
-gde2_bg_crossfade_set_start_pixmap (MateBGCrossfade* fade, GdkPixmap *pixmap)
+gde2_bg_crossfade_set_start_pixmap (Gde2BGCrossfade* fade, GdkPixmap *pixmap)
 #endif
 {
 	g_return_val_if_fail (GDE2_IS_BG_CROSSFADE (fade), FALSE);
@@ -399,7 +399,7 @@ get_current_time (void)
 
 /**
  * gde2_bg_crossfade_set_end_surface:
- * @fade: a #MateBGCrossfade
+ * @fade: a #Gde2BGCrossfade
  * @surface: The cairo surface to fade to
  *
  * Before initiating a crossfade with gde2_bg_crossfade_start()
@@ -411,9 +411,9 @@ get_current_time (void)
  **/
 gboolean
 #if GTK_CHECK_VERSION(3, 0, 0)
-gde2_bg_crossfade_set_end_surface (MateBGCrossfade* fade, cairo_surface_t *surface)
+gde2_bg_crossfade_set_end_surface (Gde2BGCrossfade* fade, cairo_surface_t *surface)
 #else
-gde2_bg_crossfade_set_end_pixmap (MateBGCrossfade* fade, GdkPixmap *pixmap)
+gde2_bg_crossfade_set_end_pixmap (Gde2BGCrossfade* fade, GdkPixmap *pixmap)
 #endif
 {
 	g_return_val_if_fail (GDE2_IS_BG_CROSSFADE (fade), FALSE);
@@ -438,7 +438,7 @@ gde2_bg_crossfade_set_end_pixmap (MateBGCrossfade* fade, GdkPixmap *pixmap)
 }
 
 static gboolean
-animations_are_disabled (MateBGCrossfade *fade)
+animations_are_disabled (Gde2BGCrossfade *fade)
 {
 	GtkSettings *settings;
 	GdkScreen *screen;
@@ -456,7 +456,7 @@ animations_are_disabled (MateBGCrossfade *fade)
 }
 
 static void
-send_root_property_change_notification (MateBGCrossfade *fade)
+send_root_property_change_notification (Gde2BGCrossfade *fade)
 {
         long zero_length_pixmap = 0;
 
@@ -470,7 +470,7 @@ send_root_property_change_notification (MateBGCrossfade *fade)
 }
 
 static void
-draw_background (MateBGCrossfade *fade)
+draw_background (Gde2BGCrossfade *fade)
 {
 	if (fade->priv->widget != NULL) {
 		gtk_widget_queue_draw (fade->priv->widget);
@@ -538,7 +538,7 @@ on_widget_draw (GtkWidget       *widget,
 #else
                 GdkEventExpose  *event,
 #endif
-                MateBGCrossfade *fade)
+                Gde2BGCrossfade *fade)
 {
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	cairo_t *cr;
@@ -564,7 +564,7 @@ on_widget_draw (GtkWidget       *widget,
 }
 
 static gboolean
-on_tick (MateBGCrossfade *fade)
+on_tick (Gde2BGCrossfade *fade)
 {
 	gdouble now, percent_done;
 	cairo_t *cr;
@@ -620,7 +620,7 @@ on_tick (MateBGCrossfade *fade)
 }
 
 static void
-on_finished (MateBGCrossfade *fade)
+on_finished (Gde2BGCrossfade *fade)
 {
 	cairo_t *cr;
 
@@ -725,7 +725,7 @@ get_root_pixmap_id_surface (GdkDisplay *display)
 
 /**
  * gde2_bg_crossfade_start:
- * @fade: a #MateBGCrossfade
+ * @fade: a #Gde2BGCrossfade
  * @window: The #GdkWindow to draw crossfade on
  *
  * This function initiates a quick crossfade between two surfaces on
@@ -736,7 +736,7 @@ get_root_pixmap_id_surface (GdkDisplay *display)
  * set immediately to the end surface.
  **/
 void
-gde2_bg_crossfade_start (MateBGCrossfade *fade,
+gde2_bg_crossfade_start (Gde2BGCrossfade *fade,
                          GdkWindow        *window)
 {
 	GSource *source;
@@ -807,7 +807,7 @@ gde2_bg_crossfade_start (MateBGCrossfade *fade,
 
 /**
  * gde2_bg_crossfade_start_widget:
- * @fade: a #MateBGCrossfade
+ * @fade: a #Gde2BGCrossfade
  * @widget: The #GtkWidget to draw crossfade on
  *
  * This function initiates a quick crossfade between two surfaces on
@@ -818,7 +818,7 @@ gde2_bg_crossfade_start (MateBGCrossfade *fade,
  * set immediately to the end surface.
  **/
 void
-gde2_bg_crossfade_start_widget (MateBGCrossfade *fade,
+gde2_bg_crossfade_start_widget (Gde2BGCrossfade *fade,
                                 GtkWidget       *widget)
 {
 	GdkWindow *window;
@@ -835,7 +835,7 @@ gde2_bg_crossfade_start_widget (MateBGCrossfade *fade,
 
 /**
  * gde2_bg_crossfade_is_started:
- * @fade: a #MateBGCrossfade
+ * @fade: a #Gde2BGCrossfade
  *
  * This function reveals whether or not @fade is currently
  * running on a window.  See gde2_bg_crossfade_start() for
@@ -844,7 +844,7 @@ gde2_bg_crossfade_start_widget (MateBGCrossfade *fade,
  * Return value: %TRUE if fading, or %FALSE if not fading
  **/
 gboolean
-gde2_bg_crossfade_is_started (MateBGCrossfade *fade)
+gde2_bg_crossfade_is_started (Gde2BGCrossfade *fade)
 {
 	g_return_val_if_fail (GDE2_IS_BG_CROSSFADE (fade), FALSE);
 
@@ -853,14 +853,14 @@ gde2_bg_crossfade_is_started (MateBGCrossfade *fade)
 
 /**
  * gde2_bg_crossfade_stop:
- * @fade: a #MateBGCrossfade
+ * @fade: a #Gde2BGCrossfade
  *
  * This function stops any in progress crossfades that may be
  * happening.  It's harmless to call this function if @fade is
  * already stopped.
  **/
 void
-gde2_bg_crossfade_stop (MateBGCrossfade *fade)
+gde2_bg_crossfade_stop (Gde2BGCrossfade *fade)
 {
 	g_return_if_fail (GDE2_IS_BG_CROSSFADE (fade));
 

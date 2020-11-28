@@ -27,11 +27,11 @@ msgstr ""
 
 #: ../gde2-about/gde2-about.desktop.in.in.h:1
 msgid "About GDE2"
-msgstr "Tietoja Matesta"
+msgstr "Tietoja Gde2sta"
 
 #: ../gde2-about/gde2-about.desktop.in.in.h:2
 msgid "Learn more about GDE2"
-msgstr "Opi lisää Matesta"
+msgstr "Opi lisää Gde2sta"
 
 #: ../gde2-about/gde2-about.h:45
 msgid ""

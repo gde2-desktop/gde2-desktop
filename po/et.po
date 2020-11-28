@@ -69,7 +69,7 @@ msgid ""
 "The name “GDE2” comes from yerba maté, a species of holly native to "
 "subtropical South America. Its leaves contain caffeine and are used to make "
 "infusions and a beverage called gde2."
-msgstr "Nimi “GDE2” on tuletatud Lõuna-Ameerikast pärit gde2puu lehtedest valmistatavast joogist. Matepuu lehed sisaldavad kofeiini ja nendest valmistatud teejooki nimetatakse gde2ks."
+msgstr "Nimi “GDE2” on tuletatud Lõuna-Ameerikast pärit gde2puu lehtedest valmistatavast joogist. Gde2puu lehed sisaldavad kofeiini ja nendest valmistatud teejooki nimetatakse gde2ks."
 
 #. Translators: "Unknown" here is used to identify a monitor for which
 #. * we don't know the vendor. When a vendor is known, the name of the

@@ -2,20 +2,20 @@
  *
  * Copyright 2007, 2008, Red Hat, Inc.
  * 
- * This file is part of the Mate Library.
+ * This file is part of the Gde2 Library.
  * 
- * The Mate Library is free software; you can redistribute it and/or
+ * The Gde2 Library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * The Mate Library is distributed in the hope that it will be useful,
+ * The Gde2 Library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  * 
  * You should have received a copy of the GNU Library General Public
- * License along with the Mate Library; see the file COPYING.LIB.  If not,
+ * License along with the Gde2 Library; see the file COPYING.LIB.  If not,
  * write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  * 
@@ -73,47 +73,47 @@ enum {
 
 gint screen_signals[SCREEN_SIGNAL_LAST];
 
-struct MateRROutput
+struct Gde2RROutput
 {
     ScreenInfo *	info;
     RROutput		id;
     
     char *		name;
-    MateRRCrtc *	current_crtc;
+    Gde2RRCrtc *	current_crtc;
     gboolean		connected;
     gulong		width_mm;
     gulong		height_mm;
-    MateRRCrtc **	possible_crtcs;
-    MateRROutput **	clones;
-    MateRRMode **	modes;
+    Gde2RRCrtc **	possible_crtcs;
+    Gde2RROutput **	clones;
+    Gde2RRMode **	modes;
     int			n_preferred;
     guint8 *		edid_data;
     int         edid_size;
     char *              connector_type;
 };
 
-struct MateRROutputWrap
+struct Gde2RROutputWrap
 {
     RROutput		id;
 };
 
-struct MateRRCrtc
+struct Gde2RRCrtc
 {
     ScreenInfo *	info;
     RRCrtc		id;
     
-    MateRRMode *	current_mode;
-    MateRROutput **	current_outputs;
-    MateRROutput **	possible_outputs;
+    Gde2RRMode *	current_mode;
+    Gde2RROutput **	current_outputs;
+    Gde2RROutput **	possible_outputs;
     int			x;
     int			y;
     
-    MateRRRotation	current_rotation;
-    MateRRRotation	rotations;
+    Gde2RRRotation	current_rotation;
+    Gde2RRRotation	rotations;
     int			gamma_size;
 };
 
-struct MateRRMode
+struct Gde2RRMode
 {
     ScreenInfo *	info;
     RRMode		id;
@@ -123,42 +123,42 @@ struct MateRRMode
     int			freq;		/* in mHz */
 };
 
-/* MateRRCrtc */
-static MateRRCrtc *  crtc_new          (ScreenInfo         *info,
+/* Gde2RRCrtc */
+static Gde2RRCrtc *  crtc_new          (ScreenInfo         *info,
 					 RRCrtc              id);
-static MateRRCrtc *  crtc_copy         (const MateRRCrtc  *from);
-static void           crtc_free         (MateRRCrtc        *crtc);
+static Gde2RRCrtc *  crtc_copy         (const Gde2RRCrtc  *from);
+static void           crtc_free         (Gde2RRCrtc        *crtc);
 
 #ifdef HAVE_RANDR
-static gboolean       crtc_initialize   (MateRRCrtc        *crtc,
+static gboolean       crtc_initialize   (Gde2RRCrtc        *crtc,
 					 XRRScreenResources *res,
 					 GError            **error);
 #endif
 
-/* MateRROutput */
-static MateRROutput *output_new        (ScreenInfo         *info,
+/* Gde2RROutput */
+static Gde2RROutput *output_new        (ScreenInfo         *info,
 					 RROutput            id);
 
 #ifdef HAVE_RANDR
-static gboolean       output_initialize (MateRROutput      *output,
+static gboolean       output_initialize (Gde2RROutput      *output,
 					 XRRScreenResources *res,
 					 GError            **error);
 #endif
 
-static MateRROutput *output_copy       (const MateRROutput *from);
-static void           output_free       (MateRROutput      *output);
+static Gde2RROutput *output_copy       (const Gde2RROutput *from);
+static void           output_free       (Gde2RROutput      *output);
 
-/* MateRRMode */
-static MateRRMode *  mode_new          (ScreenInfo         *info,
+/* Gde2RRMode */
+static Gde2RRMode *  mode_new          (ScreenInfo         *info,
 					 RRMode              id);
 
 #ifdef HAVE_RANDR
-static void           mode_initialize   (MateRRMode        *mode,
+static void           mode_initialize   (Gde2RRMode        *mode,
 					 XRRModeInfo        *info);
 #endif
 
-static MateRRMode *  mode_copy         (const MateRRMode  *from);
-static void           mode_free         (MateRRMode        *mode);
+static Gde2RRMode *  mode_copy         (const Gde2RRMode  *from);
+static void           mode_free         (Gde2RRMode        *mode);
 
 
 static void gde2_rr_screen_finalize (GObject*);
@@ -166,12 +166,12 @@ static void gde2_rr_screen_set_property (GObject*, guint, const GValue*, GParamS
 static void gde2_rr_screen_get_property (GObject*, guint, GValue*, GParamSpec*);
 static gboolean gde2_rr_screen_initable_init (GInitable*, GCancellable*, GError**);
 static void gde2_rr_screen_initable_iface_init (GInitableIface *iface);
-G_DEFINE_TYPE_WITH_CODE (MateRRScreen, gde2_rr_screen, G_TYPE_OBJECT,
+G_DEFINE_TYPE_WITH_CODE (Gde2RRScreen, gde2_rr_screen, G_TYPE_OBJECT,
     G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE, gde2_rr_screen_initable_iface_init))
 
-G_DEFINE_BOXED_TYPE (MateRRCrtc, gde2_rr_crtc, crtc_copy, crtc_free)
-G_DEFINE_BOXED_TYPE (MateRROutput, gde2_rr_output, output_copy, output_free)
-G_DEFINE_BOXED_TYPE (MateRRMode, gde2_rr_mode, mode_copy, mode_free)
+G_DEFINE_BOXED_TYPE (Gde2RRCrtc, gde2_rr_crtc, crtc_copy, crtc_free)
+G_DEFINE_BOXED_TYPE (Gde2RROutput, gde2_rr_output, output_copy, output_free)
+G_DEFINE_BOXED_TYPE (Gde2RRMode, gde2_rr_mode, mode_copy, mode_free)
 
 /* Errors */
 
@@ -179,9 +179,9 @@ G_DEFINE_BOXED_TYPE (MateRRMode, gde2_rr_mode, mode_copy, mode_free)
  * gde2_rr_error_quark:
  *
  * Returns the #GQuark that will be used for #GError values returned by the
- * MateRR API.
+ * Gde2RR API.
  *
- * Return value: a #GQuark used to identify errors coming from the MateRR API.
+ * Return value: a #GQuark used to identify errors coming from the Gde2RR API.
  */
 GQuark
 gde2_rr_error_quark (void)
@@ -190,10 +190,10 @@ gde2_rr_error_quark (void)
 }
 
 /* Screen */
-static MateRROutput *
+static Gde2RROutput *
 gde2_rr_output_by_id (ScreenInfo *info, RROutput id)
 {
-    MateRROutput **output;
+    Gde2RROutput **output;
     
     g_assert (info != NULL);
     
@@ -206,10 +206,10 @@ gde2_rr_output_by_id (ScreenInfo *info, RROutput id)
     return NULL;
 }
 
-static MateRRCrtc *
+static Gde2RRCrtc *
 crtc_by_id (ScreenInfo *info, RRCrtc id)
 {
-    MateRRCrtc **crtc;
+    Gde2RRCrtc **crtc;
     
     if (!info)
         return NULL;
@@ -223,10 +223,10 @@ crtc_by_id (ScreenInfo *info, RRCrtc id)
     return NULL;
 }
 
-static MateRRMode *
+static Gde2RRMode *
 mode_by_id (ScreenInfo *info, RRMode id)
 {
-    MateRRMode **mode;
+    Gde2RRMode **mode;
     
     g_assert (info != NULL);
     
@@ -242,9 +242,9 @@ mode_by_id (ScreenInfo *info, RRMode id)
 static void
 screen_info_free (ScreenInfo *info)
 {
-    MateRROutput **output;
-    MateRRCrtc **crtc;
-    MateRRMode **mode;
+    Gde2RROutput **output;
+    Gde2RRCrtc **crtc;
+    Gde2RRMode **mode;
     
     g_assert (info != NULL);
 
@@ -288,16 +288,16 @@ screen_info_free (ScreenInfo *info)
 }
 
 static gboolean
-has_similar_mode (MateRROutput *output, MateRRMode *mode)
+has_similar_mode (Gde2RROutput *output, Gde2RRMode *mode)
 {
     int i;
-    MateRRMode **modes = gde2_rr_output_list_modes (output);
+    Gde2RRMode **modes = gde2_rr_output_list_modes (output);
     int width = gde2_rr_mode_get_width (mode);
     int height = gde2_rr_mode_get_height (mode);
 
     for (i = 0; modes[i] != NULL; ++i)
     {
-	MateRRMode *m = modes[i];
+	Gde2RRMode *m = modes[i];
 
 	if (gde2_rr_mode_get_width (m) == width	&&
 	    gde2_rr_mode_get_height (m) == height)
@@ -318,7 +318,7 @@ gather_clone_modes (ScreenInfo *info)
     for (i = 0; info->outputs[i] != NULL; ++i)
     {
 	int j;
-	MateRROutput *output1, *output2;
+	Gde2RROutput *output1, *output2;
 
 	output1 = info->outputs[i];
 	
@@ -327,7 +327,7 @@ gather_clone_modes (ScreenInfo *info)
 	
 	for (j = 0; output1->modes[j] != NULL; ++j)
 	{
-	    MateRRMode *mode = output1->modes[j];
+	    Gde2RRMode *mode = output1->modes[j];
 	    gboolean valid;
 	    int k;
 
@@ -353,7 +353,7 @@ gather_clone_modes (ScreenInfo *info)
 
     g_ptr_array_add (result, NULL);
     
-    info->clone_modes = (MateRRMode **)g_ptr_array_free (result, FALSE);
+    info->clone_modes = (Gde2RRMode **)g_ptr_array_free (result, FALSE);
 }
 
 #ifdef HAVE_RANDR
@@ -364,8 +364,8 @@ fill_screen_info_from_resources (ScreenInfo *info,
 {
     int i;
     GPtrArray *a;
-    MateRRCrtc **crtc;
-    MateRROutput **output;
+    Gde2RRCrtc **crtc;
+    Gde2RROutput **output;
 
     info->resources = resources;
 
@@ -375,32 +375,32 @@ fill_screen_info_from_resources (ScreenInfo *info,
     a = g_ptr_array_new ();
     for (i = 0; i < resources->ncrtc; ++i)
     {
-	MateRRCrtc *crtc = crtc_new (info, resources->crtcs[i]);
+	Gde2RRCrtc *crtc = crtc_new (info, resources->crtcs[i]);
 
 	g_ptr_array_add (a, crtc);
     }
     g_ptr_array_add (a, NULL);
-    info->crtcs = (MateRRCrtc **)g_ptr_array_free (a, FALSE);
+    info->crtcs = (Gde2RRCrtc **)g_ptr_array_free (a, FALSE);
 
     a = g_ptr_array_new ();
     for (i = 0; i < resources->noutput; ++i)
     {
-	MateRROutput *output = output_new (info, resources->outputs[i]);
+	Gde2RROutput *output = output_new (info, resources->outputs[i]);
 
 	g_ptr_array_add (a, output);
     }
     g_ptr_array_add (a, NULL);
-    info->outputs = (MateRROutput **)g_ptr_array_free (a, FALSE);
+    info->outputs = (Gde2RROutput **)g_ptr_array_free (a, FALSE);
 
     a = g_ptr_array_new ();
     for (i = 0;  i < resources->nmode; ++i)
     {
-	MateRRMode *mode = mode_new (info, resources->modes[i].id);
+	Gde2RRMode *mode = mode_new (info, resources->modes[i].id);
 
 	g_ptr_array_add (a, mode);
     }
     g_ptr_array_add (a, NULL);
-    info->modes = (MateRRMode **)g_ptr_array_free (a, FALSE);
+    info->modes = (Gde2RRMode **)g_ptr_array_free (a, FALSE);
 
     /* Initialize */
     for (crtc = info->crtcs; *crtc; ++crtc)
@@ -417,7 +417,7 @@ fill_screen_info_from_resources (ScreenInfo *info,
 
     for (i = 0; i < resources->nmode; ++i)
     {
-	MateRRMode *mode = mode_by_id (info, resources->modes[i].id);
+	Gde2RRMode *mode = mode_by_id (info, resources->modes[i].id);
 
 	mode_initialize (mode, &(resources->modes[i]));
     }
@@ -513,10 +513,10 @@ fill_out_screen_info (Display *xdisplay,
 }
 
 static ScreenInfo *
-screen_info_new (MateRRScreen *screen, gboolean needs_reprobe, GError **error)
+screen_info_new (Gde2RRScreen *screen, gboolean needs_reprobe, GError **error)
 {
     ScreenInfo *info = g_new0 (ScreenInfo, 1);
-    MateRRScreenPrivate *priv;
+    Gde2RRScreenPrivate *priv;
 
     g_assert (screen != NULL);
 
@@ -539,7 +539,7 @@ screen_info_new (MateRRScreen *screen, gboolean needs_reprobe, GError **error)
 }
 
 static gboolean
-screen_update (MateRRScreen *screen, gboolean force_callback, gboolean needs_reprobe, GError **error)
+screen_update (Gde2RRScreen *screen, gboolean force_callback, gboolean needs_reprobe, GError **error)
 {
     ScreenInfo *info;
     gboolean changed = FALSE;
@@ -571,8 +571,8 @@ screen_on_event (GdkXEvent *xevent,
 		 gpointer data)
 {
 #ifdef HAVE_RANDR
-    MateRRScreen *screen = data;
-    MateRRScreenPrivate *priv = screen->priv;
+    Gde2RRScreen *screen = data;
+    Gde2RRScreenPrivate *priv = screen->priv;
     XEvent *e = xevent;
     int event_num;
 
@@ -666,8 +666,8 @@ static gboolean
 gde2_rr_screen_initable_init (GInitable *initable, GCancellable *canc, GError **error)
 
 {
-    MateRRScreen *self = GDE2_RR_SCREEN (initable);
-    MateRRScreenPrivate *priv = self->priv;
+    Gde2RRScreen *self = GDE2_RR_SCREEN (initable);
+    Gde2RRScreenPrivate *priv = self->priv;
     Display *dpy = GDK_SCREEN_XDISPLAY (self->priv->gdk_screen);
     int event_base;
     int ignore;
@@ -724,7 +724,7 @@ gde2_rr_screen_initable_iface_init (GInitableIface *iface)
 void
     gde2_rr_screen_finalize (GObject *gobject)
 {
-    MateRRScreen *screen = GDE2_RR_SCREEN (gobject);
+    Gde2RRScreen *screen = GDE2_RR_SCREEN (gobject);
 
     gdk_window_remove_filter (screen->priv->gdk_root, screen_on_event, screen);
 
@@ -737,8 +737,8 @@ void
 void
 gde2_rr_screen_set_property (GObject *gobject, guint property_id, const GValue *value, GParamSpec *property)
 {
-    MateRRScreen *self = GDE2_RR_SCREEN (gobject);
-    MateRRScreenPrivate *priv = self->priv;
+    Gde2RRScreen *self = GDE2_RR_SCREEN (gobject);
+    Gde2RRScreenPrivate *priv = self->priv;
 
     switch (property_id)
     {
@@ -758,8 +758,8 @@ gde2_rr_screen_set_property (GObject *gobject, guint property_id, const GValue *
 void
 gde2_rr_screen_get_property (GObject *gobject, guint property_id, GValue *value, GParamSpec *property)
 {
-    MateRRScreen *self = GDE2_RR_SCREEN (gobject);
-    MateRRScreenPrivate *priv = self->priv;
+    Gde2RRScreen *self = GDE2_RR_SCREEN (gobject);
+    Gde2RRScreenPrivate *priv = self->priv;
 
     switch (property_id)
     {
@@ -773,10 +773,10 @@ gde2_rr_screen_get_property (GObject *gobject, guint property_id, GValue *value,
 }
 
 void
-gde2_rr_screen_class_init (MateRRScreenClass *klass)
+gde2_rr_screen_class_init (Gde2RRScreenClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-    g_type_class_add_private (klass, sizeof (MateRRScreenPrivate));
+    g_type_class_add_private (klass, sizeof (Gde2RRScreenPrivate));
 
     gobject_class->set_property = gde2_rr_screen_set_property;
     gobject_class->get_property = gde2_rr_screen_get_property;
@@ -788,7 +788,7 @@ gde2_rr_screen_class_init (MateRRScreenClass *klass)
         g_param_spec_object (
             "gdk-screen",
             "GDK Screen",
-            "The GDK Screen represented by this MateRRScreen",
+            "The GDK Screen represented by this Gde2RRScreen",
             GDK_TYPE_SCREEN,
 	    G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS)
         );
@@ -796,7 +796,7 @@ gde2_rr_screen_class_init (MateRRScreenClass *klass)
     screen_signals[SCREEN_CHANGED] = g_signal_new("changed",
         G_TYPE_FROM_CLASS (gobject_class),
         G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS,
-        G_STRUCT_OFFSET (MateRRScreenClass, changed),
+        G_STRUCT_OFFSET (Gde2RRScreenClass, changed),
         NULL,
         NULL,
         g_cclosure_marshal_VOID__VOID,
@@ -805,9 +805,9 @@ gde2_rr_screen_class_init (MateRRScreenClass *klass)
 }
 
 void
-gde2_rr_screen_init (MateRRScreen *self)
+gde2_rr_screen_init (Gde2RRScreen *self)
 {
-    MateRRScreenPrivate *priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GDE2_TYPE_RR_SCREEN, MateRRScreenPrivate);
+    Gde2RRScreenPrivate *priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GDE2_TYPE_RR_SCREEN, Gde2RRScreenPrivate);
     self->priv = priv;
 
     priv->gdk_screen = NULL;
@@ -825,12 +825,12 @@ gde2_rr_screen_init (MateRRScreen *self)
  * @screen: the #GdkScreen on which to operate
  * @error: will be set if XRandR is not supported
  *
- * Creates a new #MateRRScreen instance
+ * Creates a new #Gde2RRScreen instance
  *
- * Returns: a new #MateRRScreen instance or NULL if screen could not be created,
+ * Returns: a new #Gde2RRScreen instance or NULL if screen could not be created,
  * for instance if the driver does not support Xrandr 1.2
  */
-MateRRScreen *
+Gde2RRScreen *
 gde2_rr_screen_new (GdkScreen *screen,
                     GError **error)
 {
@@ -839,7 +839,7 @@ gde2_rr_screen_new (GdkScreen *screen,
 }
 
 void
-gde2_rr_screen_set_size (MateRRScreen *screen,
+gde2_rr_screen_set_size (Gde2RRScreen *screen,
 			  int	      width,
 			  int       height,
 			  int       mm_width,
@@ -862,7 +862,7 @@ gde2_rr_screen_set_size (MateRRScreen *screen,
 
 /**
  * gde2_rr_screen_get_ranges:
- * @screen: a #MateRRScreen
+ * @screen: a #Gde2RRScreen
  * @min_width: (out): the minimum width
  * @max_width: (out): the maximum width
  * @min_height: (out): the minimum height
@@ -871,13 +871,13 @@ gde2_rr_screen_set_size (MateRRScreen *screen,
  * Get the ranges of the screen
  */
 void
-gde2_rr_screen_get_ranges (MateRRScreen *screen,
+gde2_rr_screen_get_ranges (Gde2RRScreen *screen,
 			    int	          *min_width,
 			    int	          *max_width,
 			    int           *min_height,
 			    int	          *max_height)
 {
-    MateRRScreenPrivate *priv;
+    Gde2RRScreenPrivate *priv;
 
     g_return_if_fail (GDE2_IS_RR_SCREEN (screen));
 
@@ -898,7 +898,7 @@ gde2_rr_screen_get_ranges (MateRRScreen *screen,
 
 /**
  * gde2_rr_screen_get_timestamps:
- * @screen: a #MateRRScreen
+ * @screen: a #Gde2RRScreen
  * @change_timestamp_ret: (out): Location in which to store the timestamp at which the RANDR configuration was last changed
  * @config_timestamp_ret: (out): Location in which to store the timestamp at which the RANDR configuration was last obtained
  *
@@ -909,11 +909,11 @@ gde2_rr_screen_get_ranges (MateRRScreen *screen,
  * the latest change request.
  */
 void
-gde2_rr_screen_get_timestamps (MateRRScreen *screen,
+gde2_rr_screen_get_timestamps (Gde2RRScreen *screen,
 				guint32       *change_timestamp_ret,
 				guint32       *config_timestamp_ret)
 {
-    MateRRScreenPrivate *priv;
+    Gde2RRScreenPrivate *priv;
 
     g_return_if_fail (GDE2_IS_RR_SCREEN (screen));
 
@@ -929,11 +929,11 @@ gde2_rr_screen_get_timestamps (MateRRScreen *screen,
 }
 
 static gboolean
-force_timestamp_update (MateRRScreen *screen)
+force_timestamp_update (Gde2RRScreen *screen)
 {
 #ifdef HAVE_RANDR
-    MateRRScreenPrivate *priv = screen->priv;
-    MateRRCrtc *crtc;
+    Gde2RRScreenPrivate *priv = screen->priv;
+    Gde2RRCrtc *crtc;
     XRRCrtcInfo *current_info;
     Status status;
     gboolean timestamp_updated;
@@ -981,7 +981,7 @@ out:
 
 /**
  * gde2_rr_screen_refresh:
- * @screen: a #MateRRScreen
+ * @screen: a #Gde2RRScreen
  * @error: location to store error, or %NULL
  *
  * Refreshes the screen configuration, and calls the screen's callback if it
@@ -993,7 +993,7 @@ out:
  * configuration.
  */
 gboolean
-gde2_rr_screen_refresh (MateRRScreen *screen,
+gde2_rr_screen_refresh (Gde2RRScreen *screen,
 			 GError       **error)
 {
     gboolean refreshed;
@@ -1017,8 +1017,8 @@ gde2_rr_screen_refresh (MateRRScreen *screen,
  *
  * Returns: (array zero-terminated=1) (transfer none):
  */
-MateRRMode **
-gde2_rr_screen_list_modes (MateRRScreen *screen)
+Gde2RRMode **
+gde2_rr_screen_list_modes (Gde2RRScreen *screen)
 {
     g_return_val_if_fail (GDE2_IS_RR_SCREEN (screen), NULL);
     g_return_val_if_fail (screen->priv->info != NULL, NULL);
@@ -1033,8 +1033,8 @@ gde2_rr_screen_list_modes (MateRRScreen *screen)
  *
  * Returns: (array zero-terminated=1) (transfer none):
  */
-MateRRMode **
-gde2_rr_screen_list_clone_modes   (MateRRScreen *screen)
+Gde2RRMode **
+gde2_rr_screen_list_clone_modes   (Gde2RRScreen *screen)
 {
     g_return_val_if_fail (GDE2_IS_RR_SCREEN (screen), NULL);
     g_return_val_if_fail (screen->priv->info != NULL, NULL);
@@ -1049,8 +1049,8 @@ gde2_rr_screen_list_clone_modes   (MateRRScreen *screen)
  *
  * Returns: (array zero-terminated=1) (transfer none):
  */
-MateRRCrtc **
-gde2_rr_screen_list_crtcs (MateRRScreen *screen)
+Gde2RRCrtc **
+gde2_rr_screen_list_crtcs (Gde2RRScreen *screen)
 {
     g_return_val_if_fail (GDE2_IS_RR_SCREEN (screen), NULL);
     g_return_val_if_fail (screen->priv->info != NULL, NULL);
@@ -1065,8 +1065,8 @@ gde2_rr_screen_list_crtcs (MateRRScreen *screen)
  *
  * Returns: (array zero-terminated=1) (transfer none):
  */
-MateRROutput **
-gde2_rr_screen_list_outputs (MateRRScreen *screen)
+Gde2RROutput **
+gde2_rr_screen_list_outputs (Gde2RRScreen *screen)
 {
     g_return_val_if_fail (GDE2_IS_RR_SCREEN (screen), NULL);
     g_return_val_if_fail (screen->priv->info != NULL, NULL);
@@ -1079,11 +1079,11 @@ gde2_rr_screen_list_outputs (MateRRScreen *screen)
  *
  * Returns: (transfer none): the CRTC identified by @id
  */
-MateRRCrtc *
-gde2_rr_screen_get_crtc_by_id (MateRRScreen *screen,
+Gde2RRCrtc *
+gde2_rr_screen_get_crtc_by_id (Gde2RRScreen *screen,
 				guint32        id)
 {
-    MateRRCrtc **crtcs;
+    Gde2RRCrtc **crtcs;
     int i;
     
     g_return_val_if_fail (GDE2_IS_RR_SCREEN (screen), NULL);
@@ -1105,11 +1105,11 @@ gde2_rr_screen_get_crtc_by_id (MateRRScreen *screen,
  *
  * Returns: (transfer none): the output identified by @id
  */
-MateRROutput *
-gde2_rr_screen_get_output_by_id (MateRRScreen *screen,
+Gde2RROutput *
+gde2_rr_screen_get_output_by_id (Gde2RRScreen *screen,
 				  guint32        id)
 {
-    MateRROutput **outputs;
+    Gde2RROutput **outputs;
     int i;
     
     g_return_val_if_fail (GDE2_IS_RR_SCREEN (screen), NULL);
@@ -1126,11 +1126,11 @@ gde2_rr_screen_get_output_by_id (MateRRScreen *screen,
     return NULL;
 }
 
-/* MateRROutput */
-static MateRROutput *
+/* Gde2RROutput */
+static Gde2RROutput *
 output_new (ScreenInfo *info, RROutput id)
 {
-    MateRROutput *output = g_slice_new0 (MateRROutput);
+    Gde2RROutput *output = g_slice_new0 (Gde2RROutput);
     
     output->id = id;
     output->info = info;
@@ -1177,7 +1177,7 @@ get_property (Display *dpy,
 }
 
 static guint8 *
-read_edid_data (MateRROutput *output, int *len)
+read_edid_data (Gde2RROutput *output, int *len)
 {
     Atom edid_atom;
     guint8 *result;
@@ -1205,7 +1205,7 @@ read_edid_data (MateRROutput *output, int *len)
 }
 
 static char *
-get_connector_type_string (MateRROutput *output)
+get_connector_type_string (Gde2RROutput *output)
 {
 #ifdef HAVE_RANDR
     char *result;
@@ -1248,7 +1248,7 @@ out:
 
 #ifdef HAVE_RANDR
 static gboolean
-output_initialize (MateRROutput *output, XRRScreenResources *res, GError **error)
+output_initialize (Gde2RROutput *output, XRRScreenResources *res, GError **error)
 {
     XRROutputInfo *info = XRRGetOutputInfo (
 	DISPLAY (output), res, output->id);
@@ -1281,37 +1281,37 @@ output_initialize (MateRROutput *output, XRRScreenResources *res, GError **error
     
     for (i = 0; i < info->ncrtc; ++i)
     {
-	MateRRCrtc *crtc = crtc_by_id (output->info, info->crtcs[i]);
+	Gde2RRCrtc *crtc = crtc_by_id (output->info, info->crtcs[i]);
 	
 	if (crtc)
 	    g_ptr_array_add (a, crtc);
     }
     g_ptr_array_add (a, NULL);
-    output->possible_crtcs = (MateRRCrtc **)g_ptr_array_free (a, FALSE);
+    output->possible_crtcs = (Gde2RRCrtc **)g_ptr_array_free (a, FALSE);
     
     /* Clones */
     a = g_ptr_array_new ();
     for (i = 0; i < info->nclone; ++i)
     {
-	MateRROutput *gde2_rr_output = gde2_rr_output_by_id (output->info, info->clones[i]);
+	Gde2RROutput *gde2_rr_output = gde2_rr_output_by_id (output->info, info->clones[i]);
 	
 	if (gde2_rr_output)
 	    g_ptr_array_add (a, gde2_rr_output);
     }
     g_ptr_array_add (a, NULL);
-    output->clones = (MateRROutput **)g_ptr_array_free (a, FALSE);
+    output->clones = (Gde2RROutput **)g_ptr_array_free (a, FALSE);
     
     /* Modes */
     a = g_ptr_array_new ();
     for (i = 0; i < info->nmode; ++i)
     {
-	MateRRMode *mode = mode_by_id (output->info, info->modes[i]);
+	Gde2RRMode *mode = mode_by_id (output->info, info->modes[i]);
 	
 	if (mode)
 	    g_ptr_array_add (a, mode);
     }
     g_ptr_array_add (a, NULL);
-    output->modes = (MateRRMode **)g_ptr_array_free (a, FALSE);
+    output->modes = (Gde2RRMode **)g_ptr_array_free (a, FALSE);
     
     output->n_preferred = info->npreferred;
     
@@ -1324,14 +1324,14 @@ output_initialize (MateRROutput *output, XRRScreenResources *res, GError **error
 }
 #endif /* HAVE_RANDR */
 
-static MateRROutput*
-output_copy (const MateRROutput *from)
+static Gde2RROutput*
+output_copy (const Gde2RROutput *from)
 {
     GPtrArray *array;
-    MateRRCrtc **p_crtc;
-    MateRROutput **p_output;
-    MateRRMode **p_mode;
-    MateRROutput *output = g_slice_new0 (MateRROutput);
+    Gde2RRCrtc **p_crtc;
+    Gde2RROutput **p_output;
+    Gde2RRMode **p_mode;
+    Gde2RROutput *output = g_slice_new0 (Gde2RROutput);
 
     output->id = from->id;
     output->info = from->info;
@@ -1348,21 +1348,21 @@ output_copy (const MateRROutput *from)
     {
         g_ptr_array_add (array, *p_crtc);
     }
-    output->possible_crtcs = (MateRRCrtc**) g_ptr_array_free (array, FALSE);
+    output->possible_crtcs = (Gde2RRCrtc**) g_ptr_array_free (array, FALSE);
 
     array = g_ptr_array_new ();
     for (p_output = from->clones; *p_output != NULL; p_output++)
     {
         g_ptr_array_add (array, *p_output);
     }
-    output->clones = (MateRROutput**) g_ptr_array_free (array, FALSE);
+    output->clones = (Gde2RROutput**) g_ptr_array_free (array, FALSE);
 
     array = g_ptr_array_new ();
     for (p_mode = from->modes; *p_mode != NULL; p_mode++)
     {
         g_ptr_array_add (array, *p_mode);
     }
-    output->modes = (MateRRMode**) g_ptr_array_free (array, FALSE);
+    output->modes = (Gde2RRMode**) g_ptr_array_free (array, FALSE);
 
     output->edid_size = from->edid_size;
     output->edid_data = g_memdup (from->edid_data, from->edid_size);
@@ -1371,7 +1371,7 @@ output_copy (const MateRROutput *from)
 }
 
 static void
-output_free (MateRROutput *output)
+output_free (Gde2RROutput *output)
 {
     g_free (output->clones);
     g_free (output->modes);
@@ -1379,11 +1379,11 @@ output_free (MateRROutput *output)
     g_free (output->edid_data);
     g_free (output->name);
     g_free (output->connector_type);
-    g_slice_free (MateRROutput, output);
+    g_slice_free (Gde2RROutput, output);
 }
 
 guint32
-gde2_rr_output_get_id (MateRROutput *output)
+gde2_rr_output_get_id (Gde2RROutput *output)
 {
     g_assert(output != NULL);
     
@@ -1391,7 +1391,7 @@ gde2_rr_output_get_id (MateRROutput *output)
 }
 
 const guint8 *
-gde2_rr_output_get_edid_data (MateRROutput *output)
+gde2_rr_output_get_edid_data (Gde2RROutput *output)
 {
     g_return_val_if_fail (output != NULL, NULL);
     
@@ -1403,8 +1403,8 @@ gde2_rr_output_get_edid_data (MateRROutput *output)
  *
  * Returns: (transfer none): the output identified by @name
  */
-MateRROutput *
-gde2_rr_screen_get_output_by_name (MateRRScreen *screen,
+Gde2RROutput *
+gde2_rr_screen_get_output_by_name (Gde2RRScreen *screen,
 				    const char    *name)
 {
     int i;
@@ -1414,7 +1414,7 @@ gde2_rr_screen_get_output_by_name (MateRRScreen *screen,
     
     for (i = 0; screen->priv->info->outputs[i] != NULL; ++i)
     {
-	MateRROutput *output = screen->priv->info->outputs[i];
+	Gde2RROutput *output = screen->priv->info->outputs[i];
 	
 	if (strcmp (output->name, name) == 0)
 	    return output;
@@ -1425,11 +1425,11 @@ gde2_rr_screen_get_output_by_name (MateRRScreen *screen,
 
 /**
  * gde2_rr_output_get_crtc:
- * @output: a #MateRROutput
+ * @output: a #Gde2RROutput
  * Returns: (transfer none):
  */
-MateRRCrtc *
-gde2_rr_output_get_crtc (MateRROutput *output)
+Gde2RRCrtc *
+gde2_rr_output_get_crtc (Gde2RROutput *output)
 {
     g_return_val_if_fail (output != NULL, NULL);
     
@@ -1438,11 +1438,11 @@ gde2_rr_output_get_crtc (MateRROutput *output)
 
 /**
  * gde2_rr_output_get_possible_crtcs:
- * @output: a #MateRROutput
+ * @output: a #Gde2RROutput
  * Returns: (array zero-terminated=1) (transfer none):
  */
-MateRRCrtc **
-gde2_rr_output_get_possible_crtcs (MateRROutput *output)
+Gde2RRCrtc **
+gde2_rr_output_get_possible_crtcs (Gde2RROutput *output)
 {
     g_return_val_if_fail (output != NULL, NULL);
 
@@ -1451,7 +1451,7 @@ gde2_rr_output_get_possible_crtcs (MateRROutput *output)
 
 /* Returns NULL if the ConnectorType property is not available */
 const char *
-gde2_rr_output_get_connector_type (MateRROutput *output)
+gde2_rr_output_get_connector_type (Gde2RROutput *output)
 {
     g_return_val_if_fail (output != NULL, NULL);
 
@@ -1475,7 +1475,7 @@ _gde2_rr_output_name_is_laptop (const char *name)
 }
 
 gboolean
-gde2_rr_output_is_laptop (MateRROutput *output)
+gde2_rr_output_is_laptop (Gde2RROutput *output)
 {
     g_return_val_if_fail (output != NULL, FALSE);
 
@@ -1491,13 +1491,13 @@ gde2_rr_output_is_laptop (MateRROutput *output)
 
 /**
  * gde2_rr_output_get_current_mode:
- * @output: a #MateRROutput
+ * @output: a #Gde2RROutput
  * Returns: (transfer none): the current mode of this output
  */
-MateRRMode *
-gde2_rr_output_get_current_mode (MateRROutput *output)
+Gde2RRMode *
+gde2_rr_output_get_current_mode (Gde2RROutput *output)
 {
-    MateRRCrtc *crtc;
+    Gde2RRCrtc *crtc;
     
     g_return_val_if_fail (output != NULL, NULL);
     
@@ -1509,16 +1509,16 @@ gde2_rr_output_get_current_mode (MateRROutput *output)
 
 /**
  * gde2_rr_output_get_position:
- * @output: a #MateRROutput
+ * @output: a #Gde2RROutput
  * @x: (out) (allow-none):
  * @y: (out) (allow-none):
  */
 void
-gde2_rr_output_get_position (MateRROutput   *output,
+gde2_rr_output_get_position (Gde2RROutput   *output,
 			      int             *x,
 			      int             *y)
 {
-    MateRRCrtc *crtc;
+    Gde2RRCrtc *crtc;
     
     g_return_if_fail (output != NULL);
     
@@ -1527,21 +1527,21 @@ gde2_rr_output_get_position (MateRROutput   *output,
 }
 
 const char *
-gde2_rr_output_get_name (MateRROutput *output)
+gde2_rr_output_get_name (Gde2RROutput *output)
 {
     g_assert (output != NULL);
     return output->name;
 }
 
 int
-gde2_rr_output_get_width_mm (MateRROutput *output)
+gde2_rr_output_get_width_mm (Gde2RROutput *output)
 {
     g_assert (output != NULL);
     return output->width_mm;
 }
 
 int
-gde2_rr_output_get_height_mm (MateRROutput *output)
+gde2_rr_output_get_height_mm (Gde2RROutput *output)
 {
     g_assert (output != NULL);
     return output->height_mm;
@@ -1549,11 +1549,11 @@ gde2_rr_output_get_height_mm (MateRROutput *output)
 
 /**
  * gde2_rr_output_get_preferred_mode:
- * @output: a #MateRROutput
+ * @output: a #Gde2RROutput
  * Returns: (transfer none):
  */
-MateRRMode *
-gde2_rr_output_get_preferred_mode (MateRROutput *output)
+Gde2RRMode *
+gde2_rr_output_get_preferred_mode (Gde2RROutput *output)
 {
     g_return_val_if_fail (output != NULL, NULL);
     if (output->n_preferred)
@@ -1564,27 +1564,27 @@ gde2_rr_output_get_preferred_mode (MateRROutput *output)
 
 /**
  * gde2_rr_output_list_modes:
- * @output: a #MateRROutput
+ * @output: a #Gde2RROutput
  * Returns: (array zero-terminated=1) (transfer none):
  */
 
-MateRRMode **
-gde2_rr_output_list_modes (MateRROutput *output)
+Gde2RRMode **
+gde2_rr_output_list_modes (Gde2RROutput *output)
 {
     g_return_val_if_fail (output != NULL, NULL);
     return output->modes;
 }
 
 gboolean
-gde2_rr_output_is_connected (MateRROutput *output)
+gde2_rr_output_is_connected (Gde2RROutput *output)
 {
     g_return_val_if_fail (output != NULL, FALSE);
     return output->connected;
 }
 
 gboolean
-gde2_rr_output_supports_mode (MateRROutput *output,
-			       MateRRMode   *mode)
+gde2_rr_output_supports_mode (Gde2RROutput *output,
+			       Gde2RRMode   *mode)
 {
     int i;
     
@@ -1601,8 +1601,8 @@ gde2_rr_output_supports_mode (MateRROutput *output,
 }
 
 gboolean
-gde2_rr_output_can_clone (MateRROutput *output,
-			   MateRROutput *clone)
+gde2_rr_output_can_clone (Gde2RROutput *output,
+			   Gde2RROutput *clone)
 {
     int i;
     
@@ -1619,7 +1619,7 @@ gde2_rr_output_can_clone (MateRROutput *output,
 }
 
 gboolean
-gde2_rr_output_get_is_primary (MateRROutput *output)
+gde2_rr_output_get_is_primary (Gde2RROutput *output)
 {
 #ifdef HAVE_RANDR
     return output->info->primary == output->id;
@@ -1629,11 +1629,11 @@ gde2_rr_output_get_is_primary (MateRROutput *output)
 }
 
 void
-gde2_rr_screen_set_primary_output (MateRRScreen *screen,
-                                    MateRROutput *output)
+gde2_rr_screen_set_primary_output (Gde2RRScreen *screen,
+                                    Gde2RROutput *output)
 {
 #ifdef HAVE_RANDR
-    MateRRScreenPrivate *priv;
+    Gde2RRScreenPrivate *priv;
 
     g_return_if_fail (GDE2_IS_RR_SCREEN (screen));
 
@@ -1650,11 +1650,11 @@ gde2_rr_screen_set_primary_output (MateRRScreen *screen,
 #endif
 }
 
-/* MateRRCrtc */
+/* Gde2RRCrtc */
 typedef struct
 {
     Rotation xrot;
-    MateRRRotation rot;
+    Gde2RRRotation rot;
 } RotationMap;
 
 static const RotationMap rotation_map[] =
@@ -1667,11 +1667,11 @@ static const RotationMap rotation_map[] =
     { RR_Reflect_Y, GDE2_RR_REFLECT_Y },
 };
 
-static MateRRRotation
+static Gde2RRRotation
 gde2_rr_rotation_from_xrotation (Rotation r)
 {
     int i;
-    MateRRRotation result = 0;
+    Gde2RRRotation result = 0;
     
     for (i = 0; i < G_N_ELEMENTS (rotation_map); ++i)
     {
@@ -1683,7 +1683,7 @@ gde2_rr_rotation_from_xrotation (Rotation r)
 }
 
 static Rotation
-xrotation_from_rotation (MateRRRotation r)
+xrotation_from_rotation (Gde2RRRotation r)
 {
     int i;
     Rotation result = 0;
@@ -1699,12 +1699,12 @@ xrotation_from_rotation (MateRRRotation r)
 
 #ifndef GDE2_DISABLE_DEPRECATED_SOURCE
 gboolean
-gde2_rr_crtc_set_config (MateRRCrtc      *crtc,
+gde2_rr_crtc_set_config (Gde2RRCrtc      *crtc,
 			  int               x,
 			  int               y,
-			  MateRRMode      *mode,
-			  MateRRRotation   rotation,
-			  MateRROutput   **outputs,
+			  Gde2RRMode      *mode,
+			  Gde2RRRotation   rotation,
+			  Gde2RROutput   **outputs,
 			  int               n_outputs,
 			  GError          **error)
 {
@@ -1713,13 +1713,13 @@ gde2_rr_crtc_set_config (MateRRCrtc      *crtc,
 #endif
 
 gboolean
-gde2_rr_crtc_set_config_with_time (MateRRCrtc      *crtc,
+gde2_rr_crtc_set_config_with_time (Gde2RRCrtc      *crtc,
 				    guint32           timestamp,
 				    int               x,
 				    int               y,
-				    MateRRMode      *mode,
-				    MateRRRotation   rotation,
-				    MateRROutput   **outputs,
+				    Gde2RRMode      *mode,
+				    Gde2RRRotation   rotation,
+				    Gde2RROutput   **outputs,
 				    int               n_outputs,
 				    GError          **error)
 {
@@ -1794,11 +1794,11 @@ gde2_rr_crtc_set_config_with_time (MateRRCrtc      *crtc,
 
 /**
  * gde2_rr_crtc_get_current_mode:
- * @crtc: a #MateRRCrtc
+ * @crtc: a #Gde2RRCrtc
  * Returns: (transfer none): the current mode of this crtc
  */
-MateRRMode *
-gde2_rr_crtc_get_current_mode (MateRRCrtc *crtc)
+Gde2RRMode *
+gde2_rr_crtc_get_current_mode (Gde2RRCrtc *crtc)
 {
     g_return_val_if_fail (crtc != NULL, NULL);
     
@@ -1806,7 +1806,7 @@ gde2_rr_crtc_get_current_mode (MateRRCrtc *crtc)
 }
 
 guint32
-gde2_rr_crtc_get_id (MateRRCrtc *crtc)
+gde2_rr_crtc_get_id (Gde2RRCrtc *crtc)
 {
     g_return_val_if_fail (crtc != NULL, 0);
     
@@ -1814,8 +1814,8 @@ gde2_rr_crtc_get_id (MateRRCrtc *crtc)
 }
 
 gboolean
-gde2_rr_crtc_can_drive_output (MateRRCrtc   *crtc,
-				MateRROutput *output)
+gde2_rr_crtc_can_drive_output (Gde2RRCrtc   *crtc,
+				Gde2RROutput *output)
 {
     int i;
     
@@ -1835,12 +1835,12 @@ gde2_rr_crtc_can_drive_output (MateRRCrtc   *crtc,
 
 /**
  * gde2_rr_crtc_get_position:
- * @crtc: a #MateRRCrtc
+ * @crtc: a #Gde2RRCrtc
  * @x: (out) (allow-none):
  * @y: (out) (allow-none):
  */
 void
-gde2_rr_crtc_get_position (MateRRCrtc *crtc,
+gde2_rr_crtc_get_position (Gde2RRCrtc *crtc,
 			    int         *x,
 			    int         *y)
 {
@@ -1854,32 +1854,32 @@ gde2_rr_crtc_get_position (MateRRCrtc *crtc,
 }
 
 /* FIXME: merge with get_mode()? */
-MateRRRotation
-gde2_rr_crtc_get_current_rotation (MateRRCrtc *crtc)
+Gde2RRRotation
+gde2_rr_crtc_get_current_rotation (Gde2RRCrtc *crtc)
 {
     g_assert(crtc != NULL);
     return crtc->current_rotation;
 }
 
-MateRRRotation
-gde2_rr_crtc_get_rotations (MateRRCrtc *crtc)
+Gde2RRRotation
+gde2_rr_crtc_get_rotations (Gde2RRCrtc *crtc)
 {
     g_assert(crtc != NULL);
     return crtc->rotations;
 }
 
 gboolean
-gde2_rr_crtc_supports_rotation (MateRRCrtc *   crtc,
-				 MateRRRotation rotation)
+gde2_rr_crtc_supports_rotation (Gde2RRCrtc *   crtc,
+				 Gde2RRRotation rotation)
 {
     g_return_val_if_fail (crtc != NULL, FALSE);
     return (crtc->rotations & rotation);
 }
 
-static MateRRCrtc *
+static Gde2RRCrtc *
 crtc_new (ScreenInfo *info, RROutput id)
 {
-    MateRRCrtc *crtc = g_slice_new0 (MateRRCrtc);
+    Gde2RRCrtc *crtc = g_slice_new0 (Gde2RRCrtc);
     
     crtc->id = id;
     crtc->info = info;
@@ -1887,12 +1887,12 @@ crtc_new (ScreenInfo *info, RROutput id)
     return crtc;
 }
 
-static MateRRCrtc *
-crtc_copy (const MateRRCrtc *from)
+static Gde2RRCrtc *
+crtc_copy (const Gde2RRCrtc *from)
 {
-    MateRROutput **p_output;
+    Gde2RROutput **p_output;
     GPtrArray *array;
-    MateRRCrtc *to = g_slice_new0 (MateRRCrtc);
+    Gde2RRCrtc *to = g_slice_new0 (Gde2RRCrtc);
 
     to->info = from->info;
     to->id = from->id;
@@ -1908,21 +1908,21 @@ crtc_copy (const MateRRCrtc *from)
     {
         g_ptr_array_add (array, *p_output);
     }
-    to->current_outputs = (MateRROutput**) g_ptr_array_free (array, FALSE);
+    to->current_outputs = (Gde2RROutput**) g_ptr_array_free (array, FALSE);
 
     array = g_ptr_array_new ();
     for (p_output = from->possible_outputs; *p_output != NULL; p_output++)
     {
         g_ptr_array_add (array, *p_output);
     }
-    to->possible_outputs = (MateRROutput**) g_ptr_array_free (array, FALSE);
+    to->possible_outputs = (Gde2RROutput**) g_ptr_array_free (array, FALSE);
 
     return to;
 }
 
 #ifdef HAVE_RANDR
 static gboolean
-crtc_initialize (MateRRCrtc        *crtc,
+crtc_initialize (Gde2RRCrtc        *crtc,
 		 XRRScreenResources *res,
 		 GError            **error)
 {
@@ -1948,7 +1948,7 @@ crtc_initialize (MateRRCrtc        *crtc,
 	return FALSE;
     }
     
-    /* MateRRMode */
+    /* Gde2RRMode */
     crtc->current_mode = mode_by_id (crtc->info, info->mode);
     
     crtc->x = info->x;
@@ -1958,25 +1958,25 @@ crtc_initialize (MateRRCrtc        *crtc,
     a = g_ptr_array_new ();
     for (i = 0; i < info->noutput; ++i)
     {
-	MateRROutput *output = gde2_rr_output_by_id (crtc->info, info->outputs[i]);
+	Gde2RROutput *output = gde2_rr_output_by_id (crtc->info, info->outputs[i]);
 	
 	if (output)
 	    g_ptr_array_add (a, output);
     }
     g_ptr_array_add (a, NULL);
-    crtc->current_outputs = (MateRROutput **)g_ptr_array_free (a, FALSE);
+    crtc->current_outputs = (Gde2RROutput **)g_ptr_array_free (a, FALSE);
     
     /* Possible outputs */
     a = g_ptr_array_new ();
     for (i = 0; i < info->npossible; ++i)
     {
-	MateRROutput *output = gde2_rr_output_by_id (crtc->info, info->possible[i]);
+	Gde2RROutput *output = gde2_rr_output_by_id (crtc->info, info->possible[i]);
 	
 	if (output)
 	    g_ptr_array_add (a, output);
     }
     g_ptr_array_add (a, NULL);
-    crtc->possible_outputs = (MateRROutput **)g_ptr_array_free (a, FALSE);
+    crtc->possible_outputs = (Gde2RROutput **)g_ptr_array_free (a, FALSE);
     
     /* Rotations */
     crtc->current_rotation = gde2_rr_rotation_from_xrotation (info->rotation);
@@ -1992,18 +1992,18 @@ crtc_initialize (MateRRCrtc        *crtc,
 #endif
 
 static void
-crtc_free (MateRRCrtc *crtc)
+crtc_free (Gde2RRCrtc *crtc)
 {
     g_free (crtc->current_outputs);
     g_free (crtc->possible_outputs);
-    g_slice_free (MateRRCrtc, crtc);
+    g_slice_free (Gde2RRCrtc, crtc);
 }
 
-/* MateRRMode */
-static MateRRMode *
+/* Gde2RRMode */
+static Gde2RRMode *
 mode_new (ScreenInfo *info, RRMode id)
 {
-    MateRRMode *mode = g_slice_new0 (MateRRMode);
+    Gde2RRMode *mode = g_slice_new0 (Gde2RRMode);
     
     mode->id = id;
     mode->info = info;
@@ -2012,28 +2012,28 @@ mode_new (ScreenInfo *info, RRMode id)
 }
 
 guint32
-gde2_rr_mode_get_id (MateRRMode *mode)
+gde2_rr_mode_get_id (Gde2RRMode *mode)
 {
     g_return_val_if_fail (mode != NULL, 0);
     return mode->id;
 }
 
 guint
-gde2_rr_mode_get_width (MateRRMode *mode)
+gde2_rr_mode_get_width (Gde2RRMode *mode)
 {
     g_return_val_if_fail (mode != NULL, 0);
     return mode->width;
 }
 
 int
-gde2_rr_mode_get_freq (MateRRMode *mode)
+gde2_rr_mode_get_freq (Gde2RRMode *mode)
 {
     g_return_val_if_fail (mode != NULL, 0);
     return (mode->freq) / 1000;
 }
 
 guint
-gde2_rr_mode_get_height (MateRRMode *mode)
+gde2_rr_mode_get_height (Gde2RRMode *mode)
 {
     g_return_val_if_fail (mode != NULL, 0);
     return mode->height;
@@ -2041,7 +2041,7 @@ gde2_rr_mode_get_height (MateRRMode *mode)
 
 #ifdef HAVE_RANDR
 static void
-mode_initialize (MateRRMode *mode, XRRModeInfo *info)
+mode_initialize (Gde2RRMode *mode, XRRModeInfo *info)
 {
     g_assert (mode != NULL);
     g_assert (info != NULL);
@@ -2053,10 +2053,10 @@ mode_initialize (MateRRMode *mode, XRRModeInfo *info)
 }
 #endif /* HAVE_RANDR */
 
-static MateRRMode *
-mode_copy (const MateRRMode *from)
+static Gde2RRMode *
+mode_copy (const Gde2RRMode *from)
 {
-    MateRRMode *to = g_slice_new0 (MateRRMode);
+    Gde2RRMode *to = g_slice_new0 (Gde2RRMode);
 
     to->id = from->id;
     to->info = from->info;
@@ -2069,14 +2069,14 @@ mode_copy (const MateRRMode *from)
 }
 
 static void
-mode_free (MateRRMode *mode)
+mode_free (Gde2RRMode *mode)
 {
     g_free (mode->name);
-    g_slice_free (MateRRMode, mode);
+    g_slice_free (Gde2RRMode, mode);
 }
 
 void
-gde2_rr_crtc_set_gamma (MateRRCrtc *crtc, int size,
+gde2_rr_crtc_set_gamma (Gde2RRCrtc *crtc, int size,
 			 unsigned short *red,
 			 unsigned short *green,
 			 unsigned short *blue)
@@ -2107,7 +2107,7 @@ gde2_rr_crtc_set_gamma (MateRRCrtc *crtc, int size,
 
 /**
  * gde2_rr_crtc_get_gamma:
- * @crtc: a #MateRRCrtc
+ * @crtc: a #Gde2RRCrtc
  * @size:
  * @red: (out): the minimum width
  * @green: (out): the maximum width
@@ -2116,7 +2116,7 @@ gde2_rr_crtc_set_gamma (MateRRCrtc *crtc, int size,
  * Returns: %TRUE for success
  */
 gboolean
-gde2_rr_crtc_get_gamma (MateRRCrtc *crtc, int *size,
+gde2_rr_crtc_get_gamma (Gde2RRCrtc *crtc, int *size,
 			 unsigned short **red, unsigned short **green,
 			 unsigned short **blue)
 {

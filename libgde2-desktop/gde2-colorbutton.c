@@ -44,9 +44,9 @@
 #define CHECK_DARK  (1.0 / 3.0)
 #define CHECK_LIGHT (2.0 / 3.0)
 
-#define GDE2_COLOR_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GDE2_TYPE_COLOR_BUTTON, MateColorButtonPrivate))
+#define GDE2_COLOR_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GDE2_TYPE_COLOR_BUTTON, Gde2ColorButtonPrivate))
 
-struct _MateColorButtonPrivate 
+struct _Gde2ColorButtonPrivate 
 {
   GtkWidget *draw_area; /* Widget where we draw the color sample */
   GtkWidget *cs_dialog; /* Color selection dialog */
@@ -103,7 +103,7 @@ static void gde2_color_button_drag_data_get (GtkWidget        *widget,
                                             GtkSelectionData *selection_data,
                                             guint             info,
                                             guint             time,
-                                            MateColorButton   *color_button);
+                                            Gde2ColorButton   *color_button);
 
 /* target side drag signals */
 static void gde2_color_button_drag_data_received (GtkWidget        *widget,
@@ -113,17 +113,17 @@ static void gde2_color_button_drag_data_received (GtkWidget        *widget,
 						 GtkSelectionData *selection_data,
 						 guint             info,
 						 guint32           time,
-						 MateColorButton   *color_button);
+						 Gde2ColorButton   *color_button);
 
 
 static guint color_button_signals[LAST_SIGNAL] = { 0 };
 
 static const GtkTargetEntry drop_types[] = { { "application/x-color", 0, 0 } };
 
-G_DEFINE_TYPE (MateColorButton, gde2_color_button, GTK_TYPE_BUTTON)
+G_DEFINE_TYPE (Gde2ColorButton, gde2_color_button, GTK_TYPE_BUTTON)
 
 static void
-gde2_color_button_class_init (MateColorButtonClass *klass)
+gde2_color_button_class_init (Gde2ColorButtonClass *klass)
 {
   GObjectClass *gobject_class;
   GtkWidgetClass *widget_class;
@@ -141,7 +141,7 @@ gde2_color_button_class_init (MateColorButtonClass *klass)
   klass->color_set = NULL;
 
   /**
-   * MateColorButton:use-alpha:
+   * Gde2ColorButton:use-alpha:
    *
    * If this property is set to %TRUE, the color swatch on the button is rendered against a 
    * checkerboard background to show its opacity and the opacity slider is displayed in the 
@@ -157,7 +157,7 @@ gde2_color_button_class_init (MateColorButtonClass *klass)
                                                          G_PARAM_READWRITE));
 
   /**
-   * MateColorButton:title:
+   * Gde2ColorButton:title:
    *
    * The title of the color selection dialog
    *
@@ -172,7 +172,7 @@ gde2_color_button_class_init (MateColorButtonClass *klass)
                                                         G_PARAM_READWRITE));
 
   /**
-   * MateColorButton:color:
+   * Gde2ColorButton:color:
    *
    * The selected color.
    *
@@ -187,7 +187,7 @@ gde2_color_button_class_init (MateColorButtonClass *klass)
                                                        G_PARAM_READWRITE));
 
   /**
-   * MateColorButton:alpha:
+   * Gde2ColorButton:alpha:
    *
    * The selected opacity value (0 fully transparent, 65535 fully opaque). 
    *
@@ -202,7 +202,7 @@ gde2_color_button_class_init (MateColorButtonClass *klass)
                                                       G_PARAM_READWRITE));
         
   /**
-   * MateColorButton::color-set:
+   * Gde2ColorButton::color-set:
    * @widget: the object which received the signal.
    * 
    * The ::color-set signal is emitted when the user selects a color. 
@@ -218,16 +218,16 @@ gde2_color_button_class_init (MateColorButtonClass *klass)
   color_button_signals[COLOR_SET] = g_signal_new ("color-set",
 						  G_TYPE_FROM_CLASS (gobject_class),
 						  G_SIGNAL_RUN_FIRST,
-						  G_STRUCT_OFFSET (MateColorButtonClass, color_set),
+						  G_STRUCT_OFFSET (Gde2ColorButtonClass, color_set),
 						  NULL, NULL,
 						  g_cclosure_marshal_VOID__VOID,
 						  G_TYPE_NONE, 0);
 
-  g_type_class_add_private (gobject_class, sizeof (MateColorButtonPrivate));
+  g_type_class_add_private (gobject_class, sizeof (Gde2ColorButtonPrivate));
 }
 
 static gboolean
-gde2_color_button_has_alpha (MateColorButton *color_button)
+gde2_color_button_has_alpha (Gde2ColorButton *color_button)
 {
   return color_button->priv->use_alpha &&
       color_button->priv->alpha < 65535;
@@ -268,7 +268,7 @@ expose_event (GtkWidget      *widget,
               gpointer        data)
 #endif
 {
-  MateColorButton *color_button = GDE2_COLOR_BUTTON (data);
+  Gde2ColorButton *color_button = GDE2_COLOR_BUTTON (data);
   cairo_pattern_t *checkered;
 
 #if !GTK_CHECK_VERSION (3, 0, 0)
@@ -339,7 +339,7 @@ gde2_color_button_drag_data_received (GtkWidget        *widget,
 				     GtkSelectionData *selection_data,
 				     guint             info,
 				     guint32           time,
-				     MateColorButton   *color_button)
+				     Gde2ColorButton   *color_button)
 {
   guint16 *dropped;
 
@@ -398,7 +398,7 @@ gde2_color_button_drag_begin (GtkWidget      *widget,
 			     GdkDragContext *context,
 			     gpointer        data)
 {
-  MateColorButton *color_button = data;
+  Gde2ColorButton *color_button = data;
   
   set_color_icon (context, &color_button->priv->color);
 }
@@ -409,7 +409,7 @@ gde2_color_button_drag_data_get (GtkWidget        *widget,
 				GtkSelectionData *selection_data,
 				guint             info,
 				guint             time,
-				MateColorButton   *color_button)
+				Gde2ColorButton   *color_button)
 {
   guint16 dropped[4];
 
@@ -423,7 +423,7 @@ gde2_color_button_drag_data_get (GtkWidget        *widget,
 }
 
 static void
-gde2_color_button_init (MateColorButton *color_button)
+gde2_color_button_init (Gde2ColorButton *color_button)
 {
   GtkWidget *alignment;
   GtkWidget *frame;
@@ -501,7 +501,7 @@ gde2_color_button_init (MateColorButton *color_button)
 static void
 gde2_color_button_finalize (GObject *object)
 {
-  MateColorButton *color_button = GDE2_COLOR_BUTTON (object);
+  Gde2ColorButton *color_button = GDE2_COLOR_BUTTON (object);
 
   if (color_button->priv->cs_dialog != NULL)
     gtk_widget_destroy (color_button->priv->cs_dialog);
@@ -553,8 +553,8 @@ static void
 dialog_ok_clicked (GtkWidget *widget, 
 		   gpointer   data)
 {
-  MateColorButton *color_button = GDE2_COLOR_BUTTON (data);
-  MateColorSelection *color_selection;
+  Gde2ColorButton *color_button = GDE2_COLOR_BUTTON (data);
+  Gde2ColorSelection *color_selection;
 
   color_selection = GDE2_COLOR_SELECTION (GDE2_COLOR_SELECTION_DIALOG (color_button->priv->cs_dialog)->colorsel);
 
@@ -577,7 +577,7 @@ static gboolean
 dialog_destroy (GtkWidget *widget, 
 		gpointer   data)
 {
-  MateColorButton *color_button = GDE2_COLOR_BUTTON (data);
+  Gde2ColorButton *color_button = GDE2_COLOR_BUTTON (data);
   
   color_button->priv->cs_dialog = NULL;
 
@@ -588,7 +588,7 @@ static void
 dialog_cancel_clicked (GtkWidget *widget,
 		       gpointer   data)
 {
-  MateColorButton *color_button = GDE2_COLOR_BUTTON (data);
+  Gde2ColorButton *color_button = GDE2_COLOR_BUTTON (data);
   
   gtk_widget_hide (color_button->priv->cs_dialog);  
 }
@@ -596,8 +596,8 @@ dialog_cancel_clicked (GtkWidget *widget,
 static void
 gde2_color_button_clicked (GtkButton *button)
 {
-  MateColorButton *color_button = GDE2_COLOR_BUTTON (button);
-  MateColorSelectionDialog *color_dialog;
+  Gde2ColorButton *color_button = GDE2_COLOR_BUTTON (button);
+  Gde2ColorSelectionDialog *color_dialog;
 
   /* if dialog already exists, make sure it's shown and raised */
   if (!color_button->priv->cs_dialog) 
@@ -650,7 +650,7 @@ gde2_color_button_clicked (GtkButton *button)
 
 /**
  * gde2_color_button_set_color:
- * @color_button: a #MateColorButton.
+ * @color_button: a #Gde2ColorButton.
  * @color: A #GdkColor to set the current color with.
  *
  * Sets the current color to be @color.
@@ -658,7 +658,7 @@ gde2_color_button_clicked (GtkButton *button)
  * Since: 1.9.1
  **/
 void
-gde2_color_button_set_color (MateColorButton *color_button,
+gde2_color_button_set_color (Gde2ColorButton *color_button,
 			    const GdkColor *color)
 {
   g_return_if_fail (GDE2_IS_COLOR_BUTTON (color_button));
@@ -676,7 +676,7 @@ gde2_color_button_set_color (MateColorButton *color_button,
 #if GTK_CHECK_VERSION(3, 0, 0)
 /**
  * gde2_color_button_set_rgba:
- * @color_button: a #MateColorButton.
+ * @color_button: a #Gde2ColorButton.
  * @color: A #GdkRGBA to set the current color with.
  *
  * Sets the current color to be @color.
@@ -684,7 +684,7 @@ gde2_color_button_set_color (MateColorButton *color_button,
  * Since: 1.9.1
  **/
 void
-gde2_color_button_set_rgba (MateColorButton *color_button,
+gde2_color_button_set_rgba (Gde2ColorButton *color_button,
 			    const GdkRGBA *color)
 {
   g_return_if_fail (GDE2_IS_COLOR_BUTTON (color_button));
@@ -703,7 +703,7 @@ gde2_color_button_set_rgba (MateColorButton *color_button,
 
 /**
  * gde2_color_button_set_alpha:
- * @color_button: a #MateColorButton.
+ * @color_button: a #Gde2ColorButton.
  * @alpha: an integer between 0 and 65535.
  *
  * Sets the current opacity to be @alpha. 
@@ -711,7 +711,7 @@ gde2_color_button_set_rgba (MateColorButton *color_button,
  * Since: 1.9.1
  **/
 void
-gde2_color_button_set_alpha (MateColorButton *color_button,
+gde2_color_button_set_alpha (Gde2ColorButton *color_button,
 			    guint16         alpha)
 {
   g_return_if_fail (GDE2_IS_COLOR_BUTTON (color_button));
@@ -725,15 +725,15 @@ gde2_color_button_set_alpha (MateColorButton *color_button,
 
 /**
  * gde2_color_button_get_color:
- * @color_button: a #MateColorButton.
+ * @color_button: a #Gde2ColorButton.
  * @color: a #GdkColor to fill in with the current color.
  *
- * Sets @color to be the current color in the #MateColorButton widget.
+ * Sets @color to be the current color in the #Gde2ColorButton widget.
  *
  * Since: 1.9.1
  **/
 void
-gde2_color_button_get_color (MateColorButton *color_button,
+gde2_color_button_get_color (Gde2ColorButton *color_button,
 			    GdkColor       *color)
 {
   g_return_if_fail (GDE2_IS_COLOR_BUTTON (color_button));
@@ -746,15 +746,15 @@ gde2_color_button_get_color (MateColorButton *color_button,
 #if GTK_CHECK_VERSION(3, 0, 0)
 /**
  * gde2_color_button_get_rgba:
- * @color_button: a #MateColorButton.
+ * @color_button: a #Gde2ColorButton.
  * @color: a #GdkRGBA to fill in with the current color.
  *
- * Sets @color to be the current color in the #MateColorButton widget.
+ * Sets @color to be the current color in the #Gde2ColorButton widget.
  *
  * Since: 1.9.1
  **/
 void
-gde2_color_button_get_rgba (MateColorButton *color_button,
+gde2_color_button_get_rgba (Gde2ColorButton *color_button,
 			                      GdkRGBA         *color)
 {
   g_return_if_fail (GDE2_IS_COLOR_BUTTON (color_button));
@@ -768,7 +768,7 @@ gde2_color_button_get_rgba (MateColorButton *color_button,
 
 /**
  * gde2_color_button_get_alpha:
- * @color_button: a #MateColorButton.
+ * @color_button: a #Gde2ColorButton.
  *
  * Returns the current alpha value. 
  *
@@ -777,7 +777,7 @@ gde2_color_button_get_rgba (MateColorButton *color_button,
  * Since: 1.9.1
  **/
 guint16
-gde2_color_button_get_alpha (MateColorButton *color_button)
+gde2_color_button_get_alpha (Gde2ColorButton *color_button)
 {
   g_return_val_if_fail (GDE2_IS_COLOR_BUTTON (color_button), 0);
   
@@ -786,7 +786,7 @@ gde2_color_button_get_alpha (MateColorButton *color_button)
 
 /**
  * gde2_color_button_set_use_alpha:
- * @color_button: a #MateColorButton.
+ * @color_button: a #Gde2ColorButton.
  * @use_alpha: %TRUE if color button should use alpha channel, %FALSE if not.
  *
  * Sets whether or not the color button should use the alpha channel.
@@ -794,7 +794,7 @@ gde2_color_button_get_alpha (MateColorButton *color_button)
  * Since: 1.9.1
  */
 void
-gde2_color_button_set_use_alpha (MateColorButton *color_button, 
+gde2_color_button_set_use_alpha (Gde2ColorButton *color_button, 
 				gboolean        use_alpha)
 {
   g_return_if_fail (GDE2_IS_COLOR_BUTTON (color_button));
@@ -813,7 +813,7 @@ gde2_color_button_set_use_alpha (MateColorButton *color_button,
 
 /**
  * gde2_color_button_get_use_alpha:
- * @color_button: a #MateColorButton.
+ * @color_button: a #Gde2ColorButton.
  *
  * Does the color selection dialog use the alpha channel?
  *
@@ -822,7 +822,7 @@ gde2_color_button_set_use_alpha (MateColorButton *color_button,
  * Since: 1.9.1
  */
 gboolean
-gde2_color_button_get_use_alpha (MateColorButton *color_button)
+gde2_color_button_get_use_alpha (Gde2ColorButton *color_button)
 {
   g_return_val_if_fail (GDE2_IS_COLOR_BUTTON (color_button), FALSE);
 
@@ -832,7 +832,7 @@ gde2_color_button_get_use_alpha (MateColorButton *color_button)
 
 /**
  * gde2_color_button_set_title:
- * @color_button: a #MateColorButton
+ * @color_button: a #Gde2ColorButton
  * @title: String containing new window title.
  *
  * Sets the title for the color selection dialog.
@@ -840,7 +840,7 @@ gde2_color_button_get_use_alpha (MateColorButton *color_button)
  * Since: 1.9.1
  */
 void
-gde2_color_button_set_title (MateColorButton *color_button, 
+gde2_color_button_set_title (Gde2ColorButton *color_button, 
 			    const gchar    *title)
 {
   gchar *old_title;
@@ -860,7 +860,7 @@ gde2_color_button_set_title (MateColorButton *color_button,
 
 /**
  * gde2_color_button_get_title:
- * @color_button: a #MateColorButton
+ * @color_button: a #Gde2ColorButton
  *
  * Gets the title of the color selection dialog.
  *
@@ -869,7 +869,7 @@ gde2_color_button_set_title (MateColorButton *color_button,
  * Since: 1.9.1
  */
 const gchar *
-gde2_color_button_get_title (MateColorButton *color_button)
+gde2_color_button_get_title (Gde2ColorButton *color_button)
 {
   g_return_val_if_fail (GDE2_IS_COLOR_BUTTON (color_button), NULL);
 
@@ -882,7 +882,7 @@ gde2_color_button_set_property (GObject      *object,
 			       const GValue *value,
 			       GParamSpec   *pspec)
 {
-  MateColorButton *color_button = GDE2_COLOR_BUTTON (object);
+  Gde2ColorButton *color_button = GDE2_COLOR_BUTTON (object);
 
   switch (param_id) 
     {
@@ -910,7 +910,7 @@ gde2_color_button_get_property (GObject    *object,
 			       GValue     *value,
 			       GParamSpec *pspec)
 {
-  MateColorButton *color_button = GDE2_COLOR_BUTTON (object);
+  Gde2ColorButton *color_button = GDE2_COLOR_BUTTON (object);
   GdkColor color;
 
   switch (param_id) 

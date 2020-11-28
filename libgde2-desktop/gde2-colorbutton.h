@@ -14,7 +14,7 @@
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with the Mate Library; see the file COPYING.LIB. If not,
+ * License along with the Gde2 Library; see the file COPYING.LIB. If not,
  * write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
@@ -38,35 +38,35 @@
 G_BEGIN_DECLS
 
 
-/* The MateColorButton widget is a simple color picker in a button.
+/* The Gde2ColorButton widget is a simple color picker in a button.
  * The button displays a sample of the currently selected color.  When
  * the user clicks on the button, a color selection dialog pops up.
  * The color picker emits the "color_set" signal when the color is set.
  */
 
 #define GDE2_TYPE_COLOR_BUTTON             (gde2_color_button_get_type ())
-#define GDE2_COLOR_BUTTON(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDE2_TYPE_COLOR_BUTTON, MateColorButton))
-#define GDE2_COLOR_BUTTON_CLASS(klass)     (G_TYPE_CHECK_CLASS_CAST ((klass), GDE2_TYPE_COLOR_BUTTON, MateColorButtonClass))
+#define GDE2_COLOR_BUTTON(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDE2_TYPE_COLOR_BUTTON, Gde2ColorButton))
+#define GDE2_COLOR_BUTTON_CLASS(klass)     (G_TYPE_CHECK_CLASS_CAST ((klass), GDE2_TYPE_COLOR_BUTTON, Gde2ColorButtonClass))
 #define GDE2_IS_COLOR_BUTTON(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDE2_TYPE_COLOR_BUTTON))
 #define GDE2_IS_COLOR_BUTTON_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), GDE2_TYPE_COLOR_BUTTON))
-#define GDE2_COLOR_BUTTON_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GDE2_TYPE_COLOR_BUTTON, MateColorButtonClass))
+#define GDE2_COLOR_BUTTON_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GDE2_TYPE_COLOR_BUTTON, Gde2ColorButtonClass))
 
-typedef struct _MateColorButton          MateColorButton;
-typedef struct _MateColorButtonClass     MateColorButtonClass;
-typedef struct _MateColorButtonPrivate   MateColorButtonPrivate;
+typedef struct _Gde2ColorButton          Gde2ColorButton;
+typedef struct _Gde2ColorButtonClass     Gde2ColorButtonClass;
+typedef struct _Gde2ColorButtonPrivate   Gde2ColorButtonPrivate;
 
-struct _MateColorButton {
+struct _Gde2ColorButton {
   GtkButton button;
 
   /*< private >*/
 
-  MateColorButtonPrivate *priv;
+  Gde2ColorButtonPrivate *priv;
 };
 
-struct _MateColorButtonClass {
+struct _Gde2ColorButtonClass {
   GtkButtonClass parent_class;
 
-  void (* color_set) (MateColorButton *cp);
+  void (* color_set) (Gde2ColorButton *cp);
 
   /* Padding for future expansion */
   void (*_gtk_reserved1) (void);
@@ -79,27 +79,27 @@ struct _MateColorButtonClass {
 GType      gde2_color_button_get_type       (void) G_GNUC_CONST;
 GtkWidget *gde2_color_button_new            (void);
 GtkWidget *gde2_color_button_new_with_color (const GdkColor *color);
-void       gde2_color_button_set_color      (MateColorButton *color_button,
+void       gde2_color_button_set_color      (Gde2ColorButton *color_button,
 					    const GdkColor *color);
 #if GTK_CHECK_VERSION(3, 0, 0)
-void       gde2_color_button_set_rgba       (MateColorButton *color_button,
+void       gde2_color_button_set_rgba       (Gde2ColorButton *color_button,
 					     const GdkRGBA   *color);
 #endif
-void       gde2_color_button_set_alpha      (MateColorButton *color_button,
+void       gde2_color_button_set_alpha      (Gde2ColorButton *color_button,
 					    guint16         alpha);
-void       gde2_color_button_get_color      (MateColorButton *color_button,
+void       gde2_color_button_get_color      (Gde2ColorButton *color_button,
 					    GdkColor       *color);
 #if GTK_CHECK_VERSION(3, 0, 0)
-void       gde2_color_button_get_rgba       (MateColorButton *color_button,
+void       gde2_color_button_get_rgba       (Gde2ColorButton *color_button,
 					     GdkRGBA         *color);
 #endif
-guint16    gde2_color_button_get_alpha      (MateColorButton *color_button);
-void       gde2_color_button_set_use_alpha  (MateColorButton *color_button,
+guint16    gde2_color_button_get_alpha      (Gde2ColorButton *color_button);
+void       gde2_color_button_set_use_alpha  (Gde2ColorButton *color_button,
 					    gboolean        use_alpha);
-gboolean   gde2_color_button_get_use_alpha  (MateColorButton *color_button);
-void       gde2_color_button_set_title      (MateColorButton *color_button,
+gboolean   gde2_color_button_get_use_alpha  (Gde2ColorButton *color_button);
+void       gde2_color_button_set_title      (Gde2ColorButton *color_button,
 					    const gchar    *title);
-const gchar *gde2_color_button_get_title (MateColorButton *color_button);
+const gchar *gde2_color_button_get_title (Gde2ColorButton *color_button);
 
 
 G_END_DECLS

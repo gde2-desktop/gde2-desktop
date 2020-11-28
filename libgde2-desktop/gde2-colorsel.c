@@ -140,7 +140,7 @@ struct _ColorSelectionPrivate
 
 static void gde2_color_selection_dispose		(GObject		 *object);
 static void gde2_color_selection_finalize        (GObject		 *object);
-static void update_color			(MateColorSelection	 *colorsel);
+static void update_color			(Gde2ColorSelection	 *colorsel);
 static void gde2_color_selection_set_property    (GObject                 *object,
 					         guint                    prop_id,
 					         const GValue            *value,
@@ -156,7 +156,7 @@ static void gde2_color_selection_show_all        (GtkWidget               *widge
 static gboolean gde2_color_selection_grab_broken (GtkWidget               *widget,
 						 GdkEventGrabBroken      *event);
 
-static void     gde2_color_selection_set_palette_color   (MateColorSelection *colorsel,
+static void     gde2_color_selection_set_palette_color   (Gde2ColorSelection *colorsel,
                                                          gint               index,
                                                          GdkColor          *color);
 static void     set_focus_line_attributes               (GtkWidget         *drawing_area,
@@ -184,8 +184,8 @@ static void 	hex_changed                             (GtkWidget 	   *hex_entry,
 static gboolean hex_focus_out                           (GtkWidget     	   *hex_entry, 
 							 GdkEventFocus 	   *event,
 							 gpointer      	    data);
-static void 	color_sample_new                        (MateColorSelection *colorsel);
-static void 	make_label_spinbutton     		(MateColorSelection *colorsel,
+static void 	color_sample_new                        (Gde2ColorSelection *colorsel);
+static void 	make_label_spinbutton     		(Gde2ColorSelection *colorsel,
 	    				  		 GtkWidget        **spinbutton,
 	    				  		 gchar             *text,
 	    				  		 GtkWidget         *table,
@@ -193,11 +193,11 @@ static void 	make_label_spinbutton     		(MateColorSelection *colorsel,
 	    				  		 gint               j,
 	    				  		 gint               channel_type,
 	    				  		 const gchar       *tooltip);
-static void 	make_palette_frame                      (MateColorSelection *colorsel,
+static void 	make_palette_frame                      (Gde2ColorSelection *colorsel,
 							 GtkWidget         *table,
 							 gint               i,
 							 gint               j);
-static void 	set_selected_palette                    (MateColorSelection *colorsel,
+static void 	set_selected_palette                    (Gde2ColorSelection *colorsel,
 							 int                x,
 							 int                y);
 static void 	set_focus_line_attributes               (GtkWidget 	   *drawing_area,
@@ -209,13 +209,13 @@ static gboolean mouse_press 		     	       	(GtkWidget         *invisible,
 static void  palette_change_notify_instance (GObject    *object,
 					     GParamSpec *pspec,
 					     gpointer    data);
-static void update_palette (MateColorSelection *colorsel);
+static void update_palette (Gde2ColorSelection *colorsel);
 static void shutdown_eyedropper (GtkWidget *widget);
 
 static guint color_selection_signals[LAST_SIGNAL] = { 0 };
 
-static MateColorSelectionChangePaletteFunc noscreen_change_palette_hook = default_noscreen_change_palette_func;
-static MateColorSelectionChangePaletteWithScreenFunc change_palette_hook = default_change_palette_func;
+static Gde2ColorSelectionChangePaletteFunc noscreen_change_palette_hook = default_noscreen_change_palette_func;
+static Gde2ColorSelectionChangePaletteWithScreenFunc change_palette_hook = default_change_palette_func;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static const guchar dropper_bits[] = {
@@ -284,10 +284,10 @@ static const guchar dropper_mask[] = {
   0x02, 0x00, 0x00, 0x00 };
 #endif
 
-G_DEFINE_TYPE (MateColorSelection, gde2_color_selection, GTK_TYPE_BOX)
+G_DEFINE_TYPE (Gde2ColorSelection, gde2_color_selection, GTK_TYPE_BOX)
 
 static void
-gde2_color_selection_class_init (MateColorSelectionClass *klass)
+gde2_color_selection_class_init (Gde2ColorSelectionClass *klass)
 {
   GObjectClass *gobject_class;
   GtkWidgetClass *widget_class;
@@ -346,7 +346,7 @@ gde2_color_selection_class_init (MateColorSelectionClass *klass)
     g_signal_new ("color-changed",
 		  G_OBJECT_CLASS_TYPE (gobject_class),
 		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (MateColorSelectionClass, color_changed),
+		  G_STRUCT_OFFSET (Gde2ColorSelectionClass, color_changed),
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
@@ -355,7 +355,7 @@ gde2_color_selection_class_init (MateColorSelectionClass *klass)
 }
 
 static void
-gde2_color_selection_init (MateColorSelection *colorsel)
+gde2_color_selection_init (Gde2ColorSelection *colorsel)
 {
   GtkWidget *top_hbox;
   GtkWidget *top_right_vbox;
@@ -589,7 +589,7 @@ gde2_color_selection_set_property (GObject         *object,
 				  const GValue    *value,
 				  GParamSpec      *pspec)
 {
-  MateColorSelection *colorsel = GDE2_COLOR_SELECTION (object);
+  Gde2ColorSelection *colorsel = GDE2_COLOR_SELECTION (object);
   
   switch (prop_id)
     {
@@ -620,7 +620,7 @@ gde2_color_selection_get_property (GObject     *object,
 				  GValue      *value,
 				  GParamSpec  *pspec)
 {
-  MateColorSelection *colorsel = GDE2_COLOR_SELECTION (object);
+  Gde2ColorSelection *colorsel = GDE2_COLOR_SELECTION (object);
   ColorSelectionPrivate *priv = colorsel->private_data;
   GdkColor color;
   
@@ -651,7 +651,7 @@ gde2_color_selection_get_property (GObject     *object,
 static void
 gde2_color_selection_dispose (GObject *object)
 {
-  MateColorSelection *cselection = GDE2_COLOR_SELECTION (object);
+  Gde2ColorSelection *cselection = GDE2_COLOR_SELECTION (object);
   ColorSelectionPrivate *priv = cselection->private_data;
 
   if (priv->dropper_grab_widget)
@@ -668,7 +668,7 @@ gde2_color_selection_dispose (GObject *object)
 static void
 gde2_color_selection_realize (GtkWidget *widget)
 {
-  MateColorSelection *colorsel = GDE2_COLOR_SELECTION (widget);
+  Gde2ColorSelection *colorsel = GDE2_COLOR_SELECTION (widget);
   ColorSelectionPrivate *priv = colorsel->private_data;
   GtkSettings *settings = gtk_widget_get_settings (widget);
 
@@ -684,7 +684,7 @@ gde2_color_selection_realize (GtkWidget *widget)
 static void
 gde2_color_selection_unrealize (GtkWidget *widget)
 {
-  MateColorSelection *colorsel = GDE2_COLOR_SELECTION (widget);
+  Gde2ColorSelection *colorsel = GDE2_COLOR_SELECTION (widget);
   ColorSelectionPrivate *priv = colorsel->private_data;
   GtkSettings *settings = gtk_widget_get_settings (widget);
 
@@ -719,14 +719,14 @@ gde2_color_selection_grab_broken (GtkWidget          *widget,
  */
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-static void color_sample_draw_sample (MateColorSelection *colorsel, cairo_t *cr, int which);
+static void color_sample_draw_sample (Gde2ColorSelection *colorsel, cairo_t *cr, int which);
 #else
-static void color_sample_draw_sample (MateColorSelection *colorsel, int which);
+static void color_sample_draw_sample (Gde2ColorSelection *colorsel, int which);
 #endif
-static void color_sample_update_samples (MateColorSelection *colorsel);
+static void color_sample_update_samples (Gde2ColorSelection *colorsel);
 
 static void
-set_color_internal (MateColorSelection *colorsel,
+set_color_internal (Gde2ColorSelection *colorsel,
 		    gdouble           *color)
 {
   ColorSelectionPrivate *priv;
@@ -779,7 +779,7 @@ color_sample_drag_begin (GtkWidget      *widget,
 			 GdkDragContext *context,
 			 gpointer        data)
 {
-  MateColorSelection *colorsel = data;
+  Gde2ColorSelection *colorsel = data;
   ColorSelectionPrivate *priv;
   gdouble *colsrc;
   
@@ -811,7 +811,7 @@ color_sample_drop_handle (GtkWidget        *widget,
 			  guint             time,
 			  gpointer          data)
 {
-  MateColorSelection *colorsel = data;
+  Gde2ColorSelection *colorsel = data;
   ColorSelectionPrivate *priv;
   guint16 *vals;
   gdouble color[4];
@@ -857,7 +857,7 @@ color_sample_drag_handle (GtkWidget        *widget,
 			  guint             time,
 			  gpointer          data)
 {
-  MateColorSelection *colorsel = data;
+  Gde2ColorSelection *colorsel = data;
   ColorSelectionPrivate *priv;
   guint16 vals[4];
   gdouble *colsrc;
@@ -882,9 +882,9 @@ color_sample_drag_handle (GtkWidget        *widget,
 /* which = 0 means draw old sample, which = 1 means draw new */
 static void
 #if GTK_CHECK_VERSION (3, 0, 0)
-color_sample_draw_sample (MateColorSelection *colorsel, cairo_t *cr, int which)
+color_sample_draw_sample (Gde2ColorSelection *colorsel, cairo_t *cr, int which)
 #else
-color_sample_draw_sample (MateColorSelection *colorsel, int which)
+color_sample_draw_sample (Gde2ColorSelection *colorsel, int which)
 #endif
 {
   GtkWidget *da;
@@ -969,7 +969,7 @@ color_sample_draw_sample (MateColorSelection *colorsel, int which)
 
 
 static void
-color_sample_update_samples (MateColorSelection *colorsel)
+color_sample_update_samples (Gde2ColorSelection *colorsel)
 {
   ColorSelectionPrivate *priv = colorsel->private_data;
   gtk_widget_queue_draw (priv->old_sample);
@@ -980,7 +980,7 @@ color_sample_update_samples (MateColorSelection *colorsel)
 static gboolean
 color_old_sample_draw (GtkWidget          *da,
                        cairo_t            *cr,
-                       MateColorSelection *colorsel)
+                       Gde2ColorSelection *colorsel)
 {
   color_sample_draw_sample (colorsel, cr, 0);
   return FALSE;
@@ -990,7 +990,7 @@ color_old_sample_draw (GtkWidget          *da,
 static gboolean
 color_cur_sample_draw (GtkWidget          *da,
                        cairo_t            *cr,
-                       MateColorSelection *colorsel)
+                       Gde2ColorSelection *colorsel)
 {
   color_sample_draw_sample (colorsel, cr, 1);
   return FALSE;
@@ -999,7 +999,7 @@ color_cur_sample_draw (GtkWidget          *da,
 static gboolean
 color_old_sample_expose (GtkWidget         *da,
 			 GdkEventExpose    *event,
-			 MateColorSelection *colorsel)
+			 Gde2ColorSelection *colorsel)
 {
   color_sample_draw_sample (colorsel, 0);
   return FALSE;
@@ -1009,7 +1009,7 @@ color_old_sample_expose (GtkWidget         *da,
 static gboolean
 color_cur_sample_expose (GtkWidget         *da,
 			 GdkEventExpose    *event,
-			 MateColorSelection *colorsel)
+			 Gde2ColorSelection *colorsel)
 {
   color_sample_draw_sample (colorsel, 1);
   return FALSE;
@@ -1017,7 +1017,7 @@ color_cur_sample_expose (GtkWidget         *da,
 #endif
 
 static void
-color_sample_setup_dnd (MateColorSelection *colorsel, GtkWidget *sample)
+color_sample_setup_dnd (Gde2ColorSelection *colorsel, GtkWidget *sample)
 {
   static const GtkTargetEntry targets[] = {
     { "application/x-color", 0 }
@@ -1058,7 +1058,7 @@ color_sample_setup_dnd (MateColorSelection *colorsel, GtkWidget *sample)
 }
 
 static void
-update_tooltips (MateColorSelection *colorsel)
+update_tooltips (Gde2ColorSelection *colorsel)
 {
   ColorSelectionPrivate *priv;
 
@@ -1083,7 +1083,7 @@ update_tooltips (MateColorSelection *colorsel)
 }
 
 static void
-color_sample_new (MateColorSelection *colorsel)
+color_sample_new (Gde2ColorSelection *colorsel)
 {
   ColorSelectionPrivate *priv;
   
@@ -1300,7 +1300,7 @@ palette_drag_end (GtkWidget      *widget,
 }
 
 static GdkColor *
-get_current_colors (MateColorSelection *colorsel)
+get_current_colors (Gde2ColorSelection *colorsel)
 {
   GdkColor *colors = NULL;
   gint n_colors = 0;
@@ -1318,7 +1318,7 @@ get_current_colors (MateColorSelection *colorsel)
 /* Changes the model color */
 static void
 palette_change_color (GtkWidget         *drawing_area,
-                      MateColorSelection *colorsel,
+                      Gde2ColorSelection *colorsel,
                       gdouble           *color)
 {
   gint x, y;
@@ -1381,7 +1381,7 @@ palette_change_color (GtkWidget         *drawing_area,
 /* Changes the view color */
 static void
 palette_set_color (GtkWidget         *drawing_area,
-		   MateColorSelection *colorsel,
+		   Gde2ColorSelection *colorsel,
 		   gdouble           *color)
 {
   gdouble *new_color = g_new (double, 4);
@@ -1481,7 +1481,7 @@ static void
 save_color_selected (GtkWidget *menuitem,
                      gpointer   data)
 {
-  MateColorSelection *colorsel;
+  Gde2ColorSelection *colorsel;
   GtkWidget *drawing_area;
   ColorSelectionPrivate *priv;
 
@@ -1496,7 +1496,7 @@ save_color_selected (GtkWidget *menuitem,
 }
 
 static void
-do_popup (MateColorSelection *colorsel,
+do_popup (Gde2ColorSelection *colorsel,
           GtkWidget         *drawing_area,
           guint32            timestamp)
 {
@@ -1575,7 +1575,7 @@ palette_press (GtkWidget      *drawing_area,
 	       GdkEventButton *event,
 	       gpointer        data)
 {
-  MateColorSelection *colorsel = GDE2_COLOR_SELECTION (data);
+  Gde2ColorSelection *colorsel = GDE2_COLOR_SELECTION (data);
 
   gtk_widget_grab_focus (drawing_area);
 
@@ -1593,7 +1593,7 @@ palette_release (GtkWidget      *drawing_area,
 		 GdkEventButton *event,
 		 gpointer        data)
 {
-  MateColorSelection *colorsel = GDE2_COLOR_SELECTION (data);
+  Gde2ColorSelection *colorsel = GDE2_COLOR_SELECTION (data);
 
   gtk_widget_grab_focus (drawing_area);
 
@@ -1622,7 +1622,7 @@ palette_drop_handle (GtkWidget        *widget,
 		     guint             time,
 		     gpointer          data)
 {
-  MateColorSelection *colorsel = GDE2_COLOR_SELECTION (data);
+  Gde2ColorSelection *colorsel = GDE2_COLOR_SELECTION (data);
   guint16 *vals;
   gdouble color[4];
   
@@ -1676,7 +1676,7 @@ static gboolean
 palette_popup (GtkWidget *widget,
                gpointer   data)
 {
-  MateColorSelection *colorsel = GDE2_COLOR_SELECTION (data);
+  Gde2ColorSelection *colorsel = GDE2_COLOR_SELECTION (data);
 
   do_popup (colorsel, widget, GDK_CURRENT_TIME);
   return TRUE;
@@ -1684,7 +1684,7 @@ palette_popup (GtkWidget *widget,
                
 
 static GtkWidget*
-palette_new (MateColorSelection *colorsel)
+palette_new (Gde2ColorSelection *colorsel)
 {
   static const GtkTargetEntry targets[] = {
     { "application/x-color", 0 }
@@ -1741,7 +1741,7 @@ palette_new (MateColorSelection *colorsel)
 
 /*
  *
- * The actual MateColorSelection widget
+ * The actual Gde2ColorSelection widget
  *
  */
 
@@ -1828,7 +1828,7 @@ grab_color_at_mouse (GdkScreen *screen,
 {
   GdkPixbuf *pixbuf;
   guchar *pixels;
-  MateColorSelection *colorsel = data;
+  Gde2ColorSelection *colorsel = data;
   ColorSelectionPrivate *priv;
   GdkColor color;
   GdkWindow *root_window = gdk_screen_get_root_window (screen);
@@ -1888,7 +1888,7 @@ grab_color_at_mouse (GdkScreen *screen,
 static void
 shutdown_eyedropper (GtkWidget *widget)
 {
-  MateColorSelection *colorsel;
+  Gde2ColorSelection *colorsel;
   ColorSelectionPrivate *priv;
   GdkDisplay *display = gtk_widget_get_display (widget);
 
@@ -1919,7 +1919,7 @@ mouse_release (GtkWidget      *invisible,
 	       GdkEventButton *event,
 	       gpointer        data)
 {
-  /* MateColorSelection *colorsel = data; */
+  /* Gde2ColorSelection *colorsel = data; */
 
   if (event->button != 1)
     return FALSE;
@@ -2016,7 +2016,7 @@ mouse_press (GtkWidget      *invisible,
 	     GdkEventButton *event,
 	     gpointer        data)
 {
-  /* MateColorSelection *colorsel = data; */
+  /* Gde2ColorSelection *colorsel = data; */
   
   if (event->type == GDK_BUTTON_PRESS &&
       event->button == 1)
@@ -2043,7 +2043,7 @@ mouse_press (GtkWidget      *invisible,
 static void
 get_screen_color (GtkWidget *button)
 {
-  MateColorSelection *colorsel = g_object_get_data (G_OBJECT (button), "COLORSEL");
+  Gde2ColorSelection *colorsel = g_object_get_data (G_OBJECT (button), "COLORSEL");
   ColorSelectionPrivate *priv = colorsel->private_data;
   GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (button));
   GdkCursor *picker_cursor;
@@ -2112,7 +2112,7 @@ static void
 hex_changed (GtkWidget *hex_entry,
 	     gpointer   data)
 {
-  MateColorSelection *colorsel;
+  Gde2ColorSelection *colorsel;
   ColorSelectionPrivate *priv;
   GdkColor color;
   gchar *text;
@@ -2154,7 +2154,7 @@ static void
 hsv_changed (GtkWidget *hsv,
 	     gpointer   data)
 {
-  MateColorSelection *colorsel;
+  Gde2ColorSelection *colorsel;
   ColorSelectionPrivate *priv;
   
   colorsel = GDE2_COLOR_SELECTION (data);
@@ -2180,7 +2180,7 @@ static void
 adjustment_changed (GtkAdjustment *adjustment,
 		    gpointer       data)
 {
-  MateColorSelection *colorsel;
+  Gde2ColorSelection *colorsel;
   ColorSelectionPrivate *priv;
   gdouble value;
   
@@ -2235,7 +2235,7 @@ static void
 opacity_entry_changed (GtkWidget *opacity_entry,
 		       gpointer   data)
 {
-  MateColorSelection *colorsel;
+  Gde2ColorSelection *colorsel;
   ColorSelectionPrivate *priv;
   GtkAdjustment *adj;
   gchar *text;
@@ -2256,7 +2256,7 @@ opacity_entry_changed (GtkWidget *opacity_entry,
 }
 
 static void
-make_label_spinbutton (MateColorSelection *colorsel,
+make_label_spinbutton (Gde2ColorSelection *colorsel,
 		       GtkWidget        **spinbutton,
 		       gchar             *text,
 		       GtkWidget         *table,
@@ -2302,7 +2302,7 @@ make_label_spinbutton (MateColorSelection *colorsel,
 }
 
 static void
-make_palette_frame (MateColorSelection *colorsel,
+make_palette_frame (Gde2ColorSelection *colorsel,
 		    GtkWidget         *table,
 		    gint               i,
 		    gint               j)
@@ -2321,7 +2321,7 @@ make_palette_frame (MateColorSelection *colorsel,
 
 /* Set the palette entry [x][y] to be the currently selected one. */
 static void 
-set_selected_palette (MateColorSelection *colorsel, int x, int y)
+set_selected_palette (Gde2ColorSelection *colorsel, int x, int y)
 {
   ColorSelectionPrivate *priv = colorsel->private_data; 
 
@@ -2338,7 +2338,7 @@ scale_round (double val, double factor)
 }
 
 static void
-update_color (MateColorSelection *colorsel)
+update_color (Gde2ColorSelection *colorsel)
 {
   ColorSelectionPrivate *priv = colorsel->private_data;
   gchar entryval[12];
@@ -2401,7 +2401,7 @@ update_color (MateColorSelection *colorsel)
 }
 
 static void
-update_palette (MateColorSelection *colorsel)
+update_palette (Gde2ColorSelection *colorsel)
 {
   GdkColor *current_colors;
   gint i, j;
@@ -2460,14 +2460,14 @@ default_change_palette_func (GdkScreen	    *screen,
 /**
  * gde2_color_selection_new:
  * 
- * Creates a new MateColorSelection.
+ * Creates a new Gde2ColorSelection.
  * 
- * Return value: a new #MateColorSelection
+ * Return value: a new #Gde2ColorSelection
  **/
 GtkWidget *
 gde2_color_selection_new (void)
 {
-  MateColorSelection *colorsel;
+  Gde2ColorSelection *colorsel;
   ColorSelectionPrivate *priv;
   gdouble color[4];
   color[0] = 1.0;
@@ -2490,14 +2490,14 @@ gde2_color_selection_new (void)
 
 /**
  * gde2_color_selection_get_has_opacity_control:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * 
  * Determines whether the colorsel has an opacity control.
  * 
  * Return value: %TRUE if the @colorsel has an opacity control.  %FALSE if it does't.
  **/
 gboolean
-gde2_color_selection_get_has_opacity_control (MateColorSelection *colorsel)
+gde2_color_selection_get_has_opacity_control (Gde2ColorSelection *colorsel)
 {
   ColorSelectionPrivate *priv;
   
@@ -2510,14 +2510,14 @@ gde2_color_selection_get_has_opacity_control (MateColorSelection *colorsel)
 
 /**
  * gde2_color_selection_set_has_opacity_control:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @has_opacity: %TRUE if @colorsel can set the opacity, %FALSE otherwise.
  *
  * Sets the @colorsel to use or not use opacity.
  * 
  **/
 void
-gde2_color_selection_set_has_opacity_control (MateColorSelection *colorsel,
+gde2_color_selection_set_has_opacity_control (Gde2ColorSelection *colorsel,
 					     gboolean           has_opacity)
 {
   ColorSelectionPrivate *priv;
@@ -2550,14 +2550,14 @@ gde2_color_selection_set_has_opacity_control (MateColorSelection *colorsel,
 
 /**
  * gde2_color_selection_get_has_palette:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * 
  * Determines whether the color selector has a color palette.
  * 
  * Return value: %TRUE if the selector has a palette.  %FALSE if it hasn't.
  **/
 gboolean
-gde2_color_selection_get_has_palette (MateColorSelection *colorsel)
+gde2_color_selection_get_has_palette (Gde2ColorSelection *colorsel)
 {
   ColorSelectionPrivate *priv;
   
@@ -2570,14 +2570,14 @@ gde2_color_selection_get_has_palette (MateColorSelection *colorsel)
 
 /**
  * gde2_color_selection_set_has_palette:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @has_palette: %TRUE if palette is to be visible, %FALSE otherwise.
  *
  * Shows and hides the palette based upon the value of @has_palette.
  * 
  **/
 void
-gde2_color_selection_set_has_palette (MateColorSelection *colorsel,
+gde2_color_selection_set_has_palette (Gde2ColorSelection *colorsel,
 				     gboolean           has_palette)
 {
   ColorSelectionPrivate *priv;
@@ -2602,14 +2602,14 @@ gde2_color_selection_set_has_palette (MateColorSelection *colorsel,
 
 /**
  * gde2_color_selection_set_current_color:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @color: A #GdkColor to set the current color with.
  *
  * Sets the current color to be @color.  The first time this is called, it will
  * also set the original color to be @color too.
  **/
 void
-gde2_color_selection_set_current_color (MateColorSelection *colorsel,
+gde2_color_selection_set_current_color (Gde2ColorSelection *colorsel,
 				       const GdkColor    *color)
 {
   ColorSelectionPrivate *priv;
@@ -2640,14 +2640,14 @@ gde2_color_selection_set_current_color (MateColorSelection *colorsel,
 
 /**
  * gde2_color_selection_set_current_alpha:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @alpha: an integer between 0 and 65535.
  *
  * Sets the current opacity to be @alpha.  The first time this is called, it will
  * also set the original opacity to be @alpha too.
  **/
 void
-gde2_color_selection_set_current_alpha (MateColorSelection *colorsel,
+gde2_color_selection_set_current_alpha (Gde2ColorSelection *colorsel,
 				       guint16            alpha)
 {
   ColorSelectionPrivate *priv;
@@ -2669,7 +2669,7 @@ gde2_color_selection_set_current_alpha (MateColorSelection *colorsel,
 
 /**
  * gde2_color_selection_set_color:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @color: an array of 4 doubles specifying the red, green, blue and opacity 
  *   to set the current color to.
  *
@@ -2679,7 +2679,7 @@ gde2_color_selection_set_current_alpha (MateColorSelection *colorsel,
  * Deprecated: 2.0: Use gde2_color_selection_set_current_color() instead.
  **/
 void
-gde2_color_selection_set_color (MateColorSelection    *colorsel,
+gde2_color_selection_set_color (Gde2ColorSelection    *colorsel,
 			       gdouble              *color)
 {
   g_return_if_fail (GDE2_IS_COLOR_SELECTION (colorsel));
@@ -2689,13 +2689,13 @@ gde2_color_selection_set_color (MateColorSelection    *colorsel,
 
 /**
  * gde2_color_selection_get_current_color:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @color: (out): a #GdkColor to fill in with the current color.
  *
- * Sets @color to be the current color in the MateColorSelection widget.
+ * Sets @color to be the current color in the Gde2ColorSelection widget.
  **/
 void
-gde2_color_selection_get_current_color (MateColorSelection *colorsel,
+gde2_color_selection_get_current_color (Gde2ColorSelection *colorsel,
 				       GdkColor          *color)
 {
   ColorSelectionPrivate *priv;
@@ -2711,14 +2711,14 @@ gde2_color_selection_get_current_color (MateColorSelection *colorsel,
 
 /**
  * gde2_color_selection_get_current_alpha:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  *
  * Returns the current alpha value.
  *
  * Return value: an integer between 0 and 65535.
  **/
 guint16
-gde2_color_selection_get_current_alpha (MateColorSelection *colorsel)
+gde2_color_selection_get_current_alpha (Gde2ColorSelection *colorsel)
 {
   ColorSelectionPrivate *priv;
   
@@ -2730,15 +2730,15 @@ gde2_color_selection_get_current_alpha (MateColorSelection *colorsel)
 
 /**
  * gde2_color_selection_get_color:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @color: an array of 4 #gdouble to fill in with the current color.
  *
- * Sets @color to be the current color in the MateColorSelection widget.
+ * Sets @color to be the current color in the Gde2ColorSelection widget.
  *
  * Deprecated: 2.0: Use gde2_color_selection_get_current_color() instead.
  **/
 void
-gde2_color_selection_get_color (MateColorSelection *colorsel,
+gde2_color_selection_get_color (Gde2ColorSelection *colorsel,
 			       gdouble           *color)
 {
   ColorSelectionPrivate *priv;
@@ -2754,7 +2754,7 @@ gde2_color_selection_get_color (MateColorSelection *colorsel,
 
 /**
  * gde2_color_selection_set_previous_color:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @color: a #GdkColor to set the previous color with.
  *
  * Sets the 'previous' color to be @color.  This function should be called with
@@ -2763,7 +2763,7 @@ gde2_color_selection_get_color (MateColorSelection *colorsel,
  * time it is called.
  **/
 void
-gde2_color_selection_set_previous_color (MateColorSelection *colorsel,
+gde2_color_selection_set_previous_color (Gde2ColorSelection *colorsel,
 					const GdkColor    *color)
 {
   ColorSelectionPrivate *priv;
@@ -2789,14 +2789,14 @@ gde2_color_selection_set_previous_color (MateColorSelection *colorsel,
 
 /**
  * gde2_color_selection_set_previous_alpha:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @alpha: an integer between 0 and 65535.
  *
  * Sets the 'previous' alpha to be @alpha.  This function should be called with
  * some hesitations, as it might seem confusing to have that alpha change.
  **/
 void
-gde2_color_selection_set_previous_alpha (MateColorSelection *colorsel,
+gde2_color_selection_set_previous_alpha (Gde2ColorSelection *colorsel,
 					guint16            alpha)
 {
   ColorSelectionPrivate *priv;
@@ -2814,13 +2814,13 @@ gde2_color_selection_set_previous_alpha (MateColorSelection *colorsel,
 
 /**
  * gde2_color_selection_get_previous_color:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @color: (out): a #GdkColor to fill in with the original color value.
  *
  * Fills @color in with the original color value.
  **/
 void
-gde2_color_selection_get_previous_color (MateColorSelection *colorsel,
+gde2_color_selection_get_previous_color (Gde2ColorSelection *colorsel,
 					GdkColor           *color)
 {
   ColorSelectionPrivate *priv;
@@ -2836,14 +2836,14 @@ gde2_color_selection_get_previous_color (MateColorSelection *colorsel,
 
 /**
  * gde2_color_selection_get_previous_alpha:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  *
  * Returns the previous alpha value.
  *
  * Return value: an integer between 0 and 65535.
  **/
 guint16
-gde2_color_selection_get_previous_alpha (MateColorSelection *colorsel)
+gde2_color_selection_get_previous_alpha (Gde2ColorSelection *colorsel)
 {
   ColorSelectionPrivate *priv;
   
@@ -2855,7 +2855,7 @@ gde2_color_selection_get_previous_alpha (MateColorSelection *colorsel)
 
 /**
  * gde2_color_selection_set_palette_color:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  * @index: the color index of the palette.
  * @color: A #GdkColor to set the palette with.
  *
@@ -2863,7 +2863,7 @@ gde2_color_selection_get_previous_alpha (MateColorSelection *colorsel)
  * 
  **/
 static void
-gde2_color_selection_set_palette_color (MateColorSelection   *colorsel,
+gde2_color_selection_set_palette_color (Gde2ColorSelection   *colorsel,
 				       gint                 index,
 				       GdkColor            *color)
 {
@@ -2887,7 +2887,7 @@ gde2_color_selection_set_palette_color (MateColorSelection   *colorsel,
 
 /**
  * gde2_color_selection_is_adjusting:
- * @colorsel: a #MateColorSelection.
+ * @colorsel: a #Gde2ColorSelection.
  *
  * Gets the current state of the @colorsel.
  *
@@ -2895,7 +2895,7 @@ gde2_color_selection_set_palette_color (MateColorSelection   *colorsel,
  * if the selection has stopped.
  **/
 gboolean
-gde2_color_selection_is_adjusting (MateColorSelection *colorsel)
+gde2_color_selection_is_adjusting (Gde2ColorSelection *colorsel)
 {
   ColorSelectionPrivate *priv;
   
@@ -3048,7 +3048,7 @@ gde2_color_selection_palette_to_string (const GdkColor *colors,
  * Installs a global function to be called whenever the user tries to
  * modify the palette in a color selection. This function should save
  * the new palette contents, and update the GtkSettings property
- * "gtk-color-palette" so all MateColorSelection widgets will be modified.
+ * "gtk-color-palette" so all Gde2ColorSelection widgets will be modified.
  *
  * Return value: the previous change palette hook (that was replaced).
  *
@@ -3056,10 +3056,10 @@ gde2_color_selection_palette_to_string (const GdkColor *colors,
  *     Use gde2_color_selection_set_change_palette_with_screen_hook() instead. 
  * 
  **/
-MateColorSelectionChangePaletteFunc
-gde2_color_selection_set_change_palette_hook (MateColorSelectionChangePaletteFunc func)
+Gde2ColorSelectionChangePaletteFunc
+gde2_color_selection_set_change_palette_hook (Gde2ColorSelectionChangePaletteFunc func)
 {
-  MateColorSelectionChangePaletteFunc old;
+  Gde2ColorSelectionChangePaletteFunc old;
 
   old = noscreen_change_palette_hook;
 
@@ -3075,16 +3075,16 @@ gde2_color_selection_set_change_palette_hook (MateColorSelectionChangePaletteFun
  * Installs a global function to be called whenever the user tries to
  * modify the palette in a color selection. This function should save
  * the new palette contents, and update the GtkSettings property
- * "gtk-color-palette" so all MateColorSelection widgets will be modified.
+ * "gtk-color-palette" so all Gde2ColorSelection widgets will be modified.
  * 
  * Return value: the previous change palette hook (that was replaced).
  *
  * Since: 1.9.1
  **/
-MateColorSelectionChangePaletteWithScreenFunc
-gde2_color_selection_set_change_palette_with_screen_hook (MateColorSelectionChangePaletteWithScreenFunc func)
+Gde2ColorSelectionChangePaletteWithScreenFunc
+gde2_color_selection_set_change_palette_with_screen_hook (Gde2ColorSelectionChangePaletteWithScreenFunc func)
 {
-  MateColorSelectionChangePaletteWithScreenFunc old;
+  Gde2ColorSelectionChangePaletteWithScreenFunc old;
 
   old = change_palette_hook;
 

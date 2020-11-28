@@ -28,11 +28,11 @@ msgstr "Joe Hansen, 2012, 2013, 2014, 2105.\n\nDansk-gruppen <dansk@dansk-gruppe
 
 #: ../gde2-about/gde2-about.desktop.in.in.h:1
 msgid "About GDE2"
-msgstr "Om Mate"
+msgstr "Om Gde2"
 
 #: ../gde2-about/gde2-about.desktop.in.in.h:2
 msgid "Learn more about GDE2"
-msgstr "Læs mere om Mate"
+msgstr "Læs mere om Gde2"
 
 #: ../gde2-about/gde2-about.h:45
 msgid ""

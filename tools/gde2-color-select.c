@@ -34,7 +34,7 @@
     textdomain(package);
 
 gboolean
-copy_color (GtkWidget *widget, GdkEvent  *event, MateColorSelectionDialog *color_dialog)
+copy_color (GtkWidget *widget, GdkEvent  *event, Gde2ColorSelectionDialog *color_dialog)
 {
     GdkColor color;
     gchar *color_string;

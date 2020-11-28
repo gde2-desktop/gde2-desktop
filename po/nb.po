@@ -50,7 +50,7 @@ msgstr "GDE2 omfatter det meste av det du ser på din datamaskin, inkludert filb
 msgid ""
 "GDE2 is a Free, usable, stable, accessible desktop environment for the Unix-"
 "like family of operating systems."
-msgstr "Mate er et gratis, brukervennlig, stabil og med tilgjengelig skrivebordsmiljø for den Unix-lignende familien av operativsystemer."
+msgstr "Gde2 er et gratis, brukervennlig, stabil og med tilgjengelig skrivebordsmiljø for den Unix-lignende familien av operativsystemer."
 
 #: ../gde2-about/gde2-about.h:54
 msgid ""

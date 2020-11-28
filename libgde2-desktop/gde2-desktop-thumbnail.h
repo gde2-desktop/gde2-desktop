@@ -3,20 +3,20 @@
  *
  * Copyright (C) 2002 Red Hat, Inc.
  *
- * This file is part of the Mate Library.
+ * This file is part of the Gde2 Library.
  *
- * The Mate Library is free software; you can redistribute it and/or
+ * The Gde2 Library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * The Mate Library is distributed in the hope that it will be useful,
+ * The Gde2 Library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with the Mate Library; see the file COPYING.LIB.  If not,
+ * License along with the Gde2 Library; see the file COPYING.LIB.  If not,
  * write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA  02110-1301, USA.
  *
@@ -27,7 +27,7 @@
 #define GDE2_DESKTOP_THUMBNAIL_H
 
 #ifndef GDE2_DESKTOP_USE_UNSTABLE_API
-#error    MateDesktopThumbnail is unstable API. You must define GDE2_DESKTOP_USE_UNSTABLE_API before including gde2-desktop-thumbnail.h
+#error    Gde2DesktopThumbnail is unstable API. You must define GDE2_DESKTOP_USE_UNSTABLE_API before including gde2-desktop-thumbnail.h
 #endif
 
 #include <glib.h>
@@ -40,50 +40,50 @@ G_BEGIN_DECLS
 typedef enum {
   GDE2_DESKTOP_THUMBNAIL_SIZE_NORMAL,
   GDE2_DESKTOP_THUMBNAIL_SIZE_LARGE
-} MateDesktopThumbnailSize;
+} Gde2DesktopThumbnailSize;
 
 #define GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY		(gde2_desktop_thumbnail_factory_get_type ())
-#define GDE2_DESKTOP_THUMBNAIL_FACTORY(obj)	(G_TYPE_CHECK_INSTANCE_CAST ((obj), GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY, MateDesktopThumbnailFactory))
-#define GDE2_DESKTOP_THUMBNAIL_FACTORY_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST ((klass), GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY, MateDesktopThumbnailFactoryClass))
+#define GDE2_DESKTOP_THUMBNAIL_FACTORY(obj)	(G_TYPE_CHECK_INSTANCE_CAST ((obj), GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY, Gde2DesktopThumbnailFactory))
+#define GDE2_DESKTOP_THUMBNAIL_FACTORY_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST ((klass), GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY, Gde2DesktopThumbnailFactoryClass))
 #define GDE2_DESKTOP_IS_THUMBNAIL_FACTORY(obj)		(G_TYPE_INSTANCE_CHECK_TYPE ((obj), GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY))
 #define GDE2_DESKTOP_IS_THUMBNAIL_FACTORY_CLASS(klass)	(G_TYPE_CLASS_CHECK_CLASS_TYPE ((klass), GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY))
 
-typedef struct _MateDesktopThumbnailFactory        MateDesktopThumbnailFactory;
-typedef struct _MateDesktopThumbnailFactoryClass   MateDesktopThumbnailFactoryClass;
-typedef struct _MateDesktopThumbnailFactoryPrivate MateDesktopThumbnailFactoryPrivate;
+typedef struct _Gde2DesktopThumbnailFactory        Gde2DesktopThumbnailFactory;
+typedef struct _Gde2DesktopThumbnailFactoryClass   Gde2DesktopThumbnailFactoryClass;
+typedef struct _Gde2DesktopThumbnailFactoryPrivate Gde2DesktopThumbnailFactoryPrivate;
 
-struct _MateDesktopThumbnailFactory {
+struct _Gde2DesktopThumbnailFactory {
 	GObject parent;
 
-	MateDesktopThumbnailFactoryPrivate *priv;
+	Gde2DesktopThumbnailFactoryPrivate *priv;
 };
 
-struct _MateDesktopThumbnailFactoryClass {
+struct _Gde2DesktopThumbnailFactoryClass {
 	GObjectClass parent;
 };
 
 GType                  gde2_desktop_thumbnail_factory_get_type (void);
-MateDesktopThumbnailFactory *gde2_desktop_thumbnail_factory_new      (MateDesktopThumbnailSize     size);
+Gde2DesktopThumbnailFactory *gde2_desktop_thumbnail_factory_new      (Gde2DesktopThumbnailSize     size);
 
-char *                 gde2_desktop_thumbnail_factory_lookup   (MateDesktopThumbnailFactory *factory,
+char *                 gde2_desktop_thumbnail_factory_lookup   (Gde2DesktopThumbnailFactory *factory,
 								 const char            *uri,
 								 time_t                 mtime);
 
-gboolean               gde2_desktop_thumbnail_factory_has_valid_failed_thumbnail (MateDesktopThumbnailFactory *factory,
+gboolean               gde2_desktop_thumbnail_factory_has_valid_failed_thumbnail (Gde2DesktopThumbnailFactory *factory,
 										   const char            *uri,
 										   time_t                 mtime);
-gboolean               gde2_desktop_thumbnail_factory_can_thumbnail (MateDesktopThumbnailFactory *factory,
+gboolean               gde2_desktop_thumbnail_factory_can_thumbnail (Gde2DesktopThumbnailFactory *factory,
 								      const char            *uri,
 								      const char            *mime_type,
 								      time_t                 mtime);
-GdkPixbuf *            gde2_desktop_thumbnail_factory_generate_thumbnail (MateDesktopThumbnailFactory *factory,
+GdkPixbuf *            gde2_desktop_thumbnail_factory_generate_thumbnail (Gde2DesktopThumbnailFactory *factory,
 									   const char            *uri,
 									   const char            *mime_type);
-void                   gde2_desktop_thumbnail_factory_save_thumbnail (MateDesktopThumbnailFactory *factory,
+void                   gde2_desktop_thumbnail_factory_save_thumbnail (Gde2DesktopThumbnailFactory *factory,
 								       GdkPixbuf             *thumbnail,
 								       const char            *uri,
 								       time_t                 original_mtime);
-void                   gde2_desktop_thumbnail_factory_create_failed_thumbnail (MateDesktopThumbnailFactory *factory,
+void                   gde2_desktop_thumbnail_factory_create_failed_thumbnail (Gde2DesktopThumbnailFactory *factory,
 										const char            *uri,
 										time_t                 mtime);
 
@@ -96,7 +96,7 @@ gboolean   gde2_desktop_thumbnail_is_valid          (GdkPixbuf          *pixbuf,
 						      time_t              mtime);
 char *     gde2_desktop_thumbnail_md5               (const char         *uri);
 char *     gde2_desktop_thumbnail_path_for_uri      (const char         *uri,
-						      MateDesktopThumbnailSize  size);
+						      Gde2DesktopThumbnailSize  size);
 
 
 /* Pixbuf utils */

@@ -1,10 +1,10 @@
 <SECTION>
 <INCLUDE>gde2-bg.h</INCLUDE>
 <FILE>gde2-bg</FILE>
-<TITLE>MateBG</TITLE>
-MateBG
-MateBGColorType
-MateBGPlacement
+<TITLE>Gde2BG</TITLE>
+Gde2BG
+Gde2BGColorType
+Gde2BGPlacement
 GDE2_BG_KEY_DIR
 gde2_bg_new
 gde2_bg_load_from_preferences
@@ -31,15 +31,15 @@ GDE2_TYPE_BG
 GDE2_BG_CLASS
 GDE2_IS_BG_CLASS
 GDE2_BG_GET_CLASS
-MateBGClass
+Gde2BGClass
 </SECTION>
 
 <SECTION>
 <INCLUDE>gde2-rr.h</INCLUDE>
 <FILE>gde2-rr-screen</FILE>
 <TITLE></TITLE>
-MateRRScreen
-MateRRScreenChanged
+Gde2RRScreen
+Gde2RRScreenChanged
 gde2_rr_screen_new
 gde2_rr_screen_destroy
 gde2_rr_screen_refresh
@@ -58,7 +58,7 @@ gde2_rr_screen_get_ranges
 <INCLUDE>gde2-rr.h</INCLUDE>
 <FILE>gde2-rr-output</FILE>
 <TITLE></TITLE>
-MateRROutput
+Gde2RROutput
 gde2_rr_output_get_id
 gde2_rr_output_get_name
 gde2_rr_output_is_connected
@@ -80,8 +80,8 @@ gde2_rr_output_can_clone
 <INCLUDE>gde2-rr.h</INCLUDE>
 <FILE>gde2-rr-crtc</FILE>
 <TITLE></TITLE>
-MateRRCrtc
-MateRRRotation
+Gde2RRCrtc
+Gde2RRRotation
 gde2_rr_crtc_get_id
 gde2_rr_crtc_set_config
 gde2_rr_crtc_can_drive_output
@@ -96,7 +96,7 @@ gde2_rr_crtc_get_rotations
 <INCLUDE>gde2-rr.h</INCLUDE>
 <FILE>gde2-rr-mode</FILE>
 <TITLE></TITLE>
-MateRRMode
+Gde2RRMode
 gde2_rr_mode_get_id
 gde2_rr_mode_get_width
 gde2_rr_mode_get_height
@@ -107,8 +107,8 @@ gde2_rr_mode_get_freq
 <INCLUDE>gde2-rr-config.h</INCLUDE>
 <FILE>gde2-rr-config</FILE>
 <TITLE></TITLE>
-MateOutputInfo
-MateRRConfig
+Gde2OutputInfo
+Gde2RRConfig
 gde2_rr_config_new_current
 gde2_rr_config_new_stored
 gde2_rr_config_free
@@ -124,8 +124,8 @@ gde2_rr_config_applicable
 <SECTION>
 <INCLUDE>gde2-rr-labeler.h</INCLUDE>
 <FILE>gde2-rr-labeler</FILE>
-<TITLE>MateRRLabeler</TITLE>
-MateRRLabeler
+<TITLE>Gde2RRLabeler</TITLE>
+Gde2RRLabeler
 gde2_rr_labeler_new
 gde2_rr_labeler_hide
 gde2_rr_labeler_get_color_for_output
@@ -138,16 +138,16 @@ GDE2_TYPE_RR_LABELER
 GDE2_RR_LABELER_CLASS
 GDE2_IS_RR_LABELER_CLASS
 GDE2_RR_LABELER_GET_CLASS
-MateRRLabelerClass
+Gde2RRLabelerClass
 </SECTION>
 
 <SECTION>
 <INCLUDE>gde2-desktop-item.h</INCLUDE>
 <FILE>gde2-desktop-item</FILE>
-<TITLE>MateDesktopItem</TITLE>
-MateDesktopItemType
-MateDesktopItemStatus
-MateDesktopItem
+<TITLE>Gde2DesktopItem</TITLE>
+Gde2DesktopItemType
+Gde2DesktopItemStatus
+Gde2DesktopItem
 GDE2_DESKTOP_ITEM_ENCODING
 GDE2_DESKTOP_ITEM_VERSION
 GDE2_DESKTOP_ITEM_NAME
@@ -180,10 +180,10 @@ GDE2_DESKTOP_ITEM_URL
 GDE2_DESKTOP_ITEM_DOC_PATH
 GDE2_DESKTOP_ITEM_CATEGORIES
 GDE2_DESKTOP_ITEM_ONLY_SHOW_IN
-MateDesktopItemLoadFlags
-MateDesktopItemLaunchFlags
-MateDesktopItemIconFlags
-MateDesktopItemError
+Gde2DesktopItemLoadFlags
+Gde2DesktopItemLaunchFlags
+Gde2DesktopItemIconFlags
+Gde2DesktopItemError
 GDE2_DESKTOP_ITEM_ERROR
 gde2_desktop_item_new
 gde2_desktop_item_new_from_file
@@ -246,9 +246,9 @@ gde2_desktop_thumbnail_scale_down_pixbuf
 <SECTION>
 <INCLUDE>gde2-thumbnail.h</INCLUDE>
 <FILE>gde2-desktop-thumbnail-factory</FILE>
-<TITLE>MateDesktopThumbnailFactory</TITLE>
-MateDesktopThumbnailFactory
-MateDesktopThumbnailSize
+<TITLE>Gde2DesktopThumbnailFactory</TITLE>
+Gde2DesktopThumbnailFactory
+Gde2DesktopThumbnailSize
 gde2_desktop_thumbnail_factory_new
 gde2_desktop_thumbnail_factory_lookup
 gde2_desktop_thumbnail_factory_has_valid_failed_thumbnail
@@ -257,7 +257,7 @@ gde2_desktop_thumbnail_factory_generate_thumbnail
 gde2_desktop_thumbnail_factory_save_thumbnail
 gde2_desktop_thumbnail_factory_create_failed_thumbnail
 <SUBSECTION Private>
-MateDesktopThumbnailFactoryPrivate
+Gde2DesktopThumbnailFactoryPrivate
 gde2_desktop_thumbnail_factory_get_type
 <SUBSECTION Standard>
 GDE2_DESKTOP_THUMBNAIL_FACTORY
@@ -265,7 +265,7 @@ GDE2_DESKTOP_IS_THUMBNAIL_FACTORY
 GDE2_DESKTOP_TYPE_THUMBNAIL_FACTORY
 GDE2_DESKTOP_THUMBNAIL_FACTORY_CLASS
 GDE2_DESKTOP_IS_THUMBNAIL_FACTORY_CLASS
-MateDesktopThumbnailFactoryClass
+Gde2DesktopThumbnailFactoryClass
 </SECTION>
 
 <SECTION>

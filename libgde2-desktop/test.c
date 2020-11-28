@@ -40,10 +40,10 @@ main (int argc, char **argv)
 
     gtk_window_set_title (window, "GDE2 Desktop Test");
 
-    /* create a MateColorButton */
+    /* create a Gde2ColorButton */
     widget = gde2_color_button_new ();
 
-    /* add MateColorButton to window */
+    /* add Gde2ColorButton to window */
     gtk_container_add (GTK_CONTAINER (window), widget);
 
     /* quit signal */

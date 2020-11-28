@@ -33,18 +33,18 @@
 G_BEGIN_DECLS
 
 #define GDE2_TYPE_COLOR_SELECTION_DIALOG            (gde2_color_selection_dialog_get_type ())
-#define GDE2_COLOR_SELECTION_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDE2_TYPE_COLOR_SELECTION_DIALOG, MateColorSelectionDialog))
-#define GDE2_COLOR_SELECTION_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GDE2_TYPE_COLOR_SELECTION_DIALOG, MateColorSelectionDialogClass))
+#define GDE2_COLOR_SELECTION_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDE2_TYPE_COLOR_SELECTION_DIALOG, Gde2ColorSelectionDialog))
+#define GDE2_COLOR_SELECTION_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GDE2_TYPE_COLOR_SELECTION_DIALOG, Gde2ColorSelectionDialogClass))
 #define GDE2_IS_COLOR_SELECTION_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDE2_TYPE_COLOR_SELECTION_DIALOG))
 #define GDE2_IS_COLOR_SELECTION_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GDE2_TYPE_COLOR_SELECTION_DIALOG))
-#define GDE2_COLOR_SELECTION_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GDE2_TYPE_COLOR_SELECTION_DIALOG, MateColorSelectionDialogClass))
+#define GDE2_COLOR_SELECTION_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GDE2_TYPE_COLOR_SELECTION_DIALOG, Gde2ColorSelectionDialogClass))
 
 
-typedef struct _MateColorSelectionDialog       MateColorSelectionDialog;
-typedef struct _MateColorSelectionDialogClass  MateColorSelectionDialogClass;
+typedef struct _Gde2ColorSelectionDialog       Gde2ColorSelectionDialog;
+typedef struct _Gde2ColorSelectionDialogClass  Gde2ColorSelectionDialogClass;
 
 
-struct _MateColorSelectionDialog
+struct _Gde2ColorSelectionDialog
 {
   GtkDialog parent_instance;
 
@@ -54,7 +54,7 @@ struct _MateColorSelectionDialog
   GtkWidget *help_button;
 };
 
-struct _MateColorSelectionDialogClass
+struct _Gde2ColorSelectionDialogClass
 {
   GtkDialogClass parent_class;
 
@@ -69,7 +69,7 @@ struct _MateColorSelectionDialogClass
 /* ColorSelectionDialog */
 GType      gde2_color_selection_dialog_get_type            (void) G_GNUC_CONST;
 GtkWidget* gde2_color_selection_dialog_new                 (const gchar *title);
-GtkWidget* gde2_color_selection_dialog_get_color_selection (MateColorSelectionDialog *colorsel);
+GtkWidget* gde2_color_selection_dialog_get_color_selection (Gde2ColorSelectionDialog *colorsel);
 
 
 G_END_DECLS

@@ -32,11 +32,11 @@ msgstr "Michael Steenbeek"
 
 #: ../gde2-about/gde2-about.desktop.in.in.h:1
 msgid "About GDE2"
-msgstr "Over Mate"
+msgstr "Over Gde2"
 
 #: ../gde2-about/gde2-about.desktop.in.in.h:2
 msgid "Learn more about GDE2"
-msgstr "Meer te weten komen over Mate"
+msgstr "Meer te weten komen over Gde2"
 
 #: ../gde2-about/gde2-about.h:45
 msgid ""

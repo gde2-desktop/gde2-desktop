@@ -8,7 +8,7 @@
 # Diogo Oliveira <diogodesigns@gmail.com>, 2015
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2014
 # Luis Filipe Teixeira <lufilte@gmail.com>, 2016
-# Mateus Pinho <gde2usleitepinho@gmail.com>, 2015
+# Gde2us Pinho <gde2usleitepinho@gmail.com>, 2015
 # Sérgio Marques <smarquespt@gmail.com>, 2012
 msgid ""
 msgstr ""
