@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<gde2-version>
+  <platform>@GDE2_PLATFORM@</platform>
+  <minor>@GDE2_MINOR@</minor>
+  <micro>@GDE2_MICRO@</micro>
+  @GDE2_DATE_COMMENT_START@<date>@GDE2_DATE@</date>@GDE2_DATE_COMMENT_END@
+</gde2-version>

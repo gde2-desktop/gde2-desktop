@@ -1,0 +1,37 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+gde2-about/gde2-about.c
+gde2-about/gde2-about.desktop.in.in
+gde2-about/gde2-about.h
+# When adding a file here, make sure that the entry point in the API of this
+# file calls _gde2_desktop_init_i18n ()
+libgde2-desktop/display-name.c
+libgde2-desktop/gde2-aboutdialog.c
+libgde2-desktop/gde2-colorbutton.c
+libgde2-desktop/gde2-colorsel.c
+libgde2-desktop/gde2-colorseldialog.c
+libgde2-desktop/gde2-desktop-item.c
+libgde2-desktop/gde2-desktop-utils.c
+libgde2-desktop/gde2-rr.c
+libgde2-desktop/gde2-rr-config.c
+libgde2-desktop/gde2-rr-labeler.c
+[type: gettext/gsettings]schemas/org.gde2.accessibility-keyboard.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.accessibility-startup.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.applications-at-mobility.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.applications-at-visual.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.applications-browser.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.applications-office.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.applications-terminal.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.background.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.file-views.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.interface.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.lockdown.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.peripherals-keyboard.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.peripherals-mouse.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.sound.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.thumbnail-cache.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.thumbnailers.gschema.xml.in
+[type: gettext/gsettings]schemas/org.gde2.typing-break.gschema.xml.in
+tools/gde2-color-select.c
+tools/gde2-color-select.desktop.in.in
+

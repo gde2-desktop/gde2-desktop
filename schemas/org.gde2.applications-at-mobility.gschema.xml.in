@@ -1,0 +1,14 @@
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
+  <schema id="org.gde2.applications-at-mobility" path="/org/gde2/desktop/applications/at/mobility/">
+    <key name="exec" type="s">
+      <default>'dasher'</default>
+      <summary>Preferred Mobility assistive technology application</summary>
+      <description>Preferred Mobility assistive technology application to be used for login, menu, or command line.</description>
+    </key>
+    <key name="startup" type="b">
+      <default>false</default>
+      <summary>Start preferred Mobility assistive technology application</summary>
+      <description>GDE2 to start preferred Mobility assistive technology application during login.</description>
+    </key>
+  </schema>
+</schemalist>

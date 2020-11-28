@@ -1,0 +1,19 @@
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
+  <schema id="org.gde2.debug" path="/org/gde2/debug/">
+    <key name="caja" type="b">
+      <default>false</default>
+    </key>
+    <key name="marco" type="b">
+      <default>false</default>
+    </key>
+    <key name="gde2-session" type="b">
+      <default>false</default>
+    </key>
+    <key name="gde2-settings-daemon" type="b">
+      <default>false</default>
+    </key>
+    <key name="gde2-panel" type="b">
+      <default>false</default>
+    </key>
+  </schema>
+</schemalist>

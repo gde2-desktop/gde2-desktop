@@ -1,0 +1,7 @@
+# List of source files containing translatable strings that should not be
+# translated.
+# Please keep this file sorted alphabetically.
+gde2-about/gde2-about.desktop.in
+gde2-version.xml.in
+tools/gde2-color-select.desktop.in
+

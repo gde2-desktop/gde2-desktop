@@ -1,0 +1,12 @@
+[Desktop Entry]
+_Name=GDE2 Color Selection
+_GenericName=Color selection dialog
+_Comment=Choose colors from the palette or the screen
+Exec=gde2-color-select
+Icon=gtk-select-color
+Terminal=false
+Type=Application
+Categories=GTK;Graphics;
+Keywords=GDE2;color;chooser;pick;palette;screen;selection;
+OnlyShowIn=GDE2;
+StartupNotify=false

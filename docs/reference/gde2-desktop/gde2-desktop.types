@@ -1,0 +1,9 @@
+#include <gde2-desktop-item.h>
+#include <gde2-bg.h>
+#include <gde2-desktop-thumbnail.h>
+#include <gde2-rr-labeler.h>
+
+gde2_desktop_item_get_type
+gde2_bg_get_type
+gde2_desktop_thumbnail_factory_get_type
+gde2_rr_labeler_get_type

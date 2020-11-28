@@ -1,0 +1,9 @@
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
+  <schema id="org.gde2.accessibility-startup" path="/org/gde2/desktop/accessibility/startup/">
+    <key name="exec-ats" type="as">
+      <default>[]</default>
+      <summary>Startup Assistive Technology Applications</summary>
+      <description>List of assistive technology applications to start when logging into the GDE2 desktop.</description>
+    </key>
+  </schema>
+</schemalist>

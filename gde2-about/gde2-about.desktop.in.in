@@ -1,0 +1,15 @@
+[Desktop Entry]
+_Name=About GDE2
+_Comment=Learn more about GDE2
+Exec=gde2-about
+Icon=gde2
+Terminal=false
+Type=Application
+Categories=GTK;Core;Utility;
+OnlyShowIn=GDE2;
+X-GDE2-Bugzilla-Bugzilla=GDE2
+X-GDE2-Bugzilla-Product=gde2-desktop
+X-GDE2-Bugzilla-Component=gde2-about
+X-GDE2-Bugzilla-Version=@VERSION@
+StartupNotify=false
+NoDisplay=true

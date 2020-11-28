@@ -1,0 +1,1545 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Ivar Smolin <okul@linux.ee>, 2014-2015
+msgid ""
+msgstr ""
+"Project-Id-Version: GDE2 Desktop Environment\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-21 14:35+0300\n"
+"PO-Revision-Date: 2016-03-22 08:39+0000\n"
+"Last-Translator: monsta <monsta@inbox.ru>\n"
+"Language-Team: Estonian (http://www.transifex.com/gde2/GDE2/language/et/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Translators should localize the following string which will be
+#. * displayed in the about box to give credit to the translator(s).
+#: ../gde2-about/gde2-about.c:96
+msgid "translator-credits"
+msgstr "Ivar Smolin <okul@linux.ee>, 2014–2015."
+
+#: ../gde2-about/gde2-about.desktop.in.in.h:1
+msgid "About GDE2"
+msgstr "GDE2st lähemalt"
+
+#: ../gde2-about/gde2-about.desktop.in.in.h:2
+msgid "Learn more about GDE2"
+msgstr "Rohkem teadmisi GDE2'i kohta"
+
+#: ../gde2-about/gde2-about.h:45
+msgid ""
+"GDE2 provides an intuitive and attractive desktop to Linux users using "
+"traditional metaphors."
+msgstr "GDE2 pakub Linuxikasutajatele intuitiivset ja külgetõmbavat töölauda, mida iseloomustavad traditsioonilised kasutusmustrid."
+
+#: ../gde2-about/gde2-about.h:48
+msgid ""
+"GDE2 includes most of what you see on your computer, including the file "
+"manager, document viewer, image viewer, menus, and many applications."
+msgstr "GDE2 koosseisu kuuluvad need komponendid, mida sa oled harjunud nägema oma arvutis. Sinna hulka kuuluvad failihaldur, dokumendinäitaja, pildinäitaja ja menüüd, samuti ka palju rakendusprogramme."
+
+#: ../gde2-about/gde2-about.h:51
+msgid ""
+"GDE2 is a Free, usable, stable, accessible desktop environment for the Unix-"
+"like family of operating systems."
+msgstr "GDE2 on vaba, mugav, stabiilne ja hõlbustustega töölauakeskkond Unixilaadsete operatsioonisüsteemide jaoks."
+
+#: ../gde2-about/gde2-about.h:54
+msgid ""
+"GDE2 is the continuation of GNOME 2. Hundreds of people have contributed "
+"code to GNOME since it was started in 1997; many more have contributed in "
+"other important ways, including translations, documentation, and quality "
+"assurance."
+msgstr "GDE2 on GNOME2 jätk. Sajad inimesed on alates 1997. aastast panustanud GNOME arengusse ja paljud teised on aidanud kaasa muul moel: tõlkides, dokumenteerides või kvaliteedikontrolli läbi viies."
+
+#: ../gde2-about/gde2-about.h:58
+msgid ""
+"GNOME 2 was the most popular Linux desktop but it’s no longer available... "
+"GDE2 is here to provide that same desktop to you!"
+msgstr "GNOME 2 oli kõige popim Linuxi töölaud, kuid see pole enam saadaval... GDE2 on selleks, et sulle samasugust töölauda pakkuda!"
+
+#: ../gde2-about/gde2-about.h:61
+msgid ""
+"The name “GDE2” comes from yerba maté, a species of holly native to "
+"subtropical South America. Its leaves contain caffeine and are used to make "
+"infusions and a beverage called gde2."
+msgstr "Nimi “GDE2” on tuletatud Lõuna-Ameerikast pärit gde2puu lehtedest valmistatavast joogist. Matepuu lehed sisaldavad kofeiini ja nendest valmistatud teejooki nimetatakse gde2ks."
+
+#. Translators: "Unknown" here is used to identify a monitor for which
+#. * we don't know the vendor. When a vendor is known, the name of the
+#. * vendor is used.
+#: ../libgde2-desktop/display-name.c:264
+msgctxt "Monitor vendor"
+msgid "Unknown"
+msgstr "Tundmatu"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:179
+msgid "Could not show link"
+msgstr "Viita pole võimalik näidata"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:235
+msgid "Program name"
+msgstr "Programmi nimi"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:236
+msgid ""
+"The name of the program. If this is not set, it defaults to "
+"g_get_application_name()"
+msgstr "Programmi nimi. Kui see on määramata, siis kasutatakse vaikimisi nime g_get_application_name()"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:250
+msgid "Program version"
+msgstr "Programmi versioon"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:251
+msgid "The version of the program"
+msgstr "Programmi versioon"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:265
+msgid "Copyright string"
+msgstr "Autoriõiguse teade"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:266
+msgid "Copyright information for the program"
+msgstr "Teave programmi autoriõiguse kohta"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:283
+msgid "Comments string"
+msgstr "Kommentaaride string"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:284
+msgid "Comments about the program"
+msgstr "Komentaarid programmi kohta"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:302
+#: ../libgde2-desktop/gde2-aboutdialog.c:2186
+msgid "License"
+msgstr "Litsents"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:303
+msgid "The license of the program"
+msgstr "Programmi litsents"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:318
+msgid "Website URL"
+msgstr "Veebisaidi URL"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:319
+msgid "The URL for the link to the website of the program"
+msgstr "Programmi veebisaidile viitava URL-i link"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:334
+msgid "Website label"
+msgstr "Veebisaidi silt"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:335
+msgid ""
+"The label for the link to the website of the program. If this is not set, it"
+" defaults to the URL"
+msgstr "Programmi veebisaidi URL-i silt. Kui seda pole määratud, siis vaikimis on selleks URL ise"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:351
+msgid "Authors"
+msgstr "Autorid"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:352
+msgid "List of authors of the program"
+msgstr "Programmi autorite nimekiri"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:368
+msgid "Documenters"
+msgstr "Dokumenteerijad"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:369
+msgid "List of people documenting the program"
+msgstr "Programmi dokumenteerijate nimekiri"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:385
+msgid "Artists"
+msgstr "Kunstnikud"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:386
+msgid "List of people who have contributed artwork to the program"
+msgstr "Programmile kunstiloomingu teinud autorite nimekiri"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:403
+msgid "Translator credits"
+msgstr "Tõlkijad"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:404
+msgid ""
+"Credits to the translators. This string should be marked as translatable"
+msgstr "Programmi tõlkijad. Selle stringi peaks tõlgitavaks märkima"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:419
+msgid "Logo"
+msgstr "Logo"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:420
+msgid ""
+"A logo for the about box. If this is not set, it defaults to "
+"gtk_window_get_default_icon_list()"
+msgstr "Programmi andmete kasti logo. Kui määrata, siis on vaikimisi selleks gtk_window_get_default_icon_list()"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:435
+msgid "Logo Icon Name"
+msgstr "Logo ikooni nimi"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:436
+msgid "A named icon to use as the logo for the about box."
+msgstr "Programmi andmete kastis kasutatav nimeline ikoon."
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:449
+msgid "Wrap license"
+msgstr "Litsensiridade murdmine"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:450
+msgid "Whether to wrap the license text."
+msgstr "Kas litsentsi tekstu murtakse või mitte."
+
+#. Add the credits button
+#: ../libgde2-desktop/gde2-aboutdialog.c:555
+msgid "C_redits"
+msgstr "_Autorid"
+
+#. Add the license button
+#: ../libgde2-desktop/gde2-aboutdialog.c:569
+msgid "_License"
+msgstr "_Litsents"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:852
+#, c-format
+msgid "About %s"
+msgstr "Lähem teave \"%s\" kohta"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:2110
+msgid "Credits"
+msgstr "Autorid"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:2138
+msgid "Written by"
+msgstr "Programmeerimine"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:2141
+msgid "Documented by"
+msgstr "Dokumentatsioon"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:2153
+msgid "Translated by"
+msgstr "Tõlge"
+
+#: ../libgde2-desktop/gde2-aboutdialog.c:2157
+msgid "Artwork by"
+msgstr "Kunstilooming:"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:154
+msgid "Use alpha"
+msgstr "Läbipaistvuse kasutamine"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:155
+msgid "Whether or not to give the color an alpha value"
+msgstr "Kas värvus on läbipaistev või mitte"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:169
+msgid "Title"
+msgstr "Pealkiri"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:170
+msgid "The title of the color selection dialog"
+msgstr "Värvuse valimise dialoogi pealkiri"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:171
+#: ../libgde2-desktop/gde2-colorbutton.c:470
+msgid "Pick a Color"
+msgstr "Värvuse valimine"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:184
+#: ../libgde2-desktop/gde2-colorsel.c:325
+msgid "Current Color"
+msgstr "Praegune värvus"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:185
+msgid "The selected color"
+msgstr "Valitud värvus"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:199
+#: ../libgde2-desktop/gde2-colorsel.c:332
+msgid "Current Alpha"
+msgstr "Praegune läbipaistvus"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:200
+msgid "The selected opacity value (0 fully transparent, 65535 fully opaque)"
+msgstr "Valitud läbipaistvuse väärtus (0 tähendab täiesti läbipaistvat, 65535 läbipaistmatut)"
+
+#: ../libgde2-desktop/gde2-colorbutton.c:354
+msgid "Received invalid color data\n"
+msgstr "Võeti vastu vigased värvuse andmed\n"
+
+#: ../libgde2-desktop/gde2-colorsel.c:311
+msgid "Has Opacity Control"
+msgstr "Koos katvuse määramisega"
+
+#: ../libgde2-desktop/gde2-colorsel.c:312
+msgid "Whether the color selector should allow setting opacity"
+msgstr "Kas värvuse valimisel on võimalik katvust määrata või mitte"
+
+#: ../libgde2-desktop/gde2-colorsel.c:318
+msgid "Has palette"
+msgstr "Paletiga"
+
+#: ../libgde2-desktop/gde2-colorsel.c:319
+msgid "Whether a palette should be used"
+msgstr "Kas paletti kasutatakse või mitte"
+
+#: ../libgde2-desktop/gde2-colorsel.c:326
+msgid "The current color"
+msgstr "Praegune värvus"
+
+#: ../libgde2-desktop/gde2-colorsel.c:333
+msgid "The current opacity value (0 fully transparent, 65535 fully opaque)"
+msgstr "Praegune läbipaistvuse väärtus (0 tähendab täiesti läbipaistvat, 65535 läbipaistmatut)"
+
+#: ../libgde2-desktop/gde2-colorsel.c:339
+msgid "HEX String"
+msgstr "Kuueteistkümnendsüsteemi string"
+
+#: ../libgde2-desktop/gde2-colorsel.c:340
+msgid "The hexadecimal string of current color"
+msgstr "Käesoleva värvi string kuueteistkümnendsüsteemi arvuna"
+
+#: ../libgde2-desktop/gde2-colorsel.c:400
+msgid ""
+"Select the color you want from the outer ring. Select the darkness or "
+"lightness of that color using the inner triangle."
+msgstr ""
+
+#: ../libgde2-desktop/gde2-colorsel.c:428
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+
+#: ../libgde2-desktop/gde2-colorsel.c:441
+msgid "_Hue:"
+msgstr "_Toon:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:442
+msgid "Position on the color wheel."
+msgstr "Asukoht värvirattal."
+
+#: ../libgde2-desktop/gde2-colorsel.c:444
+msgid "_Saturation:"
+msgstr "_Küllastus:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:445
+msgid "\"Deepness\" of the color."
+msgstr "Värvuse \"sügavus\"."
+
+#: ../libgde2-desktop/gde2-colorsel.c:446
+msgid "_Value:"
+msgstr "_Väärtus:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:447
+msgid "Brightness of the color."
+msgstr "Värvuse heledus."
+
+#: ../libgde2-desktop/gde2-colorsel.c:448
+msgid "_Red:"
+msgstr "_Punane:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:449
+msgid "Amount of red light in the color."
+msgstr "Punase valguse hulk värvuses:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:450
+msgid "_Green:"
+msgstr "_Roheline:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:451
+msgid "Amount of green light in the color."
+msgstr "Rohelise valguse hulk värvuses:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:452
+msgid "_Blue:"
+msgstr "_Sinine:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:453
+msgid "Amount of blue light in the color."
+msgstr "Sinise valguse hulk värvuses:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:456
+msgid "Op_acity:"
+msgstr "_Läbipaistvus:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:467
+#: ../libgde2-desktop/gde2-colorsel.c:477
+msgid "Transparency of the color."
+msgstr "Värvuse läbipaistvus."
+
+#: ../libgde2-desktop/gde2-colorsel.c:484
+msgid "Color _name:"
+msgstr "Värvi _nimi:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:502
+msgid ""
+"You can enter an HTML-style hexadecimal color value, or simply a color name "
+"such as 'orange' in this entry."
+msgstr ""
+
+#: ../libgde2-desktop/gde2-colorsel.c:536
+msgid "_Palette:"
+msgstr "_Palett:"
+
+#: ../libgde2-desktop/gde2-colorsel.c:569
+msgid "Color Wheel"
+msgstr "Värviratas"
+
+#: ../libgde2-desktop/gde2-colorsel.c:1070
+msgid ""
+"The previously-selected color, for comparison to the color you're selecting "
+"now. You can drag this color to a palette entry, or select this color as "
+"current by dragging it to the other color swatch alongside."
+msgstr ""
+
+#: ../libgde2-desktop/gde2-colorsel.c:1073
+msgid ""
+"The color you've chosen. You can drag this color to a palette entry to save "
+"it for use in the future."
+msgstr ""
+
+#: ../libgde2-desktop/gde2-colorsel.c:1078
+msgid ""
+"The previously-selected color, for comparison to the color you're selecting "
+"now."
+msgstr ""
+
+#: ../libgde2-desktop/gde2-colorsel.c:1081
+msgid "The color you've chosen."
+msgstr "Sinu poolt valitud värvus"
+
+#: ../libgde2-desktop/gde2-colorsel.c:1507
+msgid "gtk-color-sel"
+msgstr "gtk-color-sel"
+
+#: ../libgde2-desktop/gde2-colorsel.c:1512
+msgid "_Save color here"
+msgstr "_Salvesta värv siia"
+
+#: ../libgde2-desktop/gde2-colorsel.c:1737
+msgid ""
+"Click this palette entry to make it the current color. To change this entry,"
+" drag a color swatch here or right-click it and select \"Save color here.\""
+msgstr ""
+
+#: ../libgde2-desktop/gde2-colorseldialog.c:99
+#: ../libgde2-desktop/gde2-colorseldialog.c:170
+msgid "Color Selection"
+msgstr "Värvuse valimine"
+
+#: ../libgde2-desktop/gde2-colorseldialog.c:100
+msgid "The color selection embedded in the dialog."
+msgstr "Dialoogiga põimitud värvusevalik."
+
+#: ../libgde2-desktop/gde2-colorseldialog.c:106
+msgid "OK Button"
+msgstr "Olgu-nupp"
+
+#: ../libgde2-desktop/gde2-colorseldialog.c:107
+msgid "The OK button of the dialog."
+msgstr "Dialoogi Olgu-nupp."
+
+#: ../libgde2-desktop/gde2-colorseldialog.c:113
+msgid "Cancel Button"
+msgstr "Loobumise nupp"
+
+#: ../libgde2-desktop/gde2-colorseldialog.c:114
+msgid "The cancel button of the dialog."
+msgstr "Teatedialoogi loobumise nupp."
+
+#: ../libgde2-desktop/gde2-colorseldialog.c:120
+msgid "Help Button"
+msgstr "Abiteabe nupp"
+
+#: ../libgde2-desktop/gde2-colorseldialog.c:121
+msgid "The help button of the dialog."
+msgstr "Dialoogi abiteabe nupp."
+
+#: ../libgde2-desktop/gde2-desktop-item.c:220
+#, c-format
+msgid "Error reading file '%s': %s"
+msgstr "Viga faili '%s' lugemisel: %s"
+
+#: ../libgde2-desktop/gde2-desktop-item.c:288
+#, c-format
+msgid "Error rewinding file '%s': %s"
+msgstr "Viga faili '%s' tagasikerimisel: %s"
+
+#. Translators: the "name" mentioned
+#. * here is the name of an application or
+#. * a document
+#. Translators: the "name" mentioned here is the name of
+#. * an application or a document
+#: ../libgde2-desktop/gde2-desktop-item.c:380
+#: ../libgde2-desktop/gde2-desktop-item.c:3546
+msgid "No name"
+msgstr "Nimi puudub"
+
+#: ../libgde2-desktop/gde2-desktop-item.c:607
+#, c-format
+msgid "File '%s' is not a regular file or directory."
+msgstr "Fail '%s' pole tavaline fail ega kataloog."
+
+#: ../libgde2-desktop/gde2-desktop-item.c:791
+#, c-format
+msgid "Cannot find file '%s'"
+msgstr "Faili '%s' pole võimalik leida"
+
+#: ../libgde2-desktop/gde2-desktop-item.c:837
+#, c-format
+msgid "No filename to save to"
+msgstr "Puudub salvestatava faili nimi"
+
+#: ../libgde2-desktop/gde2-desktop-item.c:1844
+#, c-format
+msgid "Starting %s"
+msgstr "Käivitamine: %s"
+
+#: ../libgde2-desktop/gde2-desktop-item.c:2081
+#, c-format
+msgid "No URL to launch"
+msgstr "Puudub käivitatav URL"
+
+#: ../libgde2-desktop/gde2-desktop-item.c:2097
+#, c-format
+msgid "Not a launchable item"
+msgstr "Pole käivitatav kirje"
+
+#: ../libgde2-desktop/gde2-desktop-item.c:2107
+#, c-format
+msgid "No command (Exec) to launch"
+msgstr "Puudub käivitatav (Exec) käsk"
+
+#: ../libgde2-desktop/gde2-desktop-item.c:2120
+#, c-format
+msgid "Bad command (Exec) to launch"
+msgstr "Vigane käivitatav (Exec) käsk"
+
+#: ../libgde2-desktop/gde2-desktop-item.c:3603
+#, c-format
+msgid "Unknown encoding of: %s"
+msgstr "Tundmatu kodeering: %s"
+
+#: ../libgde2-desktop/gde2-desktop-utils.c:151
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr "Terminali pole võimalik leida, kasutatakse xtermi, isegi juhul, kui see ei pruugi töötada"
+
+#. Translators: a CRTC is a CRT Controller (this is X terminology).
+#: ../libgde2-desktop/gde2-rr.c:460
+#, c-format
+msgid "could not get the screen resources (CRTCs, outputs, modes)"
+msgstr "ekraani ressursse (CRTC-d, väljundeid, režiime) pole võimalik hankida"
+
+#: ../libgde2-desktop/gde2-rr.c:480
+#, c-format
+msgid "unhandled X error while getting the range of screen sizes"
+msgstr "X-serveri käsitlematu viga ekraanisuuruste vahemiku hankimisel"
+
+#: ../libgde2-desktop/gde2-rr.c:486
+#, c-format
+msgid "could not get the range of screen sizes"
+msgstr "ekraanisuuruste vahemikku pole võimalik hankida"
+
+#: ../libgde2-desktop/gde2-rr.c:709
+#, c-format
+msgid "RANDR extension is not present"
+msgstr "RANRD-laiendus pole saadaval"
+
+#: ../libgde2-desktop/gde2-rr.c:1267
+#, c-format
+msgid "could not get information about output %d"
+msgstr "väljundi %d kohta pole võimalik teavet hankida"
+
+#. Translators: the "position", "size", and "maximum"
+#. * words here are not keywords; please translate them
+#. * as usual.  A CRTC is a CRT Controller (this is X terminology)
+#: ../libgde2-desktop/gde2-rr.c:1748
+#, c-format
+msgid ""
+"requested position/size for CRTC %d is outside the allowed limit: "
+"position=(%d, %d), size=(%d, %d), maximum=(%d, %d)"
+msgstr "CRTC %d jaoks määratud asukoht või suurus ületab lubatud piire: asukoht=(%d, %d), suurus=(%d, %d), suurim=(%d, %d)"
+
+#: ../libgde2-desktop/gde2-rr.c:1782
+#, c-format
+msgid "could not set the configuration for CRTC %d"
+msgstr "CRTC %d jaoks pole võimalik sätteid määrata"
+
+#: ../libgde2-desktop/gde2-rr.c:1946
+#, c-format
+msgid "could not get information about CRTC %d"
+msgstr "CRTC %d kohta pole võimalik teavet hankida"
+
+#: ../libgde2-desktop/gde2-rr-config.c:555
+msgid "Laptop"
+msgstr "Sülearvuti"
+
+#: ../libgde2-desktop/gde2-rr-config.c:713
+#, c-format
+msgid ""
+"none of the saved display configurations matched the active configuration"
+msgstr "salvestatud kuvasätete hulgast ei sobi aktiivsete sätetega mitte ükski"
+
+#: ../libgde2-desktop/gde2-rr-config.c:1486
+#, c-format
+msgid "CRTC %d cannot drive output %s"
+msgstr "CRTC %d ei suuda juhtida väljundit %s"
+
+#: ../libgde2-desktop/gde2-rr-config.c:1493
+#, c-format
+msgid "output %s does not support mode %dx%d@%dHz"
+msgstr "väljund %s ei toeta režiimi %dx%d@%dHz"
+
+#: ../libgde2-desktop/gde2-rr-config.c:1504
+#, c-format
+msgid "CRTC %d does not support rotation=%s"
+msgstr "CRTC %d ei toeta pöördenurka=%s"
+
+#: ../libgde2-desktop/gde2-rr-config.c:1518
+#, c-format
+msgid ""
+"output %s does not have the same parameters as another cloned output:\n"
+"existing mode = %d, new mode = %d\n"
+"existing coordinates = (%d, %d), new coordinates = (%d, %d)\n"
+"existing rotation = %s, new rotation = %s"
+msgstr "väljundil %s ei ole samad parameetrid nagu teisel kloonitud väljundil:\npraegune režiim = %d, uus režiim = %d\npraegused koordinaadid = (%d, %d), uued koordinaadid = (%d, %d)\npraegune pöördenurk = %s, uus pöördenurk %s"
+
+#: ../libgde2-desktop/gde2-rr-config.c:1533
+#, c-format
+msgid "cannot clone to output %s"
+msgstr "pole võimalik väljundisse %s kloonida"
+
+#: ../libgde2-desktop/gde2-rr-config.c:1702
+#, c-format
+msgid "Trying modes for CRTC %d\n"
+msgstr "CRTC %d režiimide proovimine\n"
+
+#: ../libgde2-desktop/gde2-rr-config.c:1726
+#, c-format
+msgid "CRTC %d: trying mode %dx%d@%dHz with output at %dx%d@%dHz (pass %d)\n"
+msgstr "CRTC %d: režiimi %dx%d@%dHz proovimine väljundiga %dx%d@%dHz (käik %d)\n"
+
+#: ../libgde2-desktop/gde2-rr-config.c:1773
+#, c-format
+msgid ""
+"could not assign CRTCs to outputs:\n"
+"%s"
+msgstr "CRTC-sid pole võimalik väljunditele määrata:\n%s"
+
+#: ../libgde2-desktop/gde2-rr-config.c:1777
+#, c-format
+msgid ""
+"none of the selected modes were compatible with the possible modes:\n"
+"%s"
+msgstr "ükski valitud režiimidest ei sobi võimalikega:\n%s"
+
+#. Translators: the "requested", "minimum", and
+#. * "maximum" words here are not keywords; please
+#. * translate them as usual.
+#: ../libgde2-desktop/gde2-rr-config.c:1859
+#, c-format
+msgid ""
+"required virtual size does not fit available size: requested=(%d, %d), "
+"minimum=(%d, %d), maximum=(%d, %d)"
+msgstr "vajalik virtuaalsuurus ei sobi saadaoleva suurusega: küsitud suurus=(%d, %d), vähim=(%d, %d), suurim=(%d, %d)"
+
+#. Keep this string in sync with gde2-control-center/capplets/display/xrandr-
+#. capplet.c:get_display_name()
+#. Translators:  this is the feature where what you see on your laptop's
+#. * screen is the same as your external monitor.  Here, "Mirror" is being
+#. * used as an adjective, not as a verb.  For example, the Spanish
+#. * translation could be "Pantallas en Espejo", *not* "Espejar Pantallas".
+#: ../libgde2-desktop/gde2-rr-labeler.c:454
+#, c-format
+msgid "Mirror Screens"
+msgstr "Ekraanid on peegeldatud"
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:1
+msgid "minimum interval in milliseconds"
+msgstr "Vähim ajavahemik millisekundites"
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:2
+msgid "Ignore multiple presses of the _same_ key within @delay milliseconds."
+msgstr ""
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:3
+msgid "Pixels per seconds"
+msgstr "Piksleid sekundis"
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:4
+msgid "How many pixels per second to move at the maximum speed."
+msgstr "Kui palju piksleid sekundis liigutakse maksimumkiirusel."
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:5
+msgid "How long to accelerate in milliseconds"
+msgstr "Kiirenduse kestus millisekundites"
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:6
+msgid "How many milliseconds it takes to go from 0 to maximum speed."
+msgstr "Kui palju millisekundeid kulub nullist maksimumkiiruse saavutamiseks."
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:7
+msgid "Initial delay in milliseconds"
+msgstr "Lähteviivitus millisekundites"
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:8
+msgid ""
+"How many milliseconds to wait before mouse movement keys start to operate."
+msgstr "Kui mitu millisekundit tuleb enne hiire liigutamise klahvide toimimahakkamist oodata."
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:9
+msgid "Minimum interval in milliseconds"
+msgstr "Vähim ajavahemik millisekundites"
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:10
+msgid ""
+"Do not accept a key as being pressed unless held for @delay milliseconds."
+msgstr "Klahvivajutuse arvestamata jätmine, kui pärast vajutust ei hoita klahvi all kauem kui selles võtmes määratud arv millisekundeid."
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:11
+msgid "Disable if two keys are pressed at the same time."
+msgstr "Keelamine kahe klahvi samaaegselt vajutamisel."
+
+#: ../schemas/org.gde2.accessibility-keyboard.gschema.xml.in.h:12
+msgid "Beep when a modifier is pressed."
+msgstr "Piiksumine muuteklahvi vajutamisel."
+
+#: ../schemas/org.gde2.accessibility-startup.gschema.xml.in.h:1
+msgid "Startup Assistive Technology Applications"
+msgstr "Käivitatavad abistava tehnika rakendused"
+
+#: ../schemas/org.gde2.accessibility-startup.gschema.xml.in.h:2
+msgid ""
+"List of assistive technology applications to start when logging into the "
+"GDE2 desktop."
+msgstr "Abistava tehnika rakenduste loend, mis käivitatakse GDE2 töölauale sisselogimisel."
+
+#: ../schemas/org.gde2.applications-at-mobility.gschema.xml.in.h:1
+msgid "Preferred Mobility assistive technology application"
+msgstr "Eelistatud rakendus mobiilse abistava tehnika toe jaoks"
+
+#: ../schemas/org.gde2.applications-at-mobility.gschema.xml.in.h:2
+msgid ""
+"Preferred Mobility assistive technology application to be used for login, "
+"menu, or command line."
+msgstr "Sisselogimise, menüü ja käsurea jaoks kasutatav eelistatud mobiilse abistava tehnika rakendus."
+
+#: ../schemas/org.gde2.applications-at-mobility.gschema.xml.in.h:3
+msgid "Start preferred Mobility assistive technology application"
+msgstr "Eelistatud mobiilse abistava tehnika rakenduse käivitamine"
+
+#: ../schemas/org.gde2.applications-at-mobility.gschema.xml.in.h:4
+msgid ""
+"GDE2 to start preferred Mobility assistive technology application during "
+"login."
+msgstr "Kas GDE2 käivitab sisselogimisel eelistatud rakenduse mobiilse abistava tehnika toe jaoks."
+
+#: ../schemas/org.gde2.applications-at-visual.gschema.xml.in.h:1
+msgid "Preferred Visual assistive technology application"
+msgstr "Eelistatud rakendus visuaalse abistava tehnika toe jaoks"
+
+#: ../schemas/org.gde2.applications-at-visual.gschema.xml.in.h:2
+msgid ""
+"Preferred Visual assistive technology application to be used for login, "
+"menu, or command line."
+msgstr ""
+
+#: ../schemas/org.gde2.applications-at-visual.gschema.xml.in.h:3
+msgid "Start preferred Visual assistive technology application"
+msgstr "Eelistatud visuaalse abistava tehnika rakenduse käivitamine"
+
+#: ../schemas/org.gde2.applications-at-visual.gschema.xml.in.h:4
+msgid ""
+"GDE2 to start preferred Visual assistive technology application during "
+"login."
+msgstr "Kas GDE2 käivitab sisselogimisel eelistatud rakenduse visuaalse abistava tehnika toe jaoks."
+
+#: ../schemas/org.gde2.applications-browser.gschema.xml.in.h:1
+msgid "Default browser"
+msgstr "Vaikimisi veebilehitseja"
+
+#: ../schemas/org.gde2.applications-browser.gschema.xml.in.h:2
+msgid "Default browser for all URLs."
+msgstr "Vaikimisi veebilehitseja kõikide URL-ide jaoks."
+
+#: ../schemas/org.gde2.applications-browser.gschema.xml.in.h:3
+msgid "Browser needs terminal"
+msgstr "Veebilehitseja vajab terminali"
+
+#: ../schemas/org.gde2.applications-browser.gschema.xml.in.h:4
+msgid "Whether the default browser needs a terminal to run."
+msgstr "Kas veebilehitseja vajab töötamiseks terminali."
+
+#: ../schemas/org.gde2.applications-browser.gschema.xml.in.h:5
+msgid "Browser understands remote"
+msgstr "Veebilehitseja mõistab kaugkorraldusi"
+
+#: ../schemas/org.gde2.applications-browser.gschema.xml.in.h:6
+msgid "Whether the default browser understands netscape remote."
+msgstr "Kas veebilehitseja mõistab netscape kaugkorraldusi."
+
+#: ../schemas/org.gde2.applications-office.gschema.xml.in.h:1
+msgid "Default calendar"
+msgstr "Vaikimisi kalender"
+
+#: ../schemas/org.gde2.applications-office.gschema.xml.in.h:2
+msgid "Default calendar application"
+msgstr "Vaikimisi kalendrirakendus"
+
+#: ../schemas/org.gde2.applications-office.gschema.xml.in.h:3
+msgid "Calendar needs terminal"
+msgstr "Kalender vajab terminali"
+
+#: ../schemas/org.gde2.applications-office.gschema.xml.in.h:4
+msgid "Whether the default calendar application needs a terminal to run"
+msgstr "Kas vaikimisi kalendrirakendus vajab töötamiseks terminali."
+
+#: ../schemas/org.gde2.applications-office.gschema.xml.in.h:5
+msgid "Default tasks"
+msgstr "Vaikimisi ülesanded"
+
+#: ../schemas/org.gde2.applications-office.gschema.xml.in.h:6
+msgid "Default tasks application"
+msgstr "Vaikimisi ülesanneterakendus"
+
+#: ../schemas/org.gde2.applications-office.gschema.xml.in.h:7
+msgid "Tasks needs terminal"
+msgstr "Ülesanded vajavad terminali"
+
+#: ../schemas/org.gde2.applications-office.gschema.xml.in.h:8
+msgid "Whether the default tasks application needs a terminal to run"
+msgstr "Kas vaikimisi ülesanneterakendus vajab töötamiseks terminali."
+
+#: ../schemas/org.gde2.applications-terminal.gschema.xml.in.h:1
+msgid "Terminal application"
+msgstr "Terminalirakendus"
+
+#: ../schemas/org.gde2.applications-terminal.gschema.xml.in.h:2
+msgid "Terminal program to use when starting applications that require one."
+msgstr "Terminali vajavate rakenduste käivitamiseks kasutatav terminaliprogramm."
+
+#: ../schemas/org.gde2.applications-terminal.gschema.xml.in.h:3
+msgid "Exec Arguments"
+msgstr "Käivitamise argumendid"
+
+#: ../schemas/org.gde2.applications-terminal.gschema.xml.in.h:4
+msgid ""
+"Argument used to execute programs in the terminal defined by the 'exec' key."
+msgstr "Argumendid terminalis töötavatele programmidele, kirjeldatakse 'exec' võtmega."
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:1
+msgid "Draw Desktop Background"
+msgstr "Töölaua tausta joonistamine"
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:2
+msgid "Have GDE2 draw the desktop background."
+msgstr "Kas GDE2 joonistab töölaua tausta."
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:3
+msgid "Show Desktop Icons"
+msgstr "Töölaua ikoonide näitamine"
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:4
+msgid "Have GDE2 file manager (Caja) draw the desktop icons."
+msgstr "Kas GDE2 failihaldur (Caja) joonistab töölaua ikoonid."
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:5
+msgid "Fade the background on change"
+msgstr "Taustapildi tuhmistamine selle vahetamisel"
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:6
+msgid ""
+"If set to true, then GDE2 will change the desktop background with a fading "
+"effect."
+msgstr "Kui määratud, siis kasutab GDE2 töölaua taustapildi vahetamisel tuhmumise efekti."
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:7
+msgid "Picture Options"
+msgstr "Pildi valikud"
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:8
+msgid ""
+"Determines how the image set by wallpaper_filename is rendered. Possible "
+"values are \"wallpaper\", \"centered\", \"scaled\", \"stretched\", \"zoom\","
+" \"spanned\"."
+msgstr "Võtmega wallpaper_filename määratud pildi renderdamise viis. Võimalikud väärtused on \"wallpaper\" (tavaline), \"centered\" (keskel), \"scaled\" (skaleeritud), \"stretched\" (venitatud), \"zoom\" (suurendatud) või \"spanned\" (mahutatud)."
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:9
+msgid "Picture Filename"
+msgstr "Pildi failinimi"
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:10
+msgid "File to use for the background image."
+msgstr "Taustapildiks kasutatav fail."
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:11
+msgid "Picture Opacity"
+msgstr "Pildi läbipaistmatus"
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:12
+msgid "Opacity with which to draw the background picture."
+msgstr "Poolläbipaistev värv, millega taustapilt kaetakse."
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:13
+msgid "Primary Color"
+msgstr "Peamine värv"
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:14
+msgid "Left or Top color when drawing gradients, or the solid color."
+msgstr "Hajusülemineku vasakpoolne või ülemine värvus, või hoopis ühtlane värvus."
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:15
+msgid "Secondary Color"
+msgstr "Teisene värv"
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:16
+msgid ""
+"Right or Bottom color when drawing gradients, not used for solid color."
+msgstr "Hajusülemineku parempoolne või alumine värvus. Ühtlase värvuse jaoks ei kasutata."
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:17
+msgid "Color Shading Type"
+msgstr "Värvi varjutamise viis"
+
+#: ../schemas/org.gde2.background.gschema.xml.in.h:18
+msgid ""
+"How to shade the background color. Possible values are \"horizontal-"
+"gradient\", \"vertical-gradient\", and \"solid\"."
+msgstr "Kuidas taustavärvust varjutatakse. Võimalikud väärtused on \"horizontal-gradient\" (rõhtsa üleminekuga), \"vertical-gradient\" (püstise üleminekuga) ja \"solid\" (ühtlane värvus)."
+
+#: ../schemas/org.gde2.file-views.gschema.xml.in.h:1
+msgid "File Icon Theme"
+msgstr "Failiikooni teema"
+
+#: ../schemas/org.gde2.file-views.gschema.xml.in.h:2
+msgid "Theme used for displaying file icons."
+msgstr "Failiikoonide kuvamiseks kasutatav teema."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:1
+msgid "Enable Accessibility"
+msgstr "Hõlbustuste lubamine"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:2
+msgid "Whether Applications should have accessibility support."
+msgstr "Kas rakendustel peab olema hõlbustuste tugi või mitte."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:3
+msgid "Enable Animations"
+msgstr "Animatsioonide lubamine"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:4
+msgid ""
+"Whether animations should be displayed. Note: This is a global key, it "
+"changes the behaviour of the window manager, the panel etc."
+msgstr "Kas animatsioone kuvatakse. Märkus: see on globaalne klahv, see muudab ka aknahalduri, paneeli jne. käitumist."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:5
+msgid "Menus Have Tearoff"
+msgstr "Menüüd on küljestrebitavad"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:6
+msgid "Whether menus should have a tearoff."
+msgstr "Kas menüüsid peaks olema võimalik lahti rebida või mitte."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:7
+msgid "Can Change Accels"
+msgstr "Kiirklahve on võimalik muuta"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:8
+msgid ""
+"Whether the user can dynamically type a new accelerator when positioned over"
+" an active menuitem."
+msgstr "Kas kasutajal on võimalik menüü kuvamise ajal aktiivse menüükirje kiirklahve dünaamiliselt muuta või mitte."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:9
+msgid "Toolbar Style"
+msgstr "Tööriistariba stiil"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:10
+msgid "Toolbar Style. Valid values are \"both\", \"both-horiz\", \"icons\", and \"text\"."
+msgstr "Tööriistariba laad. Võimalikud väärtused on \"both\" (ikoonid ja tekst), \"both-horiz\" (ikoonid ja tekst rõhtsalt), \"icons\" (ainult ikoonid), ja \"text\" (ainult tekst)."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:11
+msgid "Menus Have Icons"
+msgstr "Ikoonide kuvamine menüüs"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:12
+msgid "Whether menus may display an icon next to a menu entry."
+msgstr "Kas menüüdes võib menüükirje järel ikooni kuvada või mitte."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:13
+msgid "Buttons Have Icons"
+msgstr "Ikoonide kuvamine nuppudel"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:14
+msgid "Whether buttons may display an icon in addition to the button text."
+msgstr "Kas nuppudel võib tekstile lisaks kuvada ka ikooni või mitte."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:15
+msgid "Menubar Detachable"
+msgstr "Lahtihaagitav menüüriba"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:16
+msgid "Whether the user can detach menubars and move them around."
+msgstr "Kas kasutaja tohib menüüribasid lahti haakida ja ringi tõsta või mitte."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:17
+msgid "Toolbar Detachable"
+msgstr "Lahtihaagitav tööriistariba"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:18
+msgid "Whether the user can detach toolbars and move them around."
+msgstr "Kas kasutaja tohib tööriistaribasid lahti haakida ja ringi tõsta või mitte."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:19
+msgid "Toolbar Icon Size"
+msgstr "Tööriistariba ikooni suurus"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:20
+msgid "Size of icons in toolbars, either \"small-toolbar\" or \"large-toolbar\"."
+msgstr "Ikoonide suurus tööriistaribal, kas \"small-toolbar\" (väike tööriistariba) või \"large-toolbar\" (suur tööriistariba)."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:21
+msgid "Cursor Blink"
+msgstr "Kursori plinkimine"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:22
+msgid "Whether the cursor should blink."
+msgstr "Kas kursor peaks plinkima või mitte."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:23
+msgid "Cursor Blink Time"
+msgstr "Kursori plinkimise aeg"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:24
+msgid "Length of the cursor blink cycle, in milliseconds."
+msgstr "Kursori vilkumistsükli kestus millisekundites."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:25
+msgid "Icon Theme"
+msgstr "Ikoonide teema"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:26
+msgid "Icon theme to use for the panel, Caja etc."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:27
+msgid "Gtk+ Theme"
+msgstr "Gtk+ Teema"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:28
+msgid "Basename of the default theme used by gtk+."
+msgstr "GTK+ vaikimisi teema põhinimetus."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:29
+msgid "List of symbolic names and color equivalents"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:30
+msgid ""
+"A '\\n' separated list of \"name:color\" as defined by the 'gtk-color-"
+"scheme' setting"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:31
+msgid "Default font"
+msgstr "Vaikimisi kirjatüüp"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:32
+msgid "Name of the default font used by gtk+."
+msgstr "GTK+ poolt vaikimisi kasutatava kirjatüübi nimi."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:33
+msgid "GTK IM Preedit Style"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:34
+msgid "Name of the GTK+ input method Preedit Style used by gtk+."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:35
+msgid "GTK IM Status Style"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:36
+msgid "Name of the GTK+ input method Status Style used by gtk+."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:37
+msgid "GTK IM Module"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:38
+msgid "Name of the input method module used by GTK+."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:39
+msgid "Use GTK3 header bar"
+msgstr "GTK3 päiseriba kasutamine"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:40
+msgid ""
+"Whether builtin GTK+ dialogs such as the file chooser, the color chooser or "
+"the font chooser will use a header bar at the top to show action widgets, or"
+" an action area at the bottom. This setting does not affect custom dialogs "
+"using GtkDialog directly, or message dialogs."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:41
+msgid "Use GTK3 overlay scrolling"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:42
+msgid ""
+"Whether built-in GTK+ scrolled windows will use overlay scrolling. Overlay "
+"scrolling hides and reduces the size of the scrollbar until it gets focus."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:43
+msgid "Enable Gtk toolkit-wide animations"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:44
+msgid "Whether to enable toolkit-wide animations."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:45
+msgid "Document font"
+msgstr "Dokumendi kirjatüüp"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:46
+msgid "Name of the default font used for reading documents."
+msgstr "Dokumentide lugemisel kasutatava vaikimisi kirjatüübi nimi."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:47
+msgid "Monospace font"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:48
+msgid ""
+"Name of a monospaced (fixed-width) font for use in locations like terminals."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:49
+msgid "Use Custom Font"
+msgstr "Kohandatud kirjatüübi kasutamine"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:50
+msgid "Whether to use a custom font in gtk+ applications."
+msgstr "Kas gtk+ rakendustes kasutatakse vaikimisi kirjatüüpi või mitte."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:51
+msgid "Status Bar on Right"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:52
+msgid "Whether to display a status bar meter on the right."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:53
+msgid "Module for GtkFileChooser"
+msgstr "GtkFileChooser'i moodul"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:54
+msgid ""
+"Module to use as the filesystem model for the GtkFileChooser widget. "
+"Possible values are \"gio\" and \"gtk+\"."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:55
+msgid "Menubar accelerator"
+msgstr "Menüüriba kiirklahv"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:56
+msgid "Keyboard shortcut to open the menu bars."
+msgstr "Kiirklahv menüüribade avamiseks."
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:57
+msgid "Show the 'Input Methods' menu"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:58
+msgid ""
+"Whether the context menus of entries and text views should offer to change "
+"the input method."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:59
+msgid "Show the 'Unicode Control Character' menu"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:60
+msgid ""
+"Whether the context menus of entries and text views should offer to insert "
+"control characters."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:61
+msgid "Titlebar layout of GTK3 client-side decorated windows"
+msgstr "GTK3 kliendipoolsete dekoreeritud akende tiitliriba paigutus"
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:62
+msgid ""
+"This setting determines which buttons should be put in the titlebar of "
+"client-side decorated windows, and whether they should be placed at the left"
+" of right. See "
+"https://developer.gnome.org/gtk3/stable/GtkSettings.html#GtkSettings--gtk-"
+"decoration-layout."
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:63
+msgid "Only show mnemonics on when the Alt key is pressed"
+msgstr ""
+
+#: ../schemas/org.gde2.interface.gschema.xml.in.h:64
+msgid ""
+"Whether mnemonics should be automatically shown and hidden when the user "
+"presses the Alt key."
+msgstr ""
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:1
+msgid "Disable command line"
+msgstr "Käsurea keelamine"
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:2
+msgid ""
+"Prevent the user from accessing the terminal or specifying a command line to"
+" be executed. For example, this would disable access to the panel's \"Run "
+"Application\" dialog."
+msgstr "Kasutaja ligipääsu keelamine terminalile ja käsureale. Sellega on näiteks võimalik keelata paneeli \"Käivita rakendus...\" dialoog."
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:3
+msgid "Disable saving files to disk"
+msgstr "Failide kettale salvestamise keelamine"
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:4
+msgid ""
+"Prevent the user from saving files to disk. For example, this would disable "
+"access to all applications' \"Save as\" dialogs."
+msgstr "Kasutajal failide kettale salvestamise keelamine. Sellega on näiteks võimalik keelata kõigi rakenduste \"Salvesta kui\" dialoogid."
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:5
+msgid "Disable printing"
+msgstr "Printimise keelamine"
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:6
+msgid ""
+"Prevent the user from printing. For example, this would disable access to "
+"all applications' \"Print\" dialogs."
+msgstr "Kasutajal printimise keelamine. Sellega on näiteks võimalik keelata kõigi rakenduste printimisdialoogid."
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:7
+msgid "Disable print setup"
+msgstr "Printerisätete muutmise keelamine"
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:8
+msgid ""
+"Prevent the user from modifying print settings. For example, this would "
+"disable access to all applications' \"Print Setup\" dialogs."
+msgstr "Kasutajal printerisätete muutmise keelamine. Sellega on näiteks võimalik keelata kõigi rakenduste printeri sätete dialoogid."
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:9
+msgid "Disable user switching"
+msgstr "Kasutajate vahel lülitumise keelamine"
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:10
+msgid ""
+"Prevent the user from switching to another account while his session is "
+"active."
+msgstr "Kasutajal teisele kasutajale lülitumise keelamine, kui tal on seanss aktiivne."
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:11
+msgid "Disable lock screen"
+msgstr "Ekraani lukustamise keelamine"
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:12
+msgid "Prevent the user from locking the screen."
+msgstr "Kasutajal oma ekraani lukustamise keelamine."
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:13
+msgid "Disable URL and MIME type handlers"
+msgstr ""
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:14
+msgid "Prevent running any URL or MIME type handler applications."
+msgstr ""
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:15
+msgid "Disable theme settings"
+msgstr "Teemasätete keelamine"
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:16
+msgid "Prevent the user from changing theme settings."
+msgstr "Kasutajale teemasätete keelamine."
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:17
+msgid "Disable log out"
+msgstr "Väljalogimise keelamine"
+
+#: ../schemas/org.gde2.lockdown.gschema.xml.in.h:18
+msgid "Prevent the user from logging out."
+msgstr "Kasutajal töölaualt väljalogimise keelamine."
+
+#: ../schemas/org.gde2.peripherals-keyboard.gschema.xml.in.h:1
+msgid "possible values are \"on\", \"off\", and \"custom\"."
+msgstr "võimalikud väärtused on \"on\" (sees), \"off\" (väljas) ja \"custom\" (kohandatud)."
+
+#: ../schemas/org.gde2.peripherals-keyboard.gschema.xml.in.h:2
+msgid "Keyboard Bell Custom Filename"
+msgstr "Klaviatuurikõlli kohandatud failinimi"
+
+#: ../schemas/org.gde2.peripherals-keyboard.gschema.xml.in.h:3
+msgid "File name of the bell sound to be played."
+msgstr "Kellahelina helifaili nimi."
+
+#: ../schemas/org.gde2.peripherals-keyboard.gschema.xml.in.h:4
+msgid "Remember NumLock state"
+msgstr "NumLock oleku meelespidamine"
+
+#: ../schemas/org.gde2.peripherals-keyboard.gschema.xml.in.h:5
+msgid ""
+"When set to true, GDE2 will remember the state of the NumLock LED between "
+"sessions."
+msgstr "Kui märgitud, siis GDE2 jätab seansside vahel NumLock klahvi oleku meelde."
+
+#: ../schemas/org.gde2.peripherals-keyboard.gschema.xml.in.h:6
+msgid "NumLock state"
+msgstr "NumLock olek"
+
+#: ../schemas/org.gde2.peripherals-keyboard.gschema.xml.in.h:7
+msgid "The remembered state of the NumLock LED."
+msgstr "Meelde jäetud NumLock LED-i olek."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:1
+msgid "Mouse button orientation"
+msgstr "Hiirenupu suund"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:2
+msgid "Swap left and right mouse buttons for left-handed mice."
+msgstr "Vasaku ja parema hiirenupu vahetamine vasakukäeliste hiire jaoks."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:3
+msgid "Single Click"
+msgstr "Üksikklõps"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:4
+msgid ""
+"Acceleration multiplier for mouse motion. A value of -1 is the system "
+"default."
+msgstr "Hiire liikumise kiirenduskordaja. Väärtus -1 märgib süsteemi vaikeväärtust."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:5
+msgid "Motion Threshold"
+msgstr "Liikumise lävi"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:6
+msgid ""
+"Distance in pixels the pointer must move before accelerated mouse motion is "
+"activated. A value of -1 is the system default."
+msgstr "Pikslites määratud vahemaa, mille kursor peab hiire kiirenduse aktiveerimiseks läbima. Väärtus -1 tähendab süsteemset vaikesätet."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:7
+msgid "Drag Threshold"
+msgstr "Lohistamise lävi"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:8
+msgid "Distance before a drag is started."
+msgstr "Vahemaa, millest alates lohistamine aset leiab."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:9
+msgid "Double Click Time"
+msgstr "Topeltklõpsu kestus"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:10
+msgid "Length of a double click."
+msgstr "Topeltklõpsu kestus."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:11
+msgid "Middle button emulation"
+msgstr "Keskmise nupu emuleerimiene"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:12
+msgid ""
+"Enables middle mouse button emulation through simultaneous left and right "
+"button click."
+msgstr "Keskmise hiirenupu emuleerimise lubamine samaaegse vasaku ja parema hiirenupu vajutamisega."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:13
+msgid "Locate Pointer"
+msgstr "Kursori asukoha tuvastamine"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:14
+msgid ""
+"Highlights the current location of the pointer when the Control key is "
+"pressed and released."
+msgstr "Kursori asukoha rõhutamine Control klahvi vajutamise ja lahtilaskmise korral."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:15
+msgid "Cursor font"
+msgstr "Kursori kirjatüüp"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:16
+msgid ""
+"Font name of the cursor. If unset, the default font is used. This value is "
+"only propagated to the X server start of each session, so changing it mid-"
+"session won't have an effect until the next time you log in."
+msgstr "Kursori kirjatüübi nimi. Kui see on määramata, siis kasutatakse vaikimisi kirjatüüpi. Seda väärtust edastatakse X-serverile ainult seansi alguses, seega pole selle muutmist võimalik rakendada enne järgmise seansi alustamist."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:17
+msgid "Cursor theme"
+msgstr "Kursori teema"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:18
+msgid ""
+"Cursor theme name. Used only by Xservers that support Xcursor, such as "
+"XFree86 4.3 and later."
+msgstr "Kursoriteema nimi. Kasutatakse ainult Xcursori toega Xserverite poolt, näiteks XFree86 4.3 ja hilisemad."
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:19
+msgid "Cursor size"
+msgstr "Kursori suurus"
+
+#: ../schemas/org.gde2.peripherals-mouse.gschema.xml.in.h:20
+msgid "Size of the cursor referenced by cursor_theme."
+msgstr "Võtme cursor_theme poolt viidatava kursori suurus."
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:1
+msgid "Default mixer device"
+msgstr "Vaikimisi mikserseade"
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:2
+msgid "The default mixer device used by the multimedia key bindings."
+msgstr "Multimeedia klahvivajutuste korral vaikimisi kasutatav mikserseade."
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:3
+msgid "Default mixer tracks"
+msgstr "Mikseri vaikimisi rajad"
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:4
+msgid "The default mixer tracks used by the multimedia key bindings."
+msgstr "Multimeedia klahvivajutuste korral vaikimisi miksimiseks kasutatav rada."
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:5
+msgid "Enable ESD"
+msgstr "ESD lubamine"
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:6
+msgid "Enable sound server startup."
+msgstr "Heliserveri lubamine käivitumisel."
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:7
+msgid "Sounds for events"
+msgstr "Sündmuste helid"
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:8
+msgid "Whether to play sounds on user events."
+msgstr "Kas kasutajasündmuste puhul mängitakse helisid."
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:9
+msgid "Sound theme name"
+msgstr "Heliteema nimi"
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:10
+msgid "The XDG sound theme to use for event sounds."
+msgstr "Sündmuste helide jaoks kasutatav XDG heliteema."
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:11
+msgid "Input feedback sounds"
+msgstr "Sisestuse tagasiside helid"
+
+#: ../schemas/org.gde2.sound.gschema.xml.in.h:12
+msgid "Whether to play sounds on input events."
+msgstr "Kas sisestussündmuste puhul mängitakse helisid või mitte."
+
+#: ../schemas/org.gde2.thumbnail-cache.gschema.xml.in.h:1
+msgid ""
+"Maximum age for thumbnails in the cache, in days. Set to -1 to disable "
+"cleaning."
+msgstr ""
+
+#: ../schemas/org.gde2.thumbnail-cache.gschema.xml.in.h:2
+msgid ""
+"Maximum size of the thumbnail cache, in megabytes. Set to -1 to disable "
+"cleaning."
+msgstr ""
+
+#: ../schemas/org.gde2.thumbnailers.gschema.xml.in.h:1
+msgid "Disable all external thumbnailers"
+msgstr "Kõikide väliste pisipilditegijate keelamine"
+
+#: ../schemas/org.gde2.thumbnailers.gschema.xml.in.h:2
+msgid ""
+"Set to true to disable all external thumbnailer programs, independent on "
+"whether they are independently disabled/enabled."
+msgstr "Kui mägitud, siis on kõik välisid pisipilditegijad keelatud sõltumata nende üksikust lubamisest või keelamisest."
+
+#: ../schemas/org.gde2.thumbnailers.gschema.xml.in.h:3
+msgid ""
+"List of mime-types for which external thumbnailer programs will be disabled"
+msgstr "Nimekiri mime-liikidest, mille jaoks väline pisipilditegija on keelatud"
+
+#: ../schemas/org.gde2.thumbnailers.gschema.xml.in.h:4
+msgid ""
+"Thumbnails will not be created for files whose mime-type is contained in the"
+" list."
+msgstr ""
+
+#: ../schemas/org.gde2.typing-break.gschema.xml.in.h:1
+msgid "Type time"
+msgstr "Tippimise aeg"
+
+#: ../schemas/org.gde2.typing-break.gschema.xml.in.h:2
+msgid "Number of minutes of typing time before break mode starts."
+msgstr "Tippimiseks kuluvate minutite arv enne puhkepausi aktiveerimist."
+
+#: ../schemas/org.gde2.typing-break.gschema.xml.in.h:3
+msgid "Break time"
+msgstr "Puhkepausi kestus"
+
+#: ../schemas/org.gde2.typing-break.gschema.xml.in.h:4
+msgid "Number of minutes that the typing break should last."
+msgstr "Puhkepausi kestus minutites."
+
+#: ../schemas/org.gde2.typing-break.gschema.xml.in.h:5
+msgid "Allow postponing of breaks"
+msgstr "Puhkepauside edasilükkamise lubamine"
+
+#: ../schemas/org.gde2.typing-break.gschema.xml.in.h:6
+msgid "Whether or not the typing break screen can be postponed."
+msgstr "Kas puhkepausi on võimalik edasi lükata või mitte."
+
+#: ../schemas/org.gde2.typing-break.gschema.xml.in.h:7
+msgid "Whether or not keyboard locking is enabled"
+msgstr "Kas klaviatuuri lukustamine on lubatud"
+
+#: ../schemas/org.gde2.typing-break.gschema.xml.in.h:8
+msgid "Whether or not keyboard locking is enabled."
+msgstr "Kas klaviatuuri lukustamine on lubatud või mitte."
+
+#: ../tools/gde2-color-select.c:64
+#: ../tools/gde2-color-select.desktop.in.in.h:1
+msgid "GDE2 Color Selection"
+msgstr "GDE2 värvuse valimine"
+
+#: ../tools/gde2-color-select.desktop.in.in.h:2
+msgid "Color selection dialog"
+msgstr "Värvuse valimise dialoog"
+
+#: ../tools/gde2-color-select.desktop.in.in.h:3
+msgid "Choose colors from the palette or the screen"
+msgstr "Värvuste valimine ekraanil asuvast paletist"
