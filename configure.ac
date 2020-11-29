@@ -1,6 +1,6 @@
 m4_define([gde2_platform], [1])
-m4_define([gde2_minor], [16])
-m4_define([gde2_micro], [2])
+m4_define([gde2_minor], [1])
+m4_define([gde2_micro], [0])
 
 m4_define(gde2_version, [gde2_platform.gde2_minor.gde2_micro]),
 
