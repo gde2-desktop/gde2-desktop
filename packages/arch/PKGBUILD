@@ -2,7 +2,7 @@
 # Contributor: Martin Wimpress <code@flexion.org>
 
 pkgname=gde2-desktop
-pkgver=1.0
+pkgver=1.1
 pkgrel=1
 pkgdesc="Library with common API for various GDE2 modules"
 url="http://gde2-desktop.org"
