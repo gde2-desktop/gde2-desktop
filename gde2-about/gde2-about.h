@@ -31,12 +31,13 @@
 const char* program_name = "GDE2 Desktop Environment";
 const char* version = PACKAGE_VERSION;
 const char* icon = "gde2";
-const char* website = "http://www.gde2-desktop.org/";
+const char* website = "https://www.gde2-desktop.github.io/";
 
 const char* copyright =  ""
     "Copyright © 1997-2011 GNOME developers\n"
     "Copyright © 2011 Perberos\n"
-    "Copyright © 2012-2016 GDE2 developers";
+    "Copyright © 2012-2016 MATE developers\n"
+    "Copyright © 2020 GDE2 Project";
 
 /* Increment comments_count if you add other comments. This will be
  * used to choose a random comment. */
@@ -51,26 +52,26 @@ const char* comments_array[] = {
     N_("GDE2 is a Free, usable, stable, accessible desktop environment for the Unix-"
     "like family of operating systems."),
 
-    N_("GDE2 is the continuation of GNOME 2. Hundreds of people have contributed code to "
+    N_("GDE2 is the continuation of GNOME 2/MATE. Hundreds of people have contributed code to "
     "GNOME since it was started in 1997; many more have contributed in other "
     "important ways, including translations, documentation, and quality assurance."),
 
     N_("GNOME 2 was the most popular Linux desktop but it’s no longer available... "
-    "GDE2 is here to provide that same desktop to you!"),
+    "GDE2 is here to bring you the same desktop on GTK2+!"),
 
-    N_("The name “GDE2” comes from yerba maté, a species of holly native "
-    "to subtropical South America. Its leaves contain caffeine and are "
-    "used to make infusions and a beverage called gde2.")
+    N_("GDE2 is a fork of MATE 1.14/1.16 because he dropped GTK2 + support.")
 };
 
 const char* authors[] = {
-    "GDE2:",
-    /* GDE2 founders */
+	"GDE2 Project",
+	"Максим Кутный <gtk3@inbox.ru>",
+    "MATE:",
+    /* MATE founders */
     "Perberos <perberos@gmail.com>",
     "Stefano Karapetsas <stefano@karapetsas.com>",
     "Steve Zesch <stevezesch2@gmail.com>",
     "Clement Lefebvre <root@linuxmint.com>",
-    /* GDE2 developers and contributors */
+    /* MATE developers and contributors */
     "Scott Balneaves <sbalneav@alburg.net>",
     "Marcel Dijkstra <marcel.dykstra@gmail.com>",
     "Jasmine Hassan <jasmine.aura@gmail.com>",
@@ -93,7 +94,7 @@ const char* authors[] = {
     "Chess Griffin <chess.griffin@gmail.com>",
     "Vlad Orlov <monsta@inbox.ru>",
     "Abel McClendon <hcmmac@hosscomm.com>",
-    /* GDE2 Google Summer of Code students */
+    /* MATE Google Summer of Code students */
     "Alexander van der Meij <alexandervdm@gliese.me>",
     "Avishkar Gupta <avishkar_gupta@outlook.com>",
     "Laszlo Boros <iamsemmu@gmail.com>",
